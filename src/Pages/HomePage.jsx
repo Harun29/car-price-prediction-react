@@ -7,8 +7,6 @@ import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 
-import DarkThemeTable from "../Themes/DarkThemeTable"
-
 import "../Style/HomePage.css";
 
 const HomePage = () => {
@@ -154,7 +152,7 @@ const HomePage = () => {
 
         <div className="reading-data-inputs main">
           {tableData.length > 0 && (
-            <DarkThemeTable
+            <MaterialTable
               title={`CSV Data -- Shape: ${shape} -- Duplicates: ${duplicates}`}
               columns={columns}
               data={tableData}
@@ -182,7 +180,7 @@ const HomePage = () => {
         <div className="main-info-container">
           <div className="reading-data-inputs nans">
             {nansTableData.length > 0 && (
-              <DarkThemeTable
+              <MaterialTable
                 title="NaN Values"
                 columns={nansColumns}
                 data={nansTableData}
@@ -195,7 +193,7 @@ const HomePage = () => {
           </div>
           <div className="reading-data-inputs desc">
             {nansTableData.length > 0 && (
-              <DarkThemeTable
+              <MaterialTable
                 title="Description"
                 columns={descColumns}
                 data={descTableData}
@@ -271,7 +269,7 @@ const HomePage = () => {
         </div>
         <div className="reading-data-inputs grouped">
           {groupedTableData.length > 0 && (
-            <DarkThemeTable
+            <MaterialTable
               title={`Grouped By -- ${aggregationFunction.toUpperCase(aggregationFunction)}`}
               columns={groupedColumns}
               data={groupedTableData}
