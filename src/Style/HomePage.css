@@ -63,7 +63,7 @@ input[type="file"] {
 
 .main-info-container{
   display: grid;
-  grid-template-columns: 30% 70%;
+  grid-template-columns: 40% 60%;
   width: 100%;
 }
 
@@ -71,6 +71,19 @@ input[type="file"] {
   margin: 20px 40px;
   width: auto;
 }
+
+/* .reading-data-inputs.main{
+  border: 1px solid #ff5cc0;
+}
+.reading-data-inputs.nans{
+  border: 1px solid #5cff5c;
+}
+.reading-data-inputs.desc{
+  border: 1px solid #6afff8;
+}
+.reading-data-inputs.grouped{
+  border: 1px solid #efff5c;
+} */
 
 .group-by-container{
   width: 60%;

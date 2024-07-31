@@ -7,6 +7,8 @@ import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 
+import DarkThemeTable from "../Themes/DarkThemeTable"
+
 import "../Style/HomePage.css";
 
 const HomePage = () => {
@@ -150,9 +152,9 @@ const HomePage = () => {
           <input id="file-upload" type="file" onChange={handleFileUpload} />
         </div>
 
-        <div className="reading-data-inputs">
+        <div className="reading-data-inputs main">
           {tableData.length > 0 && (
-            <MaterialTable
+            <DarkThemeTable
               title={`CSV Data -- Shape: ${shape} -- Duplicates: ${duplicates}`}
               columns={columns}
               data={tableData}
@@ -167,16 +169,21 @@ const HomePage = () => {
         </div>
         <div className="control-buttons">
           {tableData[0] && (
-            <Button className="refresh-button" variant="outlined">
-              Refresh
-            </Button>
+            <div>
+              <Button className="refresh-button" variant="outlined">
+                Refresh
+              </Button>
+              {duplicates > 0 && <Button className="refresh-button" variant="outlined">
+                Drop duplicates
+              </Button>}
+            </div>
           )}
         </div>
         <div className="main-info-container">
-          <div className="reading-data-inputs">
+          <div className="reading-data-inputs nans">
             {nansTableData.length > 0 && (
-              <MaterialTable
-                title={`NaN Values`}
+              <DarkThemeTable
+                title="NaN Values"
                 columns={nansColumns}
                 data={nansTableData}
                 options={{
@@ -188,8 +195,8 @@ const HomePage = () => {
           </div>
           <div className="reading-data-inputs desc">
             {nansTableData.length > 0 && (
-              <MaterialTable
-                title={`Description`}
+              <DarkThemeTable
+                title="Description"
                 columns={descColumns}
                 data={descTableData}
                 options={{
@@ -262,15 +269,16 @@ const HomePage = () => {
             </>
           )}
         </div>
-        <div className="reading-data-inputs desc">
+        <div className="reading-data-inputs grouped">
           {groupedTableData.length > 0 && (
-            <MaterialTable
-              title={`Description`}
+            <DarkThemeTable
+              title={`Grouped By -- ${aggregationFunction.toUpperCase(aggregationFunction)}`}
               columns={groupedColumns}
               data={groupedTableData}
               options={{
                 search: true,
                 sorting: false,
+                exportButton: true
               }}
             />
           )}
