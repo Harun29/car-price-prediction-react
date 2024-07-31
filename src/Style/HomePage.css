@@ -1,3 +1,8 @@
+.home-page-container{
+  max-width: 1400px;
+  min-width: none;
+}
+
 .home-page-container header{
   display: flex;
   align-items: center;
@@ -47,18 +52,24 @@ input[type="file"] {
 }
 
 .controll-buttons{
-  margin: 20px 40px;
-}
-
-.refresh-button{
-  margin: 5px !important;
-}
-
-.reading-data-inputs{
   margin: 0 40px;
 }
 
-.reading-data-inputs.nans{
-  width: 30%;
+.refresh-button{
+  margin: 0 5px !important;
 }
+
+/* main components */
+
+.main-info-container{
+  display: grid;
+  grid-template-columns: 30% 70%;
+  width: 100%;
+}
+
+.reading-data-inputs{
+  margin: 20px 40px;
+  width: auto;
+}
+
 
