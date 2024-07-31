@@ -51,7 +51,7 @@ input[type="file"] {
   margin-bottom: 20px;
 }
 
-.controll-buttons{
+.control-buttons{
   margin: 0 40px;
 }
 
@@ -70,6 +70,22 @@ input[type="file"] {
 .reading-data-inputs{
   margin: 20px 40px;
   width: auto;
+}
+
+.group-by-container{
+  width: 60%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.group-by-container div{
+  width: 90%;
+}
+.group-by-container button{
+  width: 40%;
+  height: 50px;
 }
 
 
