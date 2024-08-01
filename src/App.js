@@ -5,6 +5,7 @@ import { useState } from "react";
 import FormControlLabel from '@mui/material/FormControlLabel';
 import { styled } from '@mui/material/styles';
 import Switch from '@mui/material/Switch';
+import Navbar from "./Components/Navbar";
 
 function App() {
 
@@ -60,17 +61,19 @@ function App() {
   });
 
   const handleThemeChange = (event) => {
-    setTheme(event.target.checked ? 'light' : 'dark');
+    setTheme(event.target.checked ? 'dark' : 'light');
   };
 
   return (
     <ThemeProvider theme={darkTheme}>
-      <CssBaseline />
-      <FormControlLabel
-        control={<MaterialUISwitch checked={theme === 'light'} onChange={handleThemeChange} />}
-        label=""
-      />
       <div className="App">
+        <Navbar />
+        <CssBaseline />
+        <FormControlLabel
+          className="theme-change"
+          control={<MaterialUISwitch checked={theme === 'dark'} onChange={handleThemeChange} />}
+          label=""
+        />
         <HomePage />
       </div>
     </ThemeProvider>

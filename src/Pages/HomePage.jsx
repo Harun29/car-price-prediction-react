@@ -1,15 +1,29 @@
 import { useEffect, useState } from "react";
 import { Button } from "@mui/material";
-
 import MaterialTable from "@material-table/core";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
+import TextField from "@mui/material/TextField"; // Add this import
+import CloudUploadIcon from '@mui/icons-material/CloudUpload';
+import { styled } from '@mui/material/styles';
 
 import "../Style/HomePage.css";
 
 const HomePage = () => {
+  const VisuallyHiddenInput = styled('input')({
+    clip: 'rect(0 0 0 0)',
+    clipPath: 'inset(50%)',
+    height: 1,
+    overflow: 'hidden',
+    position: 'absolute',
+    bottom: 0,
+    left: 0,
+    whiteSpace: 'nowrap',
+    width: 1,
+  });
+
   const [tableData, setTableData] = useState([]);
   const [columns, setColumns] = useState([]);
 
@@ -30,6 +44,13 @@ const HomePage = () => {
   const [valueColumn, setValueColumn] = useState("");
   const [aggregationFunction, setAggregationFunction] = useState("");
 
+  // State variables for fillna and dropna
+  const [fillValue, setFillValue] = useState("");
+  const [fillMethod, setFillMethod] = useState("");
+  const [fillColumn, setFillColumn] = useState("");
+  const [dropAxis, setDropAxis] = useState(0);
+  const [dropHow, setDropHow] = useState("any");
+
   const handleGroupByChange = (event) => {
     setGroupBy(event.target.value);
   };
@@ -44,6 +65,26 @@ const HomePage = () => {
 
   const handleDelChange = (event) => {
     setDeleteCol(event.target.value);
+  };
+
+  const handleFillValueChange = (event) => {
+    setFillValue(event.target.value);
+  };
+
+  const handleFillMethodChange = (event) => {
+    setFillMethod(event.target.value);
+  };
+
+  const handleFillColumnChange = (event) => {
+    setFillColumn(event.target.value);
+  };
+
+  const handleDropAxisChange = (event) => {
+    setDropAxis(event.target.value);
+  };
+
+  const handleDropHowChange = (event) => {
+    setDropHow(event.target.value);
   };
 
   useEffect(() => {
@@ -136,18 +177,85 @@ const HomePage = () => {
     }
   };
 
+  const handleFillNa = async () => {
+    try {
+      const response = await fetch("http://127.0.0.1:5000/fillna", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          fill_value: fillValue,
+          method: fillMethod,
+          column_name: fillColumn,
+        }),
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.error || "Failed to fill NaN values");
+      }
+
+      const result = await response.json();
+      const data = result.data;
+
+      if (data.length > 0) {
+        const columns = Object.keys(data[0]).map((key) => ({
+          title: key,
+          field: key,
+        }));
+        setColumns(columns);
+        setTableData(data);
+      }
+    } catch (err) {
+      console.error("Failed to fill NaN values: ", err);
+    }
+  };
+
+  const handleDropNa = async () => {
+    try {
+      const response = await fetch("http://127.0.0.1:5000/dropna", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ axis: dropAxis, how: dropHow }),
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.error || "Failed to drop NaN values");
+      }
+
+      const result = await response.json();
+      const data = result.data;
+
+      if (data.length > 0) {
+        const columns = Object.keys(data[0]).map((key) => ({
+          title: key,
+          field: key,
+        }));
+        setColumns(columns);
+        setTableData(data);
+      }
+    } catch (err) {
+      console.error("Failed to drop NaN values: ", err);
+    }
+  };
+
   return (
     <div className="home-page-container">
-      <header>
-        <img src="pandas-icon.png" alt="" />
-        <h1>Pandas UI</h1>
-      </header>
       <div>
         <div className="data-loading">
-          <label htmlFor="file-upload" className="custom-file-upload">
-            Upload CSV
-          </label>
-          <input id="file-upload" type="file" onChange={handleFileUpload} />
+        <Button
+          component="label"
+          variant="contained"
+          tabIndex={-1}
+          startIcon={<CloudUploadIcon />}
+        >
+          Upload csv
+          <VisuallyHiddenInput type="file" onChange={handleFileUpload}/>
+        </Button>
         </div>
 
         <div className="reading-data-inputs main">
@@ -270,7 +378,7 @@ const HomePage = () => {
         <div className="reading-data-inputs grouped">
           {groupedTableData.length > 0 && (
             <MaterialTable
-              title={`Grouped By -- ${aggregationFunction.toUpperCase(aggregationFunction)}`}
+              title={`Grouped By -- ${aggregationFunction.toUpperCase()}`}
               columns={groupedColumns}
               data={groupedTableData}
               options={{
@@ -279,6 +387,90 @@ const HomePage = () => {
                 exportButton: true
               }}
             />
+          )}
+        </div>
+        <div className="control-buttons group-by-container">
+          {tableData.length > 0 && (
+            <>
+              <FormControl fullWidth>
+                <InputLabel id="fillna-label">Fill NaN Value</InputLabel>
+                <TextField
+                  id="fillna-input"
+                  value={fillValue}
+                  onChange={handleFillValueChange}
+                  label="Fill NaN Value"
+                />
+              </FormControl>
+              <FormControl fullWidth>
+                <InputLabel id="fill-method-label">Fill Method</InputLabel>
+                <Select
+                  labelId="fill-method-label"
+                  id="fill-method"
+                  value={fillMethod}
+                  label="Fill Method"
+                  onChange={handleFillMethodChange}
+                >
+                  <MenuItem value=""><em>None</em></MenuItem>
+                  <MenuItem value="ffill">Forward Fill</MenuItem>
+                  <MenuItem value="bfill">Backward Fill</MenuItem>
+                </Select>
+              </FormControl>
+              <FormControl fullWidth>
+                <InputLabel id="fill-column-label">Fill Column</InputLabel>
+                <Select
+                  labelId="fill-column-label"
+                  id="fill-column"
+                  value={fillColumn}
+                  label="Fill Column"
+                  onChange={handleFillColumnChange}
+                >
+                  <MenuItem value=""><em>All Columns</em></MenuItem>
+                  {columns.map((column) => (
+                    <MenuItem key={column.field} value={column.field}>
+                      {column.title}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
+              <Button onClick={handleFillNa} variant="outlined">
+                Fill NaNs
+              </Button>
+            </>
+          )}
+        </div>
+        <div className="control-buttons group-by-container">
+          {tableData.length > 0 && (
+            <>
+              <FormControl fullWidth>
+                <InputLabel id="dropna-axis-label">Drop NaN Axis</InputLabel>
+                <Select
+                  labelId="dropna-axis-label"
+                  id="dropna-axis"
+                  value={dropAxis}
+                  label="Drop NaN Axis"
+                  onChange={handleDropAxisChange}
+                >
+                  <MenuItem value={0}>Rows</MenuItem>
+                  <MenuItem value={1}>Columns</MenuItem>
+                </Select>
+              </FormControl>
+              <FormControl fullWidth>
+                <InputLabel id="dropna-how-label">Drop NaN How</InputLabel>
+                <Select
+                  labelId="dropna-how-label"
+                  id="dropna-how"
+                  value={dropHow}
+                  label="Drop NaN How"
+                  onChange={handleDropHowChange}
+                >
+                  <MenuItem value="any">Any</MenuItem>
+                  <MenuItem value="all">All</MenuItem>
+                </Select>
+              </FormControl>
+              <Button onClick={handleDropNa} variant="outlined">
+                Drop NaNs
+              </Button>
+            </>
           )}
         </div>
         <div className="control-buttons group-by-container">
@@ -305,7 +497,6 @@ const HomePage = () => {
           )}
         </div>
       </div>
-      <footer></footer>
     </div>
   );
 };

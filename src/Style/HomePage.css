@@ -16,39 +16,11 @@
   margin-right: 10px;
 }
 
-input[type="file"] {
-  display: none;
-}
-
-.file-upload-container {
-  text-align: center;
-}
-
-.custom-file-upload {
-  display: inline-block;
-  padding: 10px 20px;
-  cursor: pointer;
-  color: #fff;
-  background-color: #007bff;
-  border: none;
-  border-radius: 5px;
-  font-size: 16px;
-  transition: background-color 0.3s ease;
-}
-
-.custom-file-upload:hover {
-  background-color: #0056b3;
-}
-
-#file-upload {
-  display: none;
-}
-
 .data-loading{
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-bottom: 20px;
+  margin: 20px;
 }
 
 .control-buttons{

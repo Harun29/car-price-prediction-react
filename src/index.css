@@ -16,3 +16,19 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.theme-change{
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+}
+
+#root{
+  width: 100%;
+}
+
+.App{
+  display: grid;
+  grid-template-columns: 1fr 4fr;
+  justify-content: space-between;
+}
