@@ -1,24 +1,23 @@
 import { useEffect, useState } from "react";
-import { Button } from "@mui/material";
-// import Papa from 'papaparse';
+import { Button, FormControl, InputLabel, MenuItem, Select } from "@mui/material";
 import MaterialTable from '@material-table/core';
 import '../Style/HomePage.css';
 
 const HomePage = () => {
   const [tableData, setTableData] = useState([]);
   const [columns, setColumns] = useState([]);
-  
+
   const [nansTableData, setNansTableData] = useState([]);
   const [nansColumns, setNansColumns] = useState([]);
 
   const [shape, setShape] = useState();
 
   useEffect(() => {
-    tableData && console.log("main table: ", tableData)
-    nansTableData && console.log("nans table: ", nansTableData)
-    columns && console.log("columns: ", columns)
-    nansColumns && console.log("nans columns: ", nansColumns)
-  }, [tableData, nansTableData, nansColumns, columns])
+    console.log("main table: ", tableData);
+    console.log("nans table: ", nansTableData);
+    console.log("columns: ", columns);
+    console.log("nans columns: ", nansColumns);
+  }, [tableData, nansTableData, nansColumns, columns]);
 
   const handleFileUpload = async (event) => {
     const file = event.target.files[0];
@@ -59,14 +58,14 @@ const HomePage = () => {
       const response = await fetch('http://127.0.0.1:5000/get_nans', {
         method: 'GET'
       });
-  
+
       if (!response.ok) {
         throw new Error('Failed to fetch NaNs: ' + response.statusText);
       }
-  
+
       const result = await response.json();
       const data = result.nans;
-  
+
       if (data.length > 0) {
         const keys = Object.keys(data[0]);
         const columns = keys.map(key => ({ title: key, field: key }));
@@ -78,7 +77,8 @@ const HomePage = () => {
       console.error('Error fetching NaNs:', error);
     }
   };
-  
+
+
   return (
     <div className="home-page-container">
       <header>
@@ -108,8 +108,8 @@ const HomePage = () => {
           )}
         </div>
         <div className="controll-buttons">
-          {tableData[0] && <Button className="refresh-button" variant='outlined'>Refresh</Button>}
-          {tableData[0] && <Button onClick={getNans} className="refresh-button" variant='outlined'>Get NaNs</Button>}
+          {tableData.length > 0 && <Button className="refresh-button" variant='outlined'>Refresh</Button>}
+          {tableData.length > 0 && <Button onClick={getNans} className="refresh-button" variant='outlined'>Get NaNs</Button>}
         </div>
         <div className="reading-data-inputs nans">
           {nansTableData.length > 0 && (
@@ -130,6 +130,3 @@ const HomePage = () => {
 }
 
 export default HomePage;
-
-
-
