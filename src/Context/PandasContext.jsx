@@ -21,6 +21,7 @@ export function PandasProvider({ children }) {
 
   const [shape, setShape] = useState();
   const [duplicates, setDuplicates] = useState();
+  const [columnsList, setColumnsList] = useState([]);
 
   useEffect(() => {
     try{
@@ -29,6 +30,10 @@ export function PandasProvider({ children }) {
       console.error(err)
     }
   }, [])
+
+  useEffect(() => {
+    columnsList && console.log(columnsList)
+  }, [columnsList])
 
   const handleInitialData = async () => {
     try {
@@ -44,6 +49,7 @@ export function PandasProvider({ children }) {
       const data = result.data;
       const nans = result.nans;
       const desc = result.description;
+      const cols = result.columns;
 
       if (data.length > 0) {
         const columns = Object.keys(data[0]).map((key) => ({
@@ -65,6 +71,7 @@ export function PandasProvider({ children }) {
         setNansTableData(nans);
         setDescColumns(descColumns);
         setDescTableData(desc);
+        setColumnsList(cols)
 
         setShape(result.shape);
         setDuplicates(result.duplicates);
@@ -195,6 +202,7 @@ export function PandasProvider({ children }) {
         const data = result.data;
         const nans = result.nans;
         const desc = result.description;
+        const cols = result.columns;
 
         if (data.length > 0) {
           const columns = Object.keys(data[0]).map((key) => ({
@@ -216,6 +224,7 @@ export function PandasProvider({ children }) {
           setNansTableData(nans);
           setDescColumns(descColumns);
           setDescTableData(desc);
+          setColumnsList(cols)
 
           setShape(result.shape);
           setDuplicates(result.duplicates);

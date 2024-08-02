@@ -7,6 +7,8 @@ import { styled } from "@mui/material/styles";
 import Switch from "@mui/material/Switch";
 import Navbar from "./Components/Navbar";
 import {PandasProvider} from "./Context/PandasContext";
+import { MLProvider } from "./Context/MLContext";
+import PredictionsPage from "./Pages/Predictions";
 
 function App() {
   const [theme, setTheme] = useState("dark");
@@ -87,6 +89,9 @@ function App() {
         <PandasProvider>
           <HomePage />
         </PandasProvider>
+        <MLProvider>
+          <PredictionsPage />
+        </MLProvider>
       </div>
     </ThemeProvider>
   );
