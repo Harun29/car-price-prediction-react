@@ -1,55 +1,89 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Button } from "@mui/material";
 import MaterialTable from "@material-table/core";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
-import TextField from "@mui/material/TextField"; // Add this import
-import CloudUploadIcon from '@mui/icons-material/CloudUpload';
-import { styled } from '@mui/material/styles';
+import TextField from "@mui/material/TextField";
+import CloudUploadIcon from "@mui/icons-material/CloudUpload";
+import { styled } from "@mui/material/styles";
 
 import "../Style/HomePage.css";
+import { usePandas } from "../Context/PandasContext";
 
 const HomePage = () => {
-  const VisuallyHiddenInput = styled('input')({
-    clip: 'rect(0 0 0 0)',
-    clipPath: 'inset(50%)',
+  const VisuallyHiddenInput = styled("input")({
+    clip: "rect(0 0 0 0)",
+    clipPath: "inset(50%)",
     height: 1,
-    overflow: 'hidden',
-    position: 'absolute',
+    overflow: "hidden",
+    position: "absolute",
     bottom: 0,
     left: 0,
-    whiteSpace: 'nowrap',
+    whiteSpace: "nowrap",
     width: 1,
   });
 
-  const [tableData, setTableData] = useState([]);
-  const [columns, setColumns] = useState([]);
+  const {
+    tableData,
+    columns,
+    nansColumns,
+    nansTableData,
+    descTableData,
+    descColumns,
+    groupedTableData,
+    groupedColumns,
+    duplicates,
+    shape,
+    handleDropNa,
+    handleFillNa,
+    handleGroupBy,
+    handleFileUpload,
+  } = usePandas();
 
-  const [nansTableData, setNansTableData] = useState([]);
-  const [nansColumns, setNansColumns] = useState([]);
-
-  const [descTableData, setDescTableData] = useState([]);
-  const [descColumns, setDescColumns] = useState([]);
-
-  const [groupedTableData, setGroupedTableData] = useState([]);
-  const [groupedColumns, setGroupedColumns] = useState([]);
-
-  const [shape, setShape] = useState();
-  const [duplicates, setDuplicates] = useState();
   const [deleteCol, setDeleteCol] = useState("");
-
   const [groupBy, setGroupBy] = useState("");
   const [valueColumn, setValueColumn] = useState("");
   const [aggregationFunction, setAggregationFunction] = useState("");
 
-  // State variables for fillna and dropna
   const [fillValue, setFillValue] = useState("");
   const [fillMethod, setFillMethod] = useState("");
   const [fillColumn, setFillColumn] = useState("");
   const [dropAxis, setDropAxis] = useState(0);
   const [dropHow, setDropHow] = useState("any");
+
+  const dropNaFunction = async () => {
+    try {
+      await handleDropNa(dropAxis, dropHow);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  const fillNaFunction = async () => {
+    try {
+      await handleFillNa(fillValue, fillMethod, fillColumn);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  const groupByFunction = async () => {
+    try {
+      await handleGroupBy(groupBy, valueColumn, aggregationFunction);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  const fileUploadFunction = async (event) => {
+    try {
+      await handleFileUpload(event);
+    } catch (err) {
+      console.error(err);
+    }
+  };
 
   const handleGroupByChange = (event) => {
     setGroupBy(event.target.value);
@@ -87,175 +121,19 @@ const HomePage = () => {
     setDropHow(event.target.value);
   };
 
-  useEffect(() => {
-    groupBy && console.log(groupBy);
-  }, [groupBy]);
-
-  const handleFileUpload = async (event) => {
-    const file = event.target.files[0];
-    if (file) {
-      const formData = new FormData();
-      formData.append("file", file);
-
-      try {
-        const response = await fetch("http://127.0.0.1:5000/upload_csv", {
-          method: "POST",
-          body: formData,
-        });
-
-        if (!response.ok) {
-          throw new Error("Failed to upload file");
-        }
-
-        const result = await response.json();
-        const data = result.data;
-        const nans = result.nans;
-        const desc = result.description;
-
-        if (data.length > 0) {
-          const columns = Object.keys(data[0]).map((key) => ({
-            title: key,
-            field: key,
-          }));
-          const nanColumns = Object.keys(nans[0]).map((key) => ({
-            title: key,
-            field: key,
-          }));
-          const descColumns = Object.keys(desc[0]).map((key) => ({
-            title: key,
-            field: key,
-          }));
-
-          setColumns(columns);
-          setTableData(data);
-          setNansColumns(nanColumns);
-          setNansTableData(nans);
-          setDescColumns(descColumns);
-          setDescTableData(desc);
-
-          setShape(result.shape);
-          setDuplicates(result.duplicates);
-        }
-      } catch (error) {
-        console.error("Error uploading file:", error);
-      }
-    }
-  };
-
-  const handleGroupBy = async () => {
-    try {
-      const response = await fetch("http://127.0.0.1:5000/group_by", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          column_name: groupBy,
-          value_column: valueColumn,
-          aggregation_function: aggregationFunction,
-        }),
-      });
-
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.error || "Failed to group by");
-      }
-
-      const result = await response.json();
-      const data = result.grouped_data;
-
-      if (data.length > 0) {
-        const columns = Object.keys(data[0]).map((key) => ({
-          title: key,
-          field: key,
-        }));
-        setGroupedColumns(columns);
-        setGroupedTableData(data);
-      }
-    } catch (err) {
-      console.error("Failed grouping dataset: ", err);
-    }
-  };
-
-  const handleFillNa = async () => {
-    try {
-      const response = await fetch("http://127.0.0.1:5000/fillna", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          fill_value: fillValue,
-          method: fillMethod,
-          column_name: fillColumn,
-        }),
-      });
-
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.error || "Failed to fill NaN values");
-      }
-
-      const result = await response.json();
-      const data = result.data;
-
-      if (data.length > 0) {
-        const columns = Object.keys(data[0]).map((key) => ({
-          title: key,
-          field: key,
-        }));
-        setColumns(columns);
-        setTableData(data);
-      }
-    } catch (err) {
-      console.error("Failed to fill NaN values: ", err);
-    }
-  };
-
-  const handleDropNa = async () => {
-    try {
-      const response = await fetch("http://127.0.0.1:5000/dropna", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ axis: dropAxis, how: dropHow }),
-      });
-
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.error || "Failed to drop NaN values");
-      }
-
-      const result = await response.json();
-      const data = result.data;
-
-      if (data.length > 0) {
-        const columns = Object.keys(data[0]).map((key) => ({
-          title: key,
-          field: key,
-        }));
-        setColumns(columns);
-        setTableData(data);
-      }
-    } catch (err) {
-      console.error("Failed to drop NaN values: ", err);
-    }
-  };
-
   return (
     <div className="home-page-container">
       <div>
         <div className="data-loading">
-        <Button
-          component="label"
-          variant="contained"
-          tabIndex={-1}
-          startIcon={<CloudUploadIcon />}
-        >
-          Upload csv
-          <VisuallyHiddenInput type="file" onChange={handleFileUpload}/>
-        </Button>
+          <Button
+            component="label"
+            variant="contained"
+            tabIndex={-1}
+            startIcon={<CloudUploadIcon />}
+          >
+            Upload csv
+            <VisuallyHiddenInput type="file" onChange={fileUploadFunction} />
+          </Button>
         </div>
 
         <div className="reading-data-inputs main">
@@ -274,14 +152,16 @@ const HomePage = () => {
           )}
         </div>
         <div className="control-buttons">
-          {tableData[0] && (
+          {tableData.length > 0 && (
             <div>
               <Button className="refresh-button" variant="outlined">
                 Refresh
               </Button>
-              {duplicates > 0 && <Button className="refresh-button" variant="outlined">
-                Drop duplicates
-              </Button>}
+              {duplicates > 0 && (
+                <Button className="refresh-button" variant="outlined">
+                  Drop duplicates
+                </Button>
+              )}
             </div>
           )}
         </div>
@@ -300,7 +180,7 @@ const HomePage = () => {
             )}
           </div>
           <div className="reading-data-inputs desc">
-            {nansTableData.length > 0 && (
+            {descTableData.length > 0 && (
               <MaterialTable
                 title="Description"
                 columns={descColumns}
@@ -369,7 +249,7 @@ const HomePage = () => {
                 </Select>
               </FormControl>
 
-              <Button onClick={handleGroupBy} variant="outlined">
+              <Button onClick={groupByFunction} variant="outlined">
                 Group By
               </Button>
             </>
@@ -384,7 +264,7 @@ const HomePage = () => {
               options={{
                 search: true,
                 sorting: false,
-                exportButton: true
+                exportButton: true,
               }}
             />
           )}
@@ -410,7 +290,9 @@ const HomePage = () => {
                   label="Fill Method"
                   onChange={handleFillMethodChange}
                 >
-                  <MenuItem value=""><em>None</em></MenuItem>
+                  <MenuItem value="">
+                    <em>None</em>
+                  </MenuItem>
                   <MenuItem value="ffill">Forward Fill</MenuItem>
                   <MenuItem value="bfill">Backward Fill</MenuItem>
                 </Select>
@@ -424,7 +306,9 @@ const HomePage = () => {
                   label="Fill Column"
                   onChange={handleFillColumnChange}
                 >
-                  <MenuItem value=""><em>All Columns</em></MenuItem>
+                  <MenuItem value="">
+                    <em>All Columns</em>
+                  </MenuItem>
                   {columns.map((column) => (
                     <MenuItem key={column.field} value={column.field}>
                       {column.title}
@@ -432,7 +316,7 @@ const HomePage = () => {
                   ))}
                 </Select>
               </FormControl>
-              <Button onClick={handleFillNa} variant="outlined">
+              <Button onClick={fillNaFunction} variant="outlined">
                 Fill NaNs
               </Button>
             </>
@@ -467,7 +351,7 @@ const HomePage = () => {
                   <MenuItem value="all">All</MenuItem>
                 </Select>
               </FormControl>
-              <Button onClick={handleDropNa} variant="outlined">
+              <Button onClick={dropNaFunction} variant="outlined">
                 Drop NaNs
               </Button>
             </>
