@@ -25,10 +25,25 @@ function CarCard({handleDetailedDescription}) {
   const RowStats = styled('div')(({ theme }) => ({
     width: '100%',
     display: 'flex',
-    justifyContent: 'space-between',
+    justifyContent: 'center',
     fontSize: '1.2rem',
     color: theme.palette.text.secondary,
     marginBottom: '5px',
+    "& span": {
+      display: "flex",
+      width: "50%",
+      margin: "0 10px",
+      flexDirection: "column",
+      "& span:nth-child(1)": {
+        color: theme.palette.text.disabled,
+      },
+    },
+    "& span:nth-child(1)": {
+      alignItems: "end",
+    },
+    "& span:nth-child(2)": {
+      alignItems: "start",
+    }
   }));
   
   const Price = styled('span')(({ theme }) => ({

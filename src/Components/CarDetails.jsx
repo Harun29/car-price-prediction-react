@@ -8,7 +8,7 @@ function CarDetails({ closeDetailedDescription }) {
   const carData = {
     type_encoded: "VW Tiguan",
     image: "tiguan2023.png",
-    displacement: "Diesel",
+    displacement: 2.5,
     doors: 4,
     kilowatts: 150,
     mileage: 6000,
@@ -20,8 +20,8 @@ function CarDetails({ closeDetailedDescription }) {
     navigation: true,
     registration: "Registered",
     fuel_Benzin: false,
-    fuel_Dizel: false,
-    fuel_Elektro: true,
+    fuel_Dizel: true,
+    fuel_Elektro: false,
     fuel_Hibrid: false,
     fuel_Plin: false,
     pogon_Prednji: false,
@@ -96,14 +96,51 @@ function CarDetails({ closeDetailedDescription }) {
 
   const RowStats = styled(Box)(({ theme }) => ({
     width: "calc(100% - 60px)",
-    height: "30px",
+    height: "50px",
     display: "flex",
-    justifyContent: "space-between",
+    justifyContent: "center",
     alignItems: "center",
     fontSize: "1rem",
     color: theme.palette.text.secondary,
     marginBottom: "10px",
     margin: "5px 30px",
+    "& p": {
+      display: "flex",
+      width: "50%",
+      margin: "20px",
+      flexDirection: "column",
+      "& span:nth-child(1)": {
+        color: theme.palette.text.disabled,
+      },
+    },
+    "& p:nth-child(1)": {
+      alignItems: "end",
+    },
+    "& p:nth-child(2)": {
+      alignItems: "start",
+    }
+  }));
+
+  const RowStatLast = styled(Box)(({ theme }) => ({
+    width: "calc(100% - 60px)",
+    height: "50px",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    fontSize: "1rem",
+    color: theme.palette.text.secondary,
+    marginBottom: "10px",
+    margin: "5px 30px",
+    "& p": {
+      display: "flex",
+      alignItems: "center",
+      width: "50%",
+      margin: "20px",
+      flexDirection: "column",
+      "& span:nth-child(1)": {
+        color: theme.palette.text.disabled,
+      },
+    }
   }));
 
   const Price = styled(Typography)(({ theme }) => ({
@@ -113,8 +150,8 @@ function CarDetails({ closeDetailedDescription }) {
     margin: "15px 30px 5px 30px",
   }));
 
-  const Description = styled(Typography)(({theme}) => ({
-    margin: '10px 30px'
+  const Description = styled(Typography)(({ theme }) => ({
+    margin: "10px 30px",
   }));
 
   const FeatureIcon = ({ isAvailable }) => {
@@ -140,50 +177,70 @@ function CarDetails({ closeDetailedDescription }) {
       <RowStatsContainer>
         <RowStats>
           <Typography>
-            Displacement: {carData.displacement || "Electric"}
+            <span>Displacement</span>
+            <span>{carData.displacement || "Electric"}</span>
           </Typography>
-          <Typography>Doors: {carData.doors || 4}</Typography>
-        </RowStats>
-        <RowStats>
-          <Typography>Power: {carData.kilowatts || 340} KW</Typography>
-          <Typography>Mileage: {carData.mileage || 15000} km</Typography>
-        </RowStats>
-        <RowStats>
-          <Typography>Year: {carData.year || 2022}</Typography>
           <Typography>
-            Transmission: {carData.transmission || "Automatic"}
+            <span>Doors</span>
+            <span>{carData.doors || 4}</span>
           </Typography>
         </RowStats>
         <RowStats>
           <Typography>
-            Cruise Control: <FeatureIcon isAvailable={carData.cruiseControl} />
+            <span>Power</span>
+            <span>{carData.kilowatts || 340} KW</span>
           </Typography>
           <Typography>
-            Parking Sensors:{" "}
+            <span>Mileage</span>
+            <span>{carData.mileage || 15000} km</span>
+          </Typography>
+        </RowStats>
+        <RowStats>
+          <Typography>
+            <span>Year</span>
+            <span>{carData.year || 2022}</span>
+          </Typography>
+          <Typography>
+            <span>Transmission</span>
+            <span>{carData.transmission || "Automatic"}</span>
+          </Typography>
+        </RowStats>
+        <RowStats>
+          <Typography>
+            <span>Cruise Control</span>
+            <FeatureIcon isAvailable={carData.cruiseControl} />
+          </Typography>
+          <Typography>
+            <span>Parking Sensors</span>
             <FeatureIcon isAvailable={carData.parkingSensors} />
           </Typography>
         </RowStats>
         <RowStats>
           <Typography>
-            Air Condition: <FeatureIcon isAvailable={carData.airCondition} />
+            <span>Air Condition</span>
+            <FeatureIcon isAvailable={carData.airCondition} />
           </Typography>
           <Typography>
-            Navigation: <FeatureIcon isAvailable={carData.navigation} />
+            <span>Navigation</span>
+            <FeatureIcon isAvailable={carData.navigation} />
           </Typography>
         </RowStats>
         <RowStats>
           <Typography>
-            Registration: {carData.registration || "Registered"}
+            <span>Registration</span>
+            <span>{carData.registration || "Registered"}</span>
           </Typography>
           <Typography>
-            Fuel Type: {getFuelType(carData) || "Electric"}
+            <span>Fuel Type</span>
+            <span>{getFuelType(carData) || "Electric"}</span>
           </Typography>
         </RowStats>
-        <RowStats>
+        <RowStatLast>
           <Typography>
-            Drive Type: {getDriveType(carData) || "All-wheel"}
+            <span>Drive Type</span>
+            <span> {getDriveType(carData) || "All-wheel"}</span>
           </Typography>
-        </RowStats>
+        </RowStatLast>
         <Price>{carData.price || "100000 USD"}</Price>
         <Description>
           <Typography variant="body2">
