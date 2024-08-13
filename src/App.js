@@ -1,4 +1,4 @@
-import HomePage from "./Pages/HomePage";
+import DataAnalysisPage from "./Pages/DataAnalysisPage";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
 import { useState } from "react";
@@ -74,7 +74,7 @@ function App() {
   return (
     <ThemeProvider theme={darkTheme}>
       <div className="App">
-        <Navbar />
+        {/* <Navbar /> */}
         <CssBaseline />
         <FormControlLabel
           className="theme-change"
@@ -86,12 +86,13 @@ function App() {
           }
           label=""
         />
-        <PandasProvider>
-          <HomePage />
+        {/* <PandasProvider>
+          <DataAnalysisPage />
         </PandasProvider>
         <MLProvider>
           <PredictionsPage />
-        </MLProvider>
+        </MLProvider> */}
+        <HomePage />
       </div>
     </ThemeProvider>
   );
