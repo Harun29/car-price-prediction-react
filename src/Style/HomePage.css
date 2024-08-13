@@ -15,8 +15,8 @@
   position: relative;
   background-color: 	hsl(221, 100%, 61%);
   transform: rotate(30deg);
-  width: 152%;
-  height: 160%;
+  width: 160%;
+  height: 170%;
   transition: 0.5s all ease;
 }
 
@@ -29,17 +29,18 @@
 .home-page-default-car{
   position: absolute;
   top: 55%;
-  right: 15%;
-  width: 850px;
+  right: 30%;
+  width: 120%;
   transform: rotate(-30deg);
   transition: 0.5s all ease;
 }
 
 .home-page-default-car.active{
   transform: rotate(0deg);
-  width: 300px;
-  top: 83%;
-  right: 45%;
+  opacity: 0;
+  width: 180px;
+  top: 90%;
+  right: 50%;
 }
 
 .home-page-olx-symbol{
@@ -87,4 +88,30 @@
 .row-inputs div{
   margin-right: 40px;
   width: 100%;
+}
+
+.cars-found-container {
+  position: absolute;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  width: 66%;
+  padding: 50px;
+  gap: 30px;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  height: 90%;
+  justify-items: center;
+  align-items: center;
+
+  /* Hide scrollbar */
+  scrollbar-width: none; /* For Firefox */
+  -ms-overflow-style: none;  /* For Internet Explorer and Edge */
+}
+
+.cars-found-container::-webkit-scrollbar {
+  display: none; /* For Chrome, Safari, and Opera */
+}
+
+.cars-container {
+  width: 66%;
 }

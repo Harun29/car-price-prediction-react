@@ -1,6 +1,6 @@
 import "../Style/HomePage.css";
 import { Button } from "@mui/material";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   FormControl,
   InputLabel,
@@ -15,9 +15,21 @@ import {
   ToggleButton
 } from "@mui/material";
 
+import CarCard from "../Components/CarCard";
+import CarDetails from "../Components/CarDetails";
+
 const HomePage = () => {
   const [prediction, setPrediction] = useState(false);
   const [alignment, setAlignment] = useState('Front');
+  const [detailedDescription, setDetailedDescription] = useState(false);
+
+  const handleDetailedDescription = () => {
+    setDetailedDescription(true);
+  }
+
+  const closeDetailedDescription = () => {
+    setDetailedDescription(false);
+  }
 
   const handleChange = (event, newAlignment) => {
     setAlignment(newAlignment);
@@ -176,6 +188,21 @@ const HomePage = () => {
         <Button onClick={handlePrediction}>Find cars</Button>
       </div>
       <div className={`home-page-right-side ${prediction && "active"}`}>
+        {prediction && 
+        <div className="cars-container">
+          {!detailedDescription && <div className="cars-found-container">
+            <CarCard handleDetailedDescription={handleDetailedDescription}/>
+            <CarCard />
+            <CarCard />
+            <CarCard />
+            <CarCard />
+            <CarCard />
+            <CarCard />
+            <CarCard />
+          </div>}
+          {detailedDescription && <CarDetails closeDetailedDescription={closeDetailedDescription}/>}
+        </div>
+        }
         <img
           className={`home-page-default-car ${prediction && "active"}`}
           src="default-car.png"
