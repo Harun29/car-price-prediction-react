@@ -9,6 +9,7 @@ import Navbar from "./Components/Navbar";
 import {PandasProvider} from "./Context/PandasContext";
 import { MLProvider } from "./Context/MLContext";
 import PredictionsPage from "./Pages/Predictions";
+import HomePage from "./Pages/HomePage"
 
 function App() {
   const [theme, setTheme] = useState("dark");
@@ -86,6 +87,7 @@ function App() {
           }
           label=""
         />
+
         {/* <PandasProvider>
           <DataAnalysisPage />
         </PandasProvider>

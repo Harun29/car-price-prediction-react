@@ -12,6 +12,10 @@ body {
   margin-bottom: 500px;
 }
 
+.App{
+  height: 100vh;
+}
+
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
@@ -25,10 +29,4 @@ code {
 
 #root{
   width: 100%;
-}
-
-.App{
-  display: grid;
-  grid-template-columns: 1fr 4fr;
-  justify-content: space-between;
 }

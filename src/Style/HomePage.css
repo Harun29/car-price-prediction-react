@@ -1,76 +1,90 @@
 .home-page-container{
-  max-width: 1400px;
-  min-width: none;
-}
-
-.home-page-container header{
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-family: 'Roboto', sans-serif;
-  color: #00438b;
-}
-
-.home-page-container header img{
-  width: 30px;
-  margin-right: 10px;
-}
-
-.data-loading{
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin: 20px;
-}
-
-.control-buttons{
-  margin: 0 40px;
-}
-
-.refresh-button{
-  margin: 0 5px !important;
-}
-
-/* main components */
-
-.main-info-container{
   display: grid;
-  grid-template-columns: 40% 60%;
+  grid-template-columns: 5fr 2fr;
+  height: 100%;
+  overflow: hidden;
+  transition: 0.5s all ease;
+  align-items: center;
+}
+
+.home-page-container.active{
+  grid-template-columns: 5fr 4fr;
+}
+
+.home-page-right-side{
+  position: relative;
+  background-color: 	hsl(221, 100%, 61%);
+  transform: rotate(30deg);
+  width: 152%;
+  height: 160%;
+  transition: 0.5s all ease;
+}
+
+.home-page-right-side.active{
+  transform: rotate(0deg);
+  height: 100%;
+  border-radius: 50px;
+}
+
+.home-page-default-car{
+  position: absolute;
+  top: 55%;
+  right: 15%;
+  width: 850px;
+  transform: rotate(-30deg);
+  transition: 0.5s all ease;
+}
+
+.home-page-default-car.active{
+  transform: rotate(0deg);
+  width: 300px;
+  top: 83%;
+  right: 45%;
+}
+
+.home-page-olx-symbol{
+  height: 50px;
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+}
+
+/* CAR SPECS */
+
+.car-specs{
+  padding: 50px 100px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  justify-content: start;
+}
+
+.car-specs h3{
+  font-size: 3rem;
+  margin: 0;
+}
+
+.row-inputs{
+  width: 100%;
+  display: flex;
+  margin-bottom: 20px;
+}
+
+.row-inputs.smaller{
+  width: 80%;
+}
+
+.row-inputs.smallest{
+  width: 50%;
+  flex-direction: column;
+}
+
+.row-inputs.smallest span{
+  margin-left: 5px;
+}
+
+.row-inputs div{
+  margin-right: 40px;
   width: 100%;
 }
-
-.reading-data-inputs{
-  margin: 20px 40px;
-  width: auto;
-}
-
-/* .reading-data-inputs.main{
-  border: 1px solid #ff5cc0;
-}
-.reading-data-inputs.nans{
-  border: 1px solid #5cff5c;
-}
-.reading-data-inputs.desc{
-  border: 1px solid #6afff8;
-}
-.reading-data-inputs.grouped{
-  border: 1px solid #efff5c;
-} */
-
-.group-by-container{
-  width: 60%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-top: 20px;
-}
-
-.group-by-container div{
-  width: 90%;
-}
-.group-by-container button{
-  width: 40%;
-  height: 50px;
-}
-
-

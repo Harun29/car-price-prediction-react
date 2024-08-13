@@ -9,7 +9,7 @@ import TextField from "@mui/material/TextField";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import { styled } from "@mui/material/styles";
 
-import "../Style/HomePage.css";
+import "../Style/DataAnalysis.css";
 import { usePandas } from "../Context/PandasContext";
 
 const DataAnalysisPage = () => {
@@ -122,7 +122,7 @@ const DataAnalysisPage = () => {
   };
 
   return (
-    <div className="home-page-container">
+    <div className="data-analysis-container">
       <div>
         <div className="data-loading">
           <Button
