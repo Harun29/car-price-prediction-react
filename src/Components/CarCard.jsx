@@ -9,7 +9,7 @@ function CarCard({handleDetailedDescription}) {
     flexDirection: 'column',
     alignItems: 'center',
     backgroundColor: theme.palette.mode === 'dark' ? theme.palette.grey[900] : theme.palette.grey[100],
-    borderRadius: '10px',
+    borderRadius: '20px',
     boxShadow: theme.shadows[2],
     cursor: 'pointer',
     transition: 'box-shadow 0.3s ease',

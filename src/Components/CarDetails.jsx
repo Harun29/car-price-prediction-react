@@ -71,6 +71,7 @@ function CarDetails({ closeDetailedDescription }) {
 
   const CarName = styled(Typography)(({ theme }) => ({
     fontSize: "1.5rem",
+    fontFamily: "'Poppins', sans-serif",
     fontWeight: 800,
     marginBottom: "15px",
     color: theme.palette.text.primary,
@@ -101,10 +102,11 @@ function CarDetails({ closeDetailedDescription }) {
     justifyContent: "center",
     alignItems: "center",
     fontSize: "1rem",
-    color: theme.palette.text.secondary,
+    color: theme.palette.text.primary,
     marginBottom: "10px",
     margin: "5px 30px",
     "& p": {
+      fontFamily: "'Poppins', sans-serif",
       display: "flex",
       width: "50%",
       margin: "20px",
@@ -128,10 +130,11 @@ function CarDetails({ closeDetailedDescription }) {
     justifyContent: "center",
     alignItems: "center",
     fontSize: "1rem",
-    color: theme.palette.text.secondary,
+    color: theme.palette.text.primary,
     marginBottom: "10px",
     margin: "5px 30px",
     "& p": {
+      fontFamily: "'Poppins', sans-serif",
       display: "flex",
       alignItems: "center",
       width: "50%",
@@ -145,6 +148,7 @@ function CarDetails({ closeDetailedDescription }) {
 
   const Price = styled(Typography)(({ theme }) => ({
     fontSize: "1.8rem",
+    fontFamily: "'Poppins', sans-serif",
     fontWeight: 800,
     color: theme.palette.success.main,
     margin: "15px 30px 5px 30px",
@@ -152,6 +156,9 @@ function CarDetails({ closeDetailedDescription }) {
 
   const Description = styled(Typography)(({ theme }) => ({
     margin: "10px 30px",
+    "& p": {
+      fontFamily: "'Poppins', sans-serif",
+    }
   }));
 
   const FeatureIcon = ({ isAvailable }) => {

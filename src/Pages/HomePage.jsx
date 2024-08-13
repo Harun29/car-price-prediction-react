@@ -42,7 +42,7 @@ const HomePage = () => {
   return (
     <div className={`home-page-container ${prediction && "active"}`}>
       <div className="car-specs">
-        <h3>Lorem ipsum dolor sit amet</h3>
+        <h3 className={`heading3 ${prediction && "active"}`}>Lorem ipsum dolor sit amet</h3>
         <p>
           Ut mattis rutrum nisl et euismod. Nam tincidunt risus id viverra
           porttitor.
@@ -152,7 +152,7 @@ const HomePage = () => {
             />
           </FormControl>
         </div>
-        <div className="row-inputs smaller">
+        <div className={`row-inputs smaller ${prediction && "active"}`}>
           <FormControlLabel control={<Checkbox />} label="Cruise Control" />
           <FormControlLabel control={<Checkbox />} label="Air Condition" />
           <FormControlLabel control={<Checkbox />} label="Navigation" />
