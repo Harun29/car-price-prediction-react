@@ -17,11 +17,23 @@ import {
 
 import CarCard from "../Components/CarCard";
 import CarDetails from "../Components/CarDetails";
+import { motion } from "framer-motion";
 
 const HomePage = () => {
   const [prediction, setPrediction] = useState(false);
   const [alignment, setAlignment] = useState('Front');
   const [detailedDescription, setDetailedDescription] = useState(false);
+  const [carType, setCarType] = useState("default-car.png")
+  const [selectedLogo, setSelectedLogo] = useState("vw");
+
+  const changeToAudi = () =>{
+    setCarType("audi-car.png")
+    setSelectedLogo("audi");
+  }
+  const changeToVw = () =>{
+    setCarType("default-car.png")
+    setSelectedLogo("vw");
+  }
 
   const handleDetailedDescription = () => {
     setDetailedDescription(true);
@@ -203,13 +215,30 @@ const HomePage = () => {
           {detailedDescription && <CarDetails closeDetailedDescription={closeDetailedDescription}/>}
         </div>
         }
-        <img
-          className={`home-page-default-car ${prediction && "active"}`}
-          src="default-car.png"
+        <motion.img
+          className={`home-page-default-car ${prediction && "active"} ${carType === "audi-car.png" && "audi"}`}
+          src={carType}
           alt=""
+          key={carType} 
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0}}
+          transition={{ duration: 0.5 }}
         />
       </div>
       <img className="home-page-olx-symbol" src="OLX-Symbol.png" alt="" />
+      <img 
+        onClick={changeToVw} 
+        className={`home-page-vw-logo ${selectedLogo === "vw" && "selected-logo"} ${prediction && "prediction-active"}`} 
+        src="vw-logo.png" 
+        alt="VW Logo" 
+      />
+      <img 
+        onClick={changeToAudi} 
+        className={`home-page-audi-logo ${selectedLogo === "audi" && "selected-logo"} ${prediction && "prediction-active"}`} 
+        src="audi-logo.png" 
+        alt="Audi Logo" 
+      />
     </div>
   );
 };

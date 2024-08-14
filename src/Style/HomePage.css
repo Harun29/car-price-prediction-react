@@ -37,11 +37,16 @@
 }
 
 .home-page-default-car.active{
-  transform: rotate(0deg);
-  opacity: 0;
-  width: 180px;
-  top: 90%;
-  right: 50%;
+  transform: rotate(0deg) !important;
+  opacity: 0 !important;
+  width: 180px !important;
+  top: 90% !important;
+  right: 50% !important;
+  }
+
+.home-page-default-car.audi{
+  width: 90%;
+  right: 45%;
 }
 
 .home-page-olx-symbol{
@@ -130,3 +135,41 @@
 .cars-container {
   width: 66%;
 }
+
+.home-page-vw-logo{
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  width: 100px;
+  cursor: pointer;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.home-page-audi-logo{
+  position: fixed;
+  top: 70px;
+  right: 20px;
+  width: 100px;
+  cursor: pointer;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.selected-logo {
+  transform: scale(1.1);
+  opacity: 1;
+}
+
+.home-page-vw-logo:not(.selected-logo),
+.home-page-audi-logo:not(.selected-logo) {
+  opacity: 0.6;
+}
+
+.selected-logo.prediction-active{
+  top: 91.5%;
+  right: 130px;
+}
+
+.prediction-active:not(.selected-logo){
+  opacity: 0;
+}
+
