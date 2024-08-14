@@ -1,71 +1,85 @@
 .data-analysis{
-  width: 100%;
+  width: calc(100% - 300px);
+  margin: 0 200px 50px 60px;
   display: flex;
 }
 
 .data-analysis-container{
-  margin: 50px 50px 50px 100px;
+  width: 100%;
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  grid-template-rows: 1fr 1fr 1fr 1fr 1fr;
-  width: 90%;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-template-rows: 200px;
   gap: 50px;
-  place-items: center;
+  margin: 50px;
 }
 
-.bar-plot {
-  grid-column: 1/3;
-  grid-row: 1/3;
+.plot-box {
+  height: 400px;
+  width: 100%;
+  border-radius: 20px;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: 100%;
-  width: 100%;
+  padding: 20px;
+  font-weight: 300;
+  font-size: 1.5rem;
+  font-family: 'Poppins', sans-serif;
 }
 
-.bar-plot div{
-  height: 100%;
+.histplot{
+  grid-column: 1/3;
+  grid-row: 2/3;
 }
 
-.scatter-plot{
-  grid-column: 2/4;
-  grid-row: 3/5;
-  width: 100%;
-  height: 100%;
+.price-range{
+  grid-row: 2/3;
+  grid-column: 3/5;
 }
 
-.scatter-plot div{
-  height: 100%;
+.model-ranking{
+  grid-column: 1/3;
+  height: 400px;
 }
 
-.gauge-plot{
-  height: 100%;
-  width: 100%;
+.small-card{
+  padding: 20px;
+  transition: all 0.3s ease;
+  cursor: pointer;
 }
 
-.gauge-plot div{
-  height: 100%;
+.small-card:hover{
+  scale: 1.05;
 }
 
-.pie-plot{
-  height: 100%;
-  width: 100%;
+.small-card div, .small-card h4{
+  font-family: 'Poppins', sans-serif;
 }
 
-.pie-plot div{
-  height: 100%;
-  width: 100%;
+.bar-title{
+  height: 50px;
 }
 
-/* .reading-data-inputs{
-  grid-column: 1/4;
-} */
 
-.home-page-right-side.data-analysis{
+/* right side */
+
+.right-side-data-analysis{
+  position: fixed;
   transform: rotate(0);
-  width: 10%;
-  height: 100vh;
-  position: sticky;
-  left: 0;
   top: 0;
+  bottom: 0;
+  right: 0;
+  width: 200px;
+  height: 100vh;
+  background-color: 	hsl(221, 100%, 61%);
+}
+
+.data-tabs{
+  display: flex;
+  flex-direction: column;
+}
+
+.data-tabs button{
+  color: white;
+  margin: 10px 0;
 }

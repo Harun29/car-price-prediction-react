@@ -1,18 +1,27 @@
 import { Button } from "@mui/material";
-import MaterialTable from "@material-table/core";
-import CloudUploadIcon from "@mui/icons-material/CloudUpload";
-import { styled } from "@mui/material/styles";
-
-import "../Style/DataAnalysis.css";
+import { styled, useTheme } from "@mui/material/styles";
 import { usePandas } from "../Context/PandasContext";
-import ArcDesign from "../Charts/GaugePlot";
-import ArcDesign2 from "../Charts/GaugePlot2";
-import BasicScatter from "../Charts/ScatterPlot";
-import BasicPie from "../Charts/PiePlot";
-import BasicPie2 from "../Charts/PiePlot2";
-import BasicBars from "../Charts/BarPlot";
+import MyHistogram from "../Charts/HistPlot";
+import "../Style/DataAnalysis.css";
+import { Typography } from "@mui/material";
+import PriceRangeHorizontalBarChart from "../Charts/ResponsiveBar";
+import DataCard from "../Charts/DataCard";
+import ModelRankingPieChart from "../Charts/ModelRandkingChart";
 
 const DataAnalysisPage = () => {
+  const theme = useTheme(); // Access the current theme
+
+  // Styled component with theme-based box-shadow
+  const HistogramContainer = styled("div")(({ theme }) => ({
+    boxShadow:
+      theme.palette.mode === "light"
+        ? "9px 9px 18px #bcbcbc, -9px -9px 18px #ffffff"
+        : "9px 9px 18px #666666, -9px -9px 18px #333333",
+    borderRadius: "20px",
+    padding: "20px",
+    backgroundColor: theme.palette.background.paper,
+  }));
+
   const VisuallyHiddenInput = styled("input")({
     clip: "rect(0 0 0 0)",
     clipPath: "inset(50%)",
@@ -39,59 +48,31 @@ const DataAnalysisPage = () => {
   return (
     <div className="data-analysis">
       <div className="data-analysis-container">
+        <DataCard title="Average Price" value="KM 17500" color="#4caf50" />
+        <DataCard title="Median Price" value="KM 15444" color="#2196f3" />
+        <DataCard title="25% Price" value="KM 32400" color="#ff9800" />
+        <DataCard title="75% Price" value="KM 9500" color="#f44336" />
 
-        <div className="bar-plot">
-          <BasicBars />
-        </div>
+        <HistogramContainer className="plot-box histplot">
+          <span>Overall Price Distribution</span>
+          <MyHistogram />
+        </HistogramContainer>
 
-        <div className="gauge-plot">
-          <ArcDesign />
-        </div>
+        <HistogramContainer className="plot-box price-range">
+          <span>range of car prices</span>
+          <PriceRangeHorizontalBarChart />
+        </HistogramContainer>
 
-        <div className="gauge-plot">
-          <ArcDesign2 />
-        </div>
-
-        <div className="pie-plot">
-          <BasicPie />
-        </div>
-
-        <div className="scatter-plot">
-          <BasicScatter />
-        </div>
-
-        <div className="pie-plot">
-          <BasicPie2 />
-        </div>
-
-
-        {/* <div className="reading-data-inputs main">
-          {tableData.length > 0 && (
-            <MaterialTable
-              title={`CSV Data -- Shape: ${shape} -- Duplicates: ${duplicates}`}
-              columns={columns}
-              data={tableData}
-              options={{
-                search: true,
-                paging: true,
-                exportButton: true,
-                sorting: false,
-              }}
-            />
-          )}
-        </div> */}
+        <HistogramContainer className="plot-box model-ranking">
+          <span>most popular models</span>
+          <ModelRankingPieChart />
+        </HistogramContainer>
       </div>
-      <div className="home-page-right-side data-analysis">
-      <div className="data-loading">
-          <Button
-            component="label"
-            variant="contained"
-            tabIndex={-1}
-            startIcon={<CloudUploadIcon />}
-          >
-            Upload csv
-            <VisuallyHiddenInput type="file" onChange={fileUploadFunction} />
-          </Button>
+      <div className="right-side-data-analysis">
+        <div className="data-tabs">
+          <Button>Market Overview</Button>
+          <Button>Price Influencers</Button>
+          <Button>Specifications and Features</Button>
         </div>
       </div>
     </div>
