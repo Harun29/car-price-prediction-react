@@ -62,7 +62,7 @@ function CarCard({handleDetailedDescription}) {
       transition={{ duration: 0.5 }}
       whileHover={{
         y: -5,
-        boxShadow: '0px 4px 10px rgba(0, 0, 0, 0.2)'
+        boxShadow: '0px 4px 10px rgba(0, 0, 0, 0.8)'
       }}
     >
       <CarName>VW TIGUAN</CarName>

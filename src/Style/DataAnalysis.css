@@ -1,0 +1,71 @@
+.data-analysis{
+  width: 100%;
+  display: flex;
+}
+
+.data-analysis-container{
+  margin: 50px 50px 50px 100px;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr 1fr 1fr;
+  width: 90%;
+  gap: 50px;
+  place-items: center;
+}
+
+.bar-plot {
+  grid-column: 1/3;
+  grid-row: 1/3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  width: 100%;
+}
+
+.bar-plot div{
+  height: 100%;
+}
+
+.scatter-plot{
+  grid-column: 2/4;
+  grid-row: 3/5;
+  width: 100%;
+  height: 100%;
+}
+
+.scatter-plot div{
+  height: 100%;
+}
+
+.gauge-plot{
+  height: 100%;
+  width: 100%;
+}
+
+.gauge-plot div{
+  height: 100%;
+}
+
+.pie-plot{
+  height: 100%;
+  width: 100%;
+}
+
+.pie-plot div{
+  height: 100%;
+  width: 100%;
+}
+
+/* .reading-data-inputs{
+  grid-column: 1/4;
+} */
+
+.home-page-right-side.data-analysis{
+  transform: rotate(0);
+  width: 10%;
+  height: 100vh;
+  position: sticky;
+  left: 0;
+  top: 0;
+}

@@ -24,6 +24,7 @@
   transform: rotate(0deg);
   height: 100%;
   border-radius: 50px;
+  box-shadow: -20px 0 25px -10px rgba(0, 0, 0, 0.5); /* Stronger left shadow */
 }
 
 .home-page-default-car{
