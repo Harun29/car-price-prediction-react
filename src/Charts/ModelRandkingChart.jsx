@@ -1,5 +1,7 @@
 import { ResponsivePie } from '@nivo/pie';
 import React from 'react';
+import useNivoTheme from "../NivoTheme"
+import { useTheme } from '@emotion/react';
 
 const ModelRankingPieChart = () => {
   const data = [
@@ -9,11 +11,14 @@ const ModelRankingPieChart = () => {
     { id: 'Model D', value: 70 },
     { id: 'Model E', value: 50 },
   ];
-
+  const nivoTheme = useNivoTheme()
+  
   return (
+
     <div style={{ height: '80%', width: '100%' }}>
       <ResponsivePie
         data={data}
+        theme={nivoTheme}
         margin={{ top: 40, right: 80, bottom: 80, left: 80 }}
         innerRadius={0.5}
         padAngle={0.7}
@@ -70,12 +75,12 @@ const ModelRankingPieChart = () => {
                 direction: 'row',
                 justify: false,
                 translateX: 0,
-                translateY: 56,
+                translateY: 50,
                 itemsSpacing: 0,
-                itemWidth: 100,
+                itemWidth: 50,
                 itemHeight: 18,
                 itemTextColor: '#999',
-                itemDirection: 'left-to-right',
+                itemDirection: 'top-to-bottom',
                 itemOpacity: 1,
                 symbolSize: 18,
                 symbolShape: 'circle',

@@ -7,16 +7,19 @@ import { Typography } from "@mui/material";
 import PriceRangeHorizontalBarChart from "../Charts/ResponsiveBar";
 import DataCard from "../Charts/DataCard";
 import ModelRankingPieChart from "../Charts/ModelRandkingChart";
+import QueryStatsIcon from "@mui/icons-material/QueryStats";
+import PriceChangeIcon from "@mui/icons-material/PriceChange";
+import AssignmentIcon from "@mui/icons-material/Assignment";
+import BarChartIcon from "@mui/icons-material/BarChart";
+import ModelListingsChart from "../Charts/ModelListings";
 
 const DataAnalysisPage = () => {
-  const theme = useTheme(); // Access the current theme
 
-  // Styled component with theme-based box-shadow
   const HistogramContainer = styled("div")(({ theme }) => ({
     boxShadow:
       theme.palette.mode === "light"
         ? "9px 9px 18px #bcbcbc, -9px -9px 18px #ffffff"
-        : "9px 9px 18px #666666, -9px -9px 18px #333333",
+        : "4px 4px 12px #000000, -4px -4px 12px #000000",
     borderRadius: "20px",
     padding: "20px",
     backgroundColor: theme.palette.background.paper,
@@ -48,31 +51,54 @@ const DataAnalysisPage = () => {
   return (
     <div className="data-analysis">
       <div className="data-analysis-container">
-        <DataCard title="Average Price" value="KM 17500" color="#4caf50" />
-        <DataCard title="Median Price" value="KM 15444" color="#2196f3" />
-        <DataCard title="25% Price" value="KM 32400" color="#ff9800" />
-        <DataCard title="75% Price" value="KM 9500" color="#f44336" />
+        <h3 className="data-analysis-headers">Top Models by Popularity</h3>
+        <HistogramContainer className="plot-box model-ranking">
+          <span>most popular models</span>
+          <ModelRankingPieChart />
+        </HistogramContainer>
 
+        <HistogramContainer className="plot-box model-listings">
+          <span>model listings</span>
+          <ModelListingsChart />
+        </HistogramContainer>
+
+        <h3 className="data-analysis-headers">Price Distribution</h3>
         <HistogramContainer className="plot-box histplot">
           <span>Overall Price Distribution</span>
           <MyHistogram />
         </HistogramContainer>
 
+        <DataCard title="Average Price" value="KM 17500" color="#4caf50" />
+        <DataCard title="Median Price" value="KM 15444" color="#2196f3" />
+        <DataCard title="25% Price" value="KM 32400" color="#ff9800" />
+        <DataCard title="75% Price" value="KM 9500" color="#f44336" />
+
         <HistogramContainer className="plot-box price-range">
           <span>range of car prices</span>
           <PriceRangeHorizontalBarChart />
         </HistogramContainer>
-
-        <HistogramContainer className="plot-box model-ranking">
-          <span>most popular models</span>
-          <ModelRankingPieChart />
-        </HistogramContainer>
+        <h3 className="data-analysis-headers">Price by Model</h3>
       </div>
       <div className="right-side-data-analysis">
         <div className="data-tabs">
-          <Button>Market Overview</Button>
-          <Button>Price Influencers</Button>
-          <Button>Specifications and Features</Button>
+          <span className="data-analysis-header">Data Analysis</span>
+          <div className="horizontal-line"></div>
+          <Button>
+            <BarChartIcon />
+            Basic Overview
+          </Button>
+          <Button>
+            <QueryStatsIcon />
+            Market Overview
+          </Button>
+          <Button>
+            <PriceChangeIcon />
+            Price Influencers
+          </Button>
+          <Button>
+            <AssignmentIcon />
+            Specifications and Features
+          </Button>
         </div>
       </div>
     </div>

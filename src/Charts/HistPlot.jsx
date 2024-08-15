@@ -1,4 +1,5 @@
 import { ResponsiveBar } from '@nivo/bar';
+import useNivoTheme from '../NivoTheme';
 
 const MyHistogram = () => {
   const data = [
@@ -9,10 +10,13 @@ const MyHistogram = () => {
     { priceRange: '$400-$500', count: 40 }
   ];
 
+  const nivoTheme=useNivoTheme()
+
   return (
     <div style={{ width: '100%', height: '80%' }}>
       <ResponsiveBar
         data={data}
+        theme={nivoTheme}
         keys={['count']}
         indexBy="priceRange"
         margin={{ top: 20, right: 20, bottom: 50, left: 50 }} /* Minimal margin */

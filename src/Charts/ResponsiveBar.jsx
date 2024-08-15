@@ -1,4 +1,5 @@
 import { ResponsiveBar } from '@nivo/bar';
+import useNivoTheme from '../NivoTheme';
 
 const PriceRangeHorizontalBarChart = () => {
   const data = [
@@ -7,12 +8,20 @@ const PriceRangeHorizontalBarChart = () => {
     { priceRange: 'Category 3', minPrice: 3000, maxPrice: 7000 },
     { priceRange: 'Category 4', minPrice: 1500, maxPrice: 5500 },
     { priceRange: 'Category 5', minPrice: 2500, maxPrice: 6500 },
+    { priceRange: 'Category 6', minPrice: 1200, maxPrice: 4500 },
+    { priceRange: 'Category 7', minPrice: 1500, maxPrice: 8000 },
+    { priceRange: 'Category 8', minPrice: 3500, maxPrice: 7500 },
+    { priceRange: 'Category 9', minPrice: 1000, maxPrice: 3500 },
+    { priceRange: 'Category 10', minPrice: 3500, maxPrice: 7500 },
   ];
+
+  const nivoTheme = useNivoTheme()
 
   return (
     <div style={{ width: '100%', height: '80%' }}>
       <ResponsiveBar
         data={data}
+        theme={nivoTheme}
         keys={['minPrice', 'maxPrice']}
         indexBy="priceRange"
         margin={{ top: 20, right: 20, bottom: 50, left: 50 }}

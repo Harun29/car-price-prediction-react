@@ -8,7 +8,7 @@ const DataCard = ({ title, value, color }) => {
     boxShadow:
       theme.palette.mode === "light"
         ? "9px 9px 18px #bcbcbc, -9px -9px 18px #ffffff"
-        : "9px 9px 18px #666666, -9px -9px 18px #333333",
+        : "4px 4px 12px #000000, -4px -4px 12px #000000",
     borderRadius: "20px",
     padding: "20px",
     backgroundColor: theme.palette.background.paper,
