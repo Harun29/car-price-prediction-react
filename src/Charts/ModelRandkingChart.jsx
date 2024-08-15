@@ -12,10 +12,11 @@ const ModelRankingPieChart = () => {
     { id: 'Model E', value: 50 },
   ];
   const nivoTheme = useNivoTheme()
-  
+  const theme = useTheme()
+
   return (
 
-    <div style={{ height: '80%', width: '100%' }}>
+    <div style={{ height: '90%', width: '100%' }}>
       <ResponsivePie
         data={data}
         theme={nivoTheme}
@@ -35,25 +36,17 @@ const ModelRankingPieChart = () => {
             ]
         }}
         arcLinkLabelsSkipAngle={10}
-        arcLinkLabelsTextColor="#333333"
+        arcLinkLabelsTextColor={theme.palette.text.primary}
         arcLinkLabelsThickness={2}
         arcLinkLabelsColor={{ from: 'color' }}
         arcLabelsSkipAngle={10}
-        arcLabelsTextColor={{
-            from: 'color',
-            modifiers: [
-                [
-                    'darker',
-                    2
-                ]
-            ]
-        }}
+        arcLabelsTextColor={theme.palette.text.primary}
         defs={[
             {
                 id: 'dots',
                 type: 'patternDots',
                 background: 'inherit',
-                color: 'rgba(255, 255, 255, 0.3)',
+                color: theme.palette.text.primary,
                 size: 4,
                 padding: 1,
                 stagger: true
@@ -62,7 +55,7 @@ const ModelRankingPieChart = () => {
                 id: 'lines',
                 type: 'patternLines',
                 background: 'inherit',
-                color: 'rgba(255, 255, 255, 0.3)',
+                color: theme.palette.text.primary,
                 rotation: -45,
                 lineWidth: 6,
                 spacing: 10
@@ -79,7 +72,7 @@ const ModelRankingPieChart = () => {
                 itemsSpacing: 0,
                 itemWidth: 50,
                 itemHeight: 18,
-                itemTextColor: '#999',
+                itemTextColor: theme.palette.text.primary,
                 itemDirection: 'top-to-bottom',
                 itemOpacity: 1,
                 symbolSize: 18,

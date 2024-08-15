@@ -167,7 +167,7 @@ const ModelListingsChart = () => {
   // const axisLabelColor = theme.palette.mode === 'dark' ? '#ffffff' : '#333333';
 
   return (
-    <div style={{ height: "80%", width: "100%" }}>
+    <div style={{ height: "90%", width: "100%" }}>
       <ResponsiveBar
         data={data}
         theme={nivoTheme}

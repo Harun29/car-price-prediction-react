@@ -12,6 +12,10 @@ import PriceChangeIcon from "@mui/icons-material/PriceChange";
 import AssignmentIcon from "@mui/icons-material/Assignment";
 import BarChartIcon from "@mui/icons-material/BarChart";
 import ModelListingsChart from "../Charts/ModelListings";
+import AveragePriceHistogram from "../Charts/ModelsAveragePrice";
+import ModelsPriceBoxPlot from "../Charts/ModelsPriceBox";
+import PriceDistributionLineChart from "../Charts/LinePlot";
+import TableChartIcon from '@mui/icons-material/TableChart';
 
 const DataAnalysisPage = () => {
 
@@ -78,6 +82,19 @@ const DataAnalysisPage = () => {
           <PriceRangeHorizontalBarChart />
         </HistogramContainer>
         <h3 className="data-analysis-headers">Price by Model</h3>
+        <HistogramContainer className="plot-box average-price">
+          <span>average price for 25 most popular models</span>
+          <AveragePriceHistogram />
+        </HistogramContainer>
+        <HistogramContainer className="plot-box price-boxplot">
+          <span>price variance for 10 most popular models</span>
+          <ModelsPriceBoxPlot />
+        </HistogramContainer>
+        <HistogramContainer className="plot-box price-line">
+          <span>Price distribution for 5 most popular models</span>
+          <PriceDistributionLineChart />
+        </HistogramContainer>
+
       </div>
       <div className="right-side-data-analysis">
         <div className="data-tabs">
@@ -98,6 +115,10 @@ const DataAnalysisPage = () => {
           <Button>
             <AssignmentIcon />
             Specifications and Features
+          </Button>
+          <Button>
+            <TableChartIcon />
+            Read Data
           </Button>
         </div>
       </div>

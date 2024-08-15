@@ -18,7 +18,7 @@ const PriceRangeHorizontalBarChart = () => {
   const nivoTheme = useNivoTheme()
 
   return (
-    <div style={{ width: '100%', height: '80%' }}>
+    <div style={{ width: '100%', height: '90%' }}>
       <ResponsiveBar
         data={data}
         theme={nivoTheme}

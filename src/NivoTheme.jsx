@@ -23,30 +23,26 @@ const useNivoTheme = () => {
       },
     },
     legends: {
-      line: {
-        stroke: theme.palette.mode === 'dark' ? '#fff' : '#333',
-      },
       text: {
         fill: theme.palette.text.primary,
       },
     },
     grid: {
       line: {
-        stroke: theme.palette.mode === 'dark' ? '#888' : '#ccc',
+        stroke: theme.palette.mode === 'dark' ? '#888' : '#ccc', // Dynamic color based on theme
         strokeWidth: 1,
       },
-      text: {
-        fill: theme.palette.text.primary,
+    },
+    arc: {
+      borderWidth: 1,
+      borderColor: theme.palette.mode === 'dark' ? '#333' : '#fff',
+    },
+    tooltip: {
+      container: {
+        background: theme.palette.background.paper,
+        color: theme.palette.text.primary,
       },
     },
-    annotations:{
-      line: {
-        stroke: theme.palette.mode === 'dark' ? '#fff' : '#333',
-      },
-      text: {
-        fill: theme.palette.text.primary,
-      }
-    }
   };
 };
 
