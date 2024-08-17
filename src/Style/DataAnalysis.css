@@ -184,6 +184,7 @@
 
 .data-selected-logo{
   opacity: 1 !important;
+  scale: 1.1;
 }
 
 .data-analysis-top-navbar img:hover{

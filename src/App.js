@@ -54,6 +54,7 @@ function App() {
             } /> */}
           </Routes>
         </div>
+        <img className="home-page-bloomteq-symbol" src="bloomteq-logo.png" alt="" />
       </Router>
     </ThemeProvider>
   );

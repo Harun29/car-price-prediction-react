@@ -224,20 +224,19 @@ const HomePage = () => {
           animate={{ opacity: 1 }}
           exit={{ opacity: 0}}
           transition={{ duration: 0.5 }}
-        />
+          />
       </div>
-      <img className="home-page-olx-symbol" src="OLX-Symbol.png" alt="" />
       <img 
         onClick={changeToVw} 
         className={`home-page-vw-logo ${selectedLogo === "vw" && "selected-logo"} ${prediction && "prediction-active"}`} 
         src="vw-logo.png" 
-        alt="VW Logo" 
+        alt="VW Logo"
       />
       <img 
         onClick={changeToAudi} 
         className={`home-page-audi-logo ${selectedLogo === "audi" && "selected-logo"} ${prediction && "prediction-active"}`} 
         src="audi-logo.png" 
-        alt="Audi Logo" 
+        alt="Audi Logo"
       />
     </div>
   );

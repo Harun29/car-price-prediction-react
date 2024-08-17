@@ -21,7 +21,7 @@ import TableChartIcon from '@mui/icons-material/TableChart';
 const DataAnalysisPage = () => {
 
   const [selectedLogo, setSelectedLogo] = useState("vw");
-  
+
   const changeToAudi = () =>{
     setSelectedLogo("audi");
   }

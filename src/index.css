@@ -31,3 +31,10 @@ code {
 #root{
   width: 100%;
 }
+
+.home-page-bloomteq-symbol{
+  height: 80px;
+  position: fixed;
+  bottom: 0;
+  right: 15px;
+}
