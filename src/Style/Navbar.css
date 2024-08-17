@@ -4,7 +4,13 @@
   left:20px;
 }
 
-.navbar-container .MuiListItemText-root .MuiTypography-root {
+.MuiPaper-root{
+  margin: 15px;
+  border-radius: 20px;
+  height: calc(100% - 30px) !important;
+}
+
+.MuiListItemText-root .MuiTypography-root {
   font-family: 'Poppins', sans-serif;
   font-size: 1.2rem;
 }
