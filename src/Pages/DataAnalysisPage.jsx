@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Button } from "@mui/material";
 import { styled, useTheme } from "@mui/material/styles";
 import { usePandas } from "../Context/PandasContext";
@@ -19,11 +20,30 @@ import TableChartIcon from '@mui/icons-material/TableChart';
 
 const DataAnalysisPage = () => {
 
+  const [selectedLogo, setSelectedLogo] = useState("vw");
+  
+  const changeToAudi = () =>{
+    setSelectedLogo("audi");
+  }
+  const changeToVw = () =>{
+    setSelectedLogo("vw");
+  }
+
   const HistogramContainer = styled("div")(({ theme }) => ({
     boxShadow:
       theme.palette.mode === "light"
         ? "9px 9px 18px #bcbcbc, -9px -9px 18px #ffffff"
         : "4px 4px 12px #000000, -4px -4px 12px #000000",
+    borderRadius: "20px",
+    padding: "20px",
+    backgroundColor: theme.palette.background.paper,
+  }));
+
+  const NavbarContainer = styled("div")(({ theme }) => ({
+    boxShadow:
+      theme.palette.mode === "light"
+        ? "-3px -3px 8px #bcbcbc, 3px 3px 8px #ffffff"
+        : "-2px -2px 8px #000000, 2px 2px 8px #000000",
     borderRadius: "20px",
     padding: "20px",
     backgroundColor: theme.palette.background.paper,
@@ -54,6 +74,26 @@ const DataAnalysisPage = () => {
 
   return (
     <div className="data-analysis">
+      <NavbarContainer className="data-analysis-top-navbar heading">
+        <span>Market Overview</span>
+      </NavbarContainer>
+      <NavbarContainer className="data-analysis-top-navbar logos">
+        <div>
+        <img 
+        onClick={changeToAudi} 
+        className={selectedLogo === "audi" && "data-selected-logo"}
+        src="audi-logo.png" 
+        alt="Audi Logo" 
+      />
+        <img 
+        onClick={changeToVw} 
+        className={selectedLogo === "vw" && "data-selected-logo"} 
+        src="vw-logo.png" 
+        alt="VW Logo" 
+      />
+      
+        </div>
+      </NavbarContainer>
       <div className="data-analysis-container">
         <h3 className="data-analysis-headers">Top Models by Popularity</h3>
         <HistogramContainer className="plot-box model-ranking">

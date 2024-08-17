@@ -1,7 +1,8 @@
 .data-analysis{
-  width: calc(100% - 350px);
-  margin: 0 2500px 50px 60px;
+  width: calc(100% - 250px);
   display: flex;
+  margin-top: 5px;
+  margin-left: 50px;
 }
 
 .data-analysis-container{
@@ -9,7 +10,7 @@
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr;
   gap: 20px;
-  margin: 10px 50px;
+  margin: 10px 70px 10px 50px;
 }
 
 .plot-box {
@@ -137,4 +138,61 @@
   height: 1px;
   width: 100%;
   background-color: white;
+}
+
+/* top navbar */
+
+.data-analysis-top-navbar{
+  position: fixed;
+  padding: 30px 15px 15px 15px !important;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  z-index: 30;
+  transform: rotate(-90deg);
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.data-analysis-top-navbar.logos:hover{
+  left: -100px;
+}
+
+.data-analysis-top-navbar.logos{
+  top: 80px;
+  left: -115px;
+  height: 200px;
+  align-items: end;
+  justify-content: center;
+}
+.data-analysis-top-navbar.heading{
+  top: 400px;
+  left: -130px;
+  height: 100px;
+}
+
+.data-analysis-top-navbar img{
+  height: 50px;
+  margin: 0;
+  padding: 0;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  opacity: 0.5;
+  transition: all 0.3 ease;
+}
+
+.data-selected-logo{
+  opacity: 1 !important;
+}
+
+.data-analysis-top-navbar img:hover{
+  transform: rotate(90deg);
+  scale: 1.1;
+}
+
+.data-analysis-top-navbar span{
+  font-size: 1.7rem;
+  margin-right: 30px;
+  margin-left: 30px;
 }
