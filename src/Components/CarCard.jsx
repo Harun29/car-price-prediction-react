@@ -2,6 +2,7 @@ import { styled } from '@mui/material/styles';
 import { motion } from 'framer-motion';
 
 function CarCard({handleDetailedDescription}) {
+
   const CarCardContainer = styled(motion.div)(({ theme }) => ({
     width: '90%',
     padding: '15px',
@@ -76,6 +77,7 @@ function CarCard({handleDetailedDescription}) {
         <span>6000km</span>
       </RowStats>
       <Price>75000KM</Price>
+      
     </CarCardContainer>
   );
 }

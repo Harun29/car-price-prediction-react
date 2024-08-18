@@ -1,6 +1,6 @@
 import "../Style/HomePage.css";
 import { Button } from "@mui/material";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import {
   FormControl,
   InputLabel,
@@ -218,7 +218,8 @@ const HomePage = () => {
         {prediction && 
         <div className="cars-container">
           {!detailedDescription && <div className="cars-found-container">
-            <CarCard handleDetailedDescription={handleDetailedDescription}/>
+            <CarCard
+              handleDetailedDescription={handleDetailedDescription}/>
             <CarCard />
             <CarCard />
             <CarCard />
