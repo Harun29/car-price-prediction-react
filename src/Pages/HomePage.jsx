@@ -153,7 +153,22 @@ const HomePage = () => {
             </Select>
           </FormControl>
         </div>
-        <div className="row-inputs smaller">
+        <div className={`row-inputs ${!prediction && 'smaller'}`}>
+        <FormControl fullWidth>
+            <InputLabel id="aggregation-function-label">Type</InputLabel>
+            <Select
+              labelId="aggregation-function-label"
+              id="aggregation-function"
+              // value={aggregationFunction}
+              label="Drivetrain"
+              // onChange={handleAggregationFunctionChange}
+            >
+              <MenuItem value="mean">Any</MenuItem>
+              <MenuItem value="mean">SUV</MenuItem>
+              <MenuItem value="sum">Hatchback</MenuItem>
+              <MenuItem value="sum">Sedan</MenuItem>
+            </Select>
+          </FormControl>
           <FormControl fullWidth>
             <InputLabel id="fillna-label">Milage</InputLabel>
             <TextField
@@ -164,13 +179,13 @@ const HomePage = () => {
             />
           </FormControl>
         </div>
-        <div className={`row-inputs smaller ${prediction && "active"}`}>
+        <div className={`row-inputs ${!prediction && "smaller"}`}>
           <FormControlLabel control={<Checkbox />} label="Cruise Control" />
           <FormControlLabel control={<Checkbox />} label="Air Condition" />
           <FormControlLabel control={<Checkbox />} label="Navigation" />
           <FormControlLabel control={<Checkbox />} label="Registered" />
         </div>
-        <div className="row-inputs smallest">
+        <div className={`row-inputs ${!prediction && 'smallest'} cols`}>
         <Typography gutterBottom>Parking Sensors</Typography>
           <ToggleButtonGroup
             color="primary"
@@ -184,7 +199,7 @@ const HomePage = () => {
             <ToggleButton value="ios">Front and Rear</ToggleButton>
           </ToggleButtonGroup>
         </div>
-        <div className="row-inputs smallest">
+        <div className={`row-inputs ${!prediction && 'smallest'} cols`}>
           <Typography gutterBottom>Year</Typography>
           <Slider
             aria-label="Year"

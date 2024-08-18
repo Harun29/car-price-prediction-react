@@ -24,7 +24,7 @@
   transform: rotate(0deg);
   height: 100%;
   border-radius: 30px;
-  box-shadow: -15px 0 20px -10px rgba(0, 0, 0, 0.5); /* Stronger left shadow */
+  box-shadow: -15px 0 20px -10px rgba(0, 0, 0, 0.5);
 }
 
 .home-page-default-car{
@@ -76,15 +76,12 @@
   width: 100%;
   display: flex;
   margin-bottom: 20px;
+  transition: all 0.3s ease;
 }
 
 .row-inputs label, .row-inputs p, .row-inputs label span{
   font-family: 'Poppins', sans-serif;
   transition: all 0.3s ease;
-}
-
-.row-inputs.active label span{
-  font-size: 0.8rem;
 }
 
 .row-inputs.smaller{
@@ -93,10 +90,17 @@
 
 .row-inputs.smallest{
   width: 50%;
+}
+
+.row-inputs.cols{
   flex-direction: column;
 }
 
-.row-inputs.smallest span{
+.row-inputs.cols:not(.smallest){
+  width:94%;
+}
+
+.row-inputs.cols span{
   margin-left: 5px;
 }
 
