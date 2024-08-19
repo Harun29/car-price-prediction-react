@@ -10,6 +10,7 @@ import DataAnalysisPage from "./Pages/DataAnalysisPage";
 import HomePage from "./Pages/HomePage";
 import Chat from "./Components/Chat";
 import AutoAwesomeIcon from "@mui/icons-material/AutoAwesome";
+import { ChatProvider } from "./Context/ChatContext";
 
 function App() {
   const [theme, setTheme] = useState("dark");
@@ -56,48 +57,50 @@ function App() {
   };
 
   return (
-    <ThemeProvider theme={darkTheme}>
-      <Router>
-        <div className="App">
-          <Navbar theme={theme} handleThemeChange={handleThemeChange} />
-          <CssBaseline />
-          <Routes>
-            <Route path="/" element={<HomePage />} />
-            <Route
-              path="/price-prediction"
-              element={
-                <MLProvider>
-                  <HomePage />
-                </MLProvider>
-              }
+    <ChatProvider>
+      <ThemeProvider theme={darkTheme}>
+        <Router>
+          <div className="App">
+            <Navbar theme={theme} handleThemeChange={handleThemeChange} />
+            <CssBaseline />
+            <Routes>
+              <Route path="/" element={<HomePage />} />
+              <Route
+                path="/price-prediction"
+                element={
+                  <MLProvider>
+                    <HomePage/>
+                  </MLProvider>
+                }
+              />
+              <Route
+                path="/data-analysis"
+                element={
+                  <PandasProvider>
+                    <DataAnalysisPage />
+                  </PandasProvider>
+                }
+              />
+            </Routes>
+            <img
+              className="home-page-bloomteq-symbol"
+              src="bloomteq-logo.png"
+              alt=""
             />
-            <Route
-              path="/data-analysis"
-              element={
-                <PandasProvider>
-                  <DataAnalysisPage />
-                </PandasProvider>
-              }
-            />
-          </Routes>
-          <img
-            className="home-page-bloomteq-symbol"
-            src="bloomteq-logo.png"
-            alt=""
-          />
+          </div>
+        </Router>
+        <div
+          ref={iconRef}
+          onClick={handleOpenChat}
+          className="open-chat"
+          role="button"
+        >
+          <AutoAwesomeIcon />
         </div>
-      </Router>
-      <div
-        ref={iconRef}
-        onClick={handleOpenChat}
-        className="open-chat"
-        role="button"
-      >
-        <AutoAwesomeIcon />
-      </div>
 
-      {chatOpen && <Chat chatRef={chatRef}/>}
-    </ThemeProvider>
+        {chatOpen && <Chat chatRef={chatRef} />}
+      </ThemeProvider>
+    </ChatProvider>
   );
 }
 

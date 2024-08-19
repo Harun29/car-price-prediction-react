@@ -54,6 +54,25 @@
 
 /* CAR SPECS */
 
+.css-1eme1u9 svg{
+  position: absolute;
+  right: 0;
+  opacity: 0;
+  transition: all 0.3 ease;
+  scale: 1;
+}
+
+.css-1eme1u9 svg:hover{
+  scale: 1.1;
+}
+
+.css-1eme1u9:hover svg{
+  position: absolute;
+  top: -5px;
+  right: 0;
+  opacity: 1;
+}
+
 .car-specs{
   padding: 50px 100px;
   height: 100%;
@@ -171,5 +190,7 @@
 
 .prediction-active:not(.selected-logo){
   opacity: 0;
+  width: 0;
+  height: 0;
 }
 

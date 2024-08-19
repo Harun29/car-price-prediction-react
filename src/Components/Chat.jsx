@@ -1,19 +1,17 @@
-import React, { useState } from "react";
 import "../Style/Chat.css";
-import { styled, useTheme } from "@mui/material/styles";
+import { styled } from "@mui/material/styles";
 import SendIcon from "@mui/icons-material/Send";
-import { OpenAI } from "openai";
+import { useChat } from "../Context/ChatContext";
+import { useEffect } from "react";
 
 const Chat = ({ chatRef }) => {
-  const [messages, setMessages] = useState([
-    {
-      role: "assistant",
-      content: "Hello! I'm Jarvis, your AI assistant powered by GPT-4o-mini. I'm here to help you with any questions or tasks you have. Just type in your message, and I'll do my best to assist you. How can I help you today?",
-    },
-  ]);
-
-  const [typingMessage, setTypingMessage] = useState("");
-  const [userMessage, setUserMessage] = useState("");
+  const {
+    messages,
+    typingMessage,
+    userMessage,
+    handleUserMessageChange,
+    handleFormSubmit,
+  } = useChat();
 
   const HistogramContainer = styled("div")(({ theme }) => ({
     boxShadow:
@@ -23,61 +21,6 @@ const Chat = ({ chatRef }) => {
     borderRadius: "20px",
     padding: "20px",
   }));
-
-  const openai = new OpenAI({
-    apiKey: process.env.REACT_APP_OPENAI_API_KEY,
-    dangerouslyAllowBrowser: true,
-  });
-
-  const handleSendMessage = async (userMessage) => {
-    if (userMessage.trim() === "") return;
-
-    setMessages((prevMessages) => [
-      ...prevMessages,
-      { role: "user", content: userMessage },
-    ]);
-
-    try {
-      const completion = await openai.chat.completions.create({
-        model: "gpt-4o-mini",
-        messages: [
-          { role: "system", content: "You are a helpful assistant." },
-          ...messages,
-          { role: "user", content: userMessage },
-        ],
-      });
-
-      const aiMessage = completion.choices[0].message.content;
-      simulateTypingEffect(aiMessage);
-    } catch (err) {
-      console.error(err);
-    }
-  };
-
-  const simulateTypingEffect = (message) => {
-    let index = 0;
-    setTypingMessage("");
-
-    const typingInterval = setInterval(() => {
-      if (index < message.length) {
-        setTypingMessage((prev) => prev + message[index]);
-        index++;
-      } else {
-        clearInterval(typingInterval);
-        setMessages((prevMessages) => [
-          ...prevMessages,
-          { role: "assistant", content: message },
-        ]);
-        setTypingMessage("");
-      }
-    }, 10);
-  };
-
-  const handleFormSubmit = (e) => {
-    e.preventDefault();
-    handleSendMessage(userMessage);
-    setUserMessage("");
-  };
 
   return (
     <HistogramContainer className="chat" ref={chatRef}>
@@ -107,7 +50,7 @@ const Chat = ({ chatRef }) => {
             type="text"
             placeholder="Type a message..."
             value={userMessage}
-            onChange={(e) => setUserMessage(e.target.value)}
+            onChange={handleUserMessageChange}
             autoFocus
           />
           <button type="submit">

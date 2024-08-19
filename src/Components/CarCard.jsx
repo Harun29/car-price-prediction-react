@@ -1,7 +1,27 @@
 import { styled } from '@mui/material/styles';
 import { motion } from 'framer-motion';
+import AutoAwesomeIcon from "@mui/icons-material/AutoAwesome";
+import { useChat } from '../Context/ChatContext';
 
-function CarCard({handleDetailedDescription}) {
+function CarCard({ handleDetailedDescription }) {
+  const {
+    handleFormSubmit
+  } = useChat();
+  
+  const carDetails = {
+    name: "VW TIGUAN",
+    model: "2.5 TDI",
+    power: "150 KW",
+    year: "2023",
+    mileage: "6000km",
+    price: "75000KM"
+  };
+
+  const handleIconClick = (e) => {
+    e.stopPropagation();
+    const message = `Tell me more about the ${carDetails.name}.`;
+    handleFormSubmit(message); // Pass the message to handleFormSubmit
+  };
 
   const CarCardContainer = styled(motion.div)(({ theme }) => ({
     width: '90%',
@@ -66,18 +86,21 @@ function CarCard({handleDetailedDescription}) {
         boxShadow: '0px 4px 10px rgba(0, 0, 0, 0.8)'
       }}
     >
-      <CarName>VW TIGUAN</CarName>
+      <CarName>{carDetails.name}</CarName>
       <img src="tiguan2023.png" alt="Car Image" style={{ width: '100%', height: 'auto', borderRadius: '8px', marginBottom: '10px' }} />
       <RowStats>
-        <span>2.5 TDI</span>
-        <span>150 KW</span>
+        <span>{carDetails.model}</span>
+        <span>{carDetails.power}</span>
       </RowStats>
       <RowStats>
-        <span>2023</span>
-        <span>6000km</span>
+        <span>{carDetails.year}</span>
+        <span>{carDetails.mileage}</span>
       </RowStats>
-      <Price>75000KM</Price>
-      
+      <Price>{carDetails.price}</Price>
+      <AutoAwesomeIcon 
+        onClick={handleIconClick} 
+        style={{ cursor: 'pointer', marginTop: '10px' }} 
+      />
     </CarCardContainer>
   );
 }
