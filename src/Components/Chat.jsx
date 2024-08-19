@@ -1,12 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import "../Style/Chat.css";
 import { styled, useTheme } from "@mui/material/styles";
 import SendIcon from "@mui/icons-material/Send";
 import { OpenAI } from "openai";
 
-const Chat = () => {
-  const theme = useTheme();
-
+const Chat = ({ chatRef }) => {
   const [messages, setMessages] = useState([
     {
       role: "assistant",
@@ -15,6 +13,7 @@ const Chat = () => {
   ]);
 
   const [typingMessage, setTypingMessage] = useState("");
+  const [userMessage, setUserMessage] = useState("");
 
   const HistogramContainer = styled("div")(({ theme }) => ({
     boxShadow:
@@ -76,13 +75,12 @@ const Chat = () => {
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
-    const input = e.target.elements["chat-input"];
-    handleSendMessage(input.value);
-    input.value = "";
+    handleSendMessage(userMessage);
+    setUserMessage("");
   };
 
   return (
-    <HistogramContainer className="chat">
+    <HistogramContainer className="chat" ref={chatRef}>
       <div className="chat-heading">
         <h3>Chat with Jarvis</h3>
       </div>
@@ -103,12 +101,14 @@ const Chat = () => {
         )}
       </div>
       <div className="chat-input-container">
-        <form onSubmit={handleFormSubmit}>
+        <form onSubmit={handleFormSubmit} style={{ width: "100%" }}>
           <input
             className="chat-input"
-            name="chat-input"
             type="text"
             placeholder="Type a message..."
+            value={userMessage}
+            onChange={(e) => setUserMessage(e.target.value)}
+            autoFocus
           />
           <button type="submit">
             <SendIcon />

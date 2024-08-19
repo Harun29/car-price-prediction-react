@@ -147,7 +147,6 @@ const modelCounts = {
   T1: 1,
 };
 
-// Transform the data
 const carTypeData = Object.entries(model_to_type).reduce(
   (acc, [model, type]) => {
     if (!acc[type]) {
@@ -164,7 +163,6 @@ const data = Object.values(carTypeData);
 const ModelListingsChart = () => {
   const theme = useTheme()
   const nivoTheme = useNivoTheme();
-  // const axisLabelColor = theme.palette.mode === 'dark' ? '#ffffff' : '#333333';
 
   return (
     <div style={{ height: "90%", width: "100%" }}>

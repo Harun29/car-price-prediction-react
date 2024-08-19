@@ -12,6 +12,7 @@
   justify-content: space-between;
   align-items: center;
   font-family: 'Poppins', sans-serif;
+  transition: all 0.3 ease;
 }
 
 .chat h3{

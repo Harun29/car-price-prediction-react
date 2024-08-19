@@ -49,28 +49,28 @@ const DataAnalysisPage = () => {
     backgroundColor: theme.palette.background.paper,
   }));
 
-  const VisuallyHiddenInput = styled("input")({
-    clip: "rect(0 0 0 0)",
-    clipPath: "inset(50%)",
-    height: 1,
-    overflow: "hidden",
-    position: "absolute",
-    bottom: 0,
-    left: 0,
-    whiteSpace: "nowrap",
-    width: 1,
-  });
+  // const VisuallyHiddenInput = styled("input")({
+  //   clip: "rect(0 0 0 0)",
+  //   clipPath: "inset(50%)",
+  //   height: 1,
+  //   overflow: "hidden",
+  //   position: "absolute",
+  //   bottom: 0,
+  //   left: 0,
+  //   whiteSpace: "nowrap",
+  //   width: 1,
+  // });
 
-  const { tableData, columns, duplicates, shape, handleFileUpload } =
-    usePandas();
+  // const { tableData, columns, duplicates, shape, handleFileUpload } =
+  //   usePandas();
 
-  const fileUploadFunction = async (event) => {
-    try {
-      await handleFileUpload(event);
-    } catch (err) {
-      console.error(err);
-    }
-  };
+  // const fileUploadFunction = async (event) => {
+  //   try {
+  //     await handleFileUpload(event);
+  //   } catch (err) {
+  //     console.error(err);
+  //   }
+  // };
 
   return (
     <div className="data-analysis">
