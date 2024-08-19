@@ -10,7 +10,6 @@ import DataAnalysisPage from "./Pages/DataAnalysisPage";
 import HomePage from "./Pages/HomePage";
 import Chat from "./Components/Chat";
 import AutoAwesomeIcon from "@mui/icons-material/AutoAwesome";
-import { AnimatePresence, motion } from "framer-motion";
 
 function App() {
   const [theme, setTheme] = useState("dark");

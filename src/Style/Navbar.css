@@ -4,7 +4,7 @@
   left:20px;
 }
 
-.MuiPaper-root{
+.MuiDrawer-paper{
   margin: 15px;
   border-radius: 20px;
   height: calc(100% - 30px) !important;
