@@ -44,13 +44,13 @@ const Chat = ({ chatRef }) => {
         )}
       </div>
       <div className="chat-input-container">
-        <form onSubmit={handleFormSubmit} style={{ width: "100%" }}>
+        <form onSubmit={(e) => handleFormSubmit(e)} style={{ width: "100%" }}>
           <input
             className="chat-input"
             type="text"
             placeholder="Type a message..."
             value={userMessage}
-            onChange={handleUserMessageChange}
+            onChange={(e) => handleUserMessageChange(e)}
             autoFocus
           />
           <button type="submit">

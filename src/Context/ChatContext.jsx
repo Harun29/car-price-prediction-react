@@ -68,10 +68,12 @@ export function ChatProvider({ children }) {
   };
 
   const handleUserMessageChange = (event) => {
+    event.preventDefault();
     setUserMessage(event.target.value);
   };
 
-  const handleFormSubmit = async (message) => {
+  const handleFormSubmit = async (event, message = userMessage) => {
+    event.preventDefault();
     try {
       await handleSendMessage(message);
       setUserMessage("");

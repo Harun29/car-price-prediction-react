@@ -19,8 +19,8 @@ function CarCard({ handleDetailedDescription }) {
 
   const handleIconClick = (e) => {
     e.stopPropagation();
-    const message = `Tell me more about the ${carDetails.name}.`;
-    handleFormSubmit(message); // Pass the message to handleFormSubmit
+    const message = `Tell me more about the (maximum 50 words) ${carDetails.name}.`;
+    handleFormSubmit(e, message);
   };
 
   const CarCardContainer = styled(motion.div)(({ theme }) => ({
@@ -98,7 +98,7 @@ function CarCard({ handleDetailedDescription }) {
       </RowStats>
       <Price>{carDetails.price}</Price>
       <AutoAwesomeIcon 
-        onClick={handleIconClick} 
+        onClick={(e) => handleIconClick(e)} 
         style={{ cursor: 'pointer', marginTop: '10px' }} 
       />
     </CarCardContainer>
