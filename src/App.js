@@ -8,6 +8,7 @@ import { PandasProvider } from "./Context/PandasContext";
 import { MLProvider } from "./Context/MLContext";
 import DataAnalysisPage from "./Pages/DataAnalysisPage";
 import HomePage from "./Pages/HomePage";
+import Chat from "./Components/Chat";
 
 function App() {
   const [theme, setTheme] = useState("dark");
@@ -53,8 +54,8 @@ function App() {
             alt=""
           />
         </div>
-
       </Router>
+      <Chat />
     </ThemeProvider>
   );
 }

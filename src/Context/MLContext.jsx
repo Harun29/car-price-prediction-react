@@ -1,5 +1,4 @@
 import { createContext, useContext, useEffect, useState } from "react";
-import { OpenAI } from "openai";
 
 const MLContext = createContext();
 
@@ -23,39 +22,18 @@ export function MLProvider({ children }) {
 
   const [columnsAIResponse, setColumnsAIResponse] = useState("");
 
-  const openai = new OpenAI({
-    apiKey: process.env.REACT_APP_OPENAI_API_KEY,
-    dangerouslyAllowBrowser: true
-  });
+
 
   useEffect(() => {
     handleInitialData();
   }, []);
 
-  const getPossiblePredictionColumns = async (retries = 3) => {
-    try {
-      const completion = await openai.chat.completions.create({
-        messages: [{ role: "system", content: "You are a helpful assistant." }],
-        model: "gpt-4o-mini",
-      });
-  
-      console.log(completion.choices[0]);
-    } catch (err) {
-      if (retries > 0 && err.response?.status === 429) {
-        setTimeout(() => getPossiblePredictionColumns(retries - 1), 1000);
-      } else {
-        console.error(err);
-      }
-    }
-  };
 
   useEffect(() => {
     columnsList && console.log("columns: ", columnsList);
   }, [columnsList]);
 
-  useEffect(() => {
-    getPossiblePredictionColumns();
-  }, []);
+
 
   useEffect(() => {
     columnsAIResponse && console.log("ai response: ", columnsAIResponse);
@@ -109,11 +87,7 @@ export function MLProvider({ children }) {
 
   const value = {};
 
-  return (
-    <MLContext.Provider value={value}>
-      {children}
-    </MLContext.Provider>
-  );
+  return <MLContext.Provider value={value}>{children}</MLContext.Provider>;
 }
 
 export default MLContext;
