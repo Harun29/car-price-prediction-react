@@ -57,8 +57,8 @@ function App() {
   };
 
   return (
-    <ChatProvider>
-      <ThemeProvider theme={darkTheme}>
+    <ThemeProvider theme={darkTheme}>
+      <ChatProvider>
         <Router>
           <div className="App">
             <Navbar theme={theme} handleThemeChange={handleThemeChange} />
@@ -69,7 +69,7 @@ function App() {
                 path="/price-prediction"
                 element={
                   <MLProvider>
-                    <HomePage/>
+                    <HomePage />
                   </MLProvider>
                 }
               />
@@ -91,7 +91,7 @@ function App() {
         </Router>
         <div
           ref={iconRef}
-          onClick={handleOpenChat}
+          onClick={(e) => handleOpenChat(e)}
           className="open-chat"
           role="button"
         >
@@ -99,8 +99,8 @@ function App() {
         </div>
 
         {chatOpen && <Chat chatRef={chatRef} />}
-      </ThemeProvider>
-    </ChatProvider>
+      </ChatProvider>
+    </ThemeProvider>
   );
 }
 
