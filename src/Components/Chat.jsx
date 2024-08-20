@@ -2,16 +2,20 @@ import "../Style/Chat.css";
 import { styled } from "@mui/material/styles";
 import SendIcon from "@mui/icons-material/Send";
 import { useChat } from "../Context/ChatContext";
-import { useEffect } from "react";
+import { useState } from "react";
 
 const Chat = ({ chatRef }) => {
   const {
     messages,
     typingMessage,
-    userMessage,
-    handleUserMessageChange,
     handleFormSubmit,
   } = useChat();
+
+  const [userMessage, setUserMessage] = useState("");
+  const handleUserMessageChange = (event) => {
+    event.preventDefault();
+    setUserMessage(event.target.value);
+  };
 
   const HistogramContainer = styled("div")(({ theme }) => ({
     boxShadow:
@@ -21,6 +25,12 @@ const Chat = ({ chatRef }) => {
     borderRadius: "20px",
     padding: "20px",
   }));
+
+  const submitForm = async (event) => {
+    event.preventDefault();
+    await handleFormSubmit(event, userMessage);
+    setUserMessage("");
+  };
 
   return (
     <HistogramContainer className="chat" ref={chatRef}>
@@ -44,13 +54,13 @@ const Chat = ({ chatRef }) => {
         )}
       </div>
       <div className="chat-input-container">
-        <form onSubmit={(e) => handleFormSubmit(e)} style={{ width: "100%" }}>
+        <form onSubmit={submitForm} style={{ width: "100%" }}>
           <input
             className="chat-input"
             type="text"
             placeholder="Type a message..."
             value={userMessage}
-            onChange={(e) => handleUserMessageChange(e)}
+            onChange={handleUserMessageChange}
             autoFocus
           />
           <button type="submit">

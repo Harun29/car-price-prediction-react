@@ -16,7 +16,6 @@ export function ChatProvider({ children }) {
   ]);
 
   const [typingMessage, setTypingMessage] = useState("");
-  const [userMessage, setUserMessage] = useState("");
 
   const openai = new OpenAI({
     apiKey: process.env.REACT_APP_OPENAI_API_KEY,
@@ -67,16 +66,10 @@ export function ChatProvider({ children }) {
     }, 10);
   };
 
-  const handleUserMessageChange = (event) => {
-    event.preventDefault();
-    setUserMessage(event.target.value);
-  };
-
-  const handleFormSubmit = async (event, message = userMessage) => {
+  const handleFormSubmit = async (event, message) => {
     event.preventDefault();
     try {
       await handleSendMessage(message);
-      setUserMessage("");
     } catch (error) {
       console.error("Failed to send message:", error);
     }
@@ -90,8 +83,6 @@ export function ChatProvider({ children }) {
   const values ={
     messages,
     typingMessage,
-    userMessage,
-    handleUserMessageChange,
     handleFormSubmit,
   }
 

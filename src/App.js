@@ -18,13 +18,12 @@ function App() {
   const chatRef = useRef(null);
   const iconRef = useRef(null);
 
-  const handleOpenChat = (event) => {
-    event.preventDefault();
+  const handleOpenChat = () => {
+    console.log("Toggling chatOpen:", !chatOpen); // Debugging log
     setChatOpen((prev) => !prev);
   };
 
   const handleClickOutside = (event) => {
-    event.preventDefault();
     if (
       chatRef.current &&
       !chatRef.current.contains(event.target) &&
@@ -37,8 +36,6 @@ function App() {
   useEffect(() => {
     if (chatOpen) {
       document.addEventListener("mousedown", handleClickOutside);
-    } else {
-      document.removeEventListener("mousedown", handleClickOutside);
     }
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
@@ -52,55 +49,43 @@ function App() {
   });
 
   const handleThemeChange = (event) => {
-    event.preventDefault();
     setTheme(event.target.checked ? "dark" : "light");
   };
 
   return (
-    <ThemeProvider theme={darkTheme}>
-      <ChatProvider>
-        <Router>
-          <div className="App">
-            <Navbar theme={theme} handleThemeChange={handleThemeChange} />
-            <CssBaseline />
-            <Routes>
-              <Route path="/" element={<HomePage />} />
-              <Route
-                path="/price-prediction"
-                element={
-                  <MLProvider>
-                    <HomePage />
-                  </MLProvider>
-                }
-              />
-              <Route
-                path="/data-analysis"
-                element={
-                  <PandasProvider>
-                    <DataAnalysisPage />
-                  </PandasProvider>
-                }
-              />
-            </Routes>
-            <img
-              className="home-page-bloomteq-symbol"
-              src="bloomteq-logo.png"
-              alt=""
-            />
-          </div>
-        </Router>
-        <div
-          ref={iconRef}
-          onClick={(e) => handleOpenChat(e)}
-          className="open-chat"
-          role="button"
-        >
-          <AutoAwesomeIcon />
-        </div>
-
-        {chatOpen && <Chat chatRef={chatRef} />}
-      </ChatProvider>
-    </ThemeProvider>
+    <ChatProvider>
+      <PandasProvider>
+        <MLProvider>
+          <ThemeProvider theme={darkTheme}>
+            <Router>
+              <div className="App">
+                <Navbar theme={theme} handleThemeChange={handleThemeChange} />
+                <CssBaseline />
+                <Routes>
+                  <Route path="/" element={<HomePage />} />
+                  <Route path="/price-prediction" element={<HomePage />} />
+                  <Route path="/data-analysis" element={<DataAnalysisPage />} />
+                </Routes>
+                <img
+                  className="home-page-bloomteq-symbol"
+                  src="bloomteq-logo.png"
+                  alt=""
+                />
+                <div
+                  ref={iconRef}
+                  onClick={handleOpenChat}
+                  className="open-chat"
+                  role="button"
+                >
+                  <AutoAwesomeIcon />
+                </div>
+              </div>
+            </Router>
+            {chatOpen && <Chat chatRef={chatRef} />}
+          </ThemeProvider>
+        </MLProvider>
+      </PandasProvider>
+    </ChatProvider>
   );
 }
 

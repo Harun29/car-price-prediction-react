@@ -4,9 +4,9 @@ import AutoAwesomeIcon from "@mui/icons-material/AutoAwesome";
 import { useChat } from '../Context/ChatContext';
 
 function CarCard({ handleDetailedDescription }) {
-  // const {
-  //   handleFormSubmit
-  // } = useChat();
+  const {
+    handleFormSubmit
+  } = useChat();
   
   const carDetails = {
     name: "VW TIGUAN",
@@ -20,7 +20,7 @@ function CarCard({ handleDetailedDescription }) {
   const handleIconClick = (e) => {
     e.stopPropagation();
     const message = `Tell me more about the (maximum 50 words) ${carDetails.name}.`;
-    // handleFormSubmit(e, message);
+    handleFormSubmit(e, message);
   };
 
   const CarCardContainer = styled(motion.div)(({ theme }) => ({
