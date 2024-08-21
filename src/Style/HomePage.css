@@ -137,6 +137,7 @@
   position: absolute;
   display: grid;
   grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr 1fr 1fr;
   width: 66%;
   padding: 50px;
   gap: 30px;
@@ -200,6 +201,7 @@
 
 .predicted-value{
   font-size: 1.5rem;
+  margin-top: 20px;
 }
 
 .predicted-value span{
@@ -208,5 +210,9 @@
   border-radius: 5px;
   border: 1px solid hsl(221, 100%, 61%);
   padding: 0 10px;
+}
+
+.find-cars-button{
+  font-size: 1.2rem !important;
 }
 

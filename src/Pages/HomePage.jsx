@@ -19,7 +19,7 @@ import CarCard from "../Components/CarCard";
 import CarDetails from "../Components/CarDetails";
 import { motion } from "framer-motion";
 import { usePandas } from "../Context/PandasContext";
-import CircularProgress from '@mui/material/CircularProgress';
+import CircularProgress from "@mui/material/CircularProgress";
 
 const HomePage = () => {
   const [prediction, setPrediction] = useState(false);
@@ -32,14 +32,13 @@ const HomePage = () => {
   const { getPrediction } = usePandas();
   const [loading, setLoading] = useState(false);
 
-  // State hooks for each form input
   const [displacement, setDisplacement] = useState("");
-  const [kilowatts, setKilowatts] = useState();
+  const [kilowatts, setKilowatts] = useState("");
   const [fuelType, setFuelType] = useState("");
   const [transmission, setTransmission] = useState("");
   const [doors, setDoors] = useState("");
   const [drivetrain, setDrivetrain] = useState("");
-  const [mileage, setMileage] = useState();
+  const [mileage, setMileage] = useState("");
   const [carCategory, setCarCategory] = useState("");
   const [cruiseControl, setCruiseControl] = useState(false);
   const [airCondition, setAirCondition] = useState(false);
@@ -48,10 +47,18 @@ const HomePage = () => {
   const [parkingSensors, setParkingSensors] = useState("");
   const [year, setYear] = useState(2010);
 
+  const [vehicleData, setVehicleData] = useState([]);
+  const [carImg, setCarImg] = useState("");
+
   const handlePrediction = async () => {
     const data = {
       type: carCategory,
-      drivetrain: drivetrain === "FWD" ? "Prednji" : (drivetrain === "RWD" ? "Zadnji" : "Sva četiri"),
+      drivetrain:
+        drivetrain === "FWD"
+          ? "Prednji"
+          : drivetrain === "RWD"
+          ? "Zadnji"
+          : "Sva četiri",
       fuel: fuelType,
       doors,
       displacement: parseFloat(displacement),
@@ -63,10 +70,17 @@ const HomePage = () => {
       aircondition: airCondition ? 1 : 0,
       navigation: navigation ? 1 : 0,
       registration: registration ? 1 : 0,
-      parkingsensors: parkingSensors === "Front" ? 3 : (parkingSensors === "Rear" ? 2 : (parkingSensors ==="Front and Rear" ? 1 : 0)),
+      parkingsensors:
+        parkingSensors === "Front"
+          ? 3
+          : parkingSensors === "Rear"
+          ? 2
+          : parkingSensors === "Front and Rear"
+          ? 1
+          : 0,
     };
 
-    console.log(data)
+    console.log(data);
 
     setLoading(true);
     try {
@@ -94,7 +108,9 @@ const HomePage = () => {
     setSelectedLogo("vw");
   };
 
-  const handleDetailedDescription = () => {
+  const handleDetailedDescription = (vehicle, carImage) => {
+    setCarImg(carImage);
+    setVehicleData(vehicle);
     setDetailedDescription(true);
   };
 
@@ -113,7 +129,9 @@ const HomePage = () => {
           Find Your Perfect Car Match
         </h3>
         <p className="home-page-paragraph">
-        Use our advanced car prediction tool to find vehicles that meet your specific needs. Simply enter your preferences, and we'll match you with the best options available.
+          Use our advanced car prediction tool to find vehicles that meet your
+          specific needs. Simply enter your preferences, and we'll match you
+          with the best options available.
         </p>
         <div className="row-inputs">
           <FormControl fullWidth>
@@ -233,19 +251,39 @@ const HomePage = () => {
         </div>
         <div className={`row-inputs ${!prediction && "smallest"}`}>
           <FormControlLabel
-            control={<Checkbox checked={cruiseControl} onChange={(e) => setCruiseControl(e.target.checked)} />}
+            control={
+              <Checkbox
+                checked={cruiseControl}
+                onChange={(e) => setCruiseControl(e.target.checked)}
+              />
+            }
             label="Cruise Control"
           />
           <FormControlLabel
-            control={<Checkbox checked={airCondition} onChange={(e) => setAirCondition(e.target.checked)} />}
+            control={
+              <Checkbox
+                checked={airCondition}
+                onChange={(e) => setAirCondition(e.target.checked)}
+              />
+            }
             label="Air Condition"
           />
           <FormControlLabel
-            control={<Checkbox checked={navigation} onChange={(e) => setNavigation(e.target.checked)} />}
+            control={
+              <Checkbox
+                checked={navigation}
+                onChange={(e) => setNavigation(e.target.checked)}
+              />
+            }
             label="Navigation"
           />
           <FormControlLabel
-            control={<Checkbox checked={registration} onChange={(e) => setRegistration(e.target.checked)} />}
+            control={
+              <Checkbox
+                checked={registration}
+                onChange={(e) => setRegistration(e.target.checked)}
+              />
+            }
             label="Registered"
           />
         </div>
@@ -276,11 +314,25 @@ const HomePage = () => {
             max={2024}
           />
         </div>
-        <Button onClick={handlePrediction}>Find cars</Button>
-        {loading && <div className="loading">Loading Car Price...
-          <CircularProgress />
-          </div>}
-        {!loading && prediction && <div className="predicted-value">Such car would cost around: <span>{Math.round(predictionValue, 0)} BAM</span></div>}
+        <Button
+          variant="outlined"
+          className="find-cars-button"
+          onClick={handlePrediction}
+        >
+          Find cars
+        </Button>
+        {loading && (
+          <div className="loading">
+            Loading Car Price...
+            <CircularProgress />
+          </div>
+        )}
+        {!loading && prediction && (
+          <div className="predicted-value">
+            Such car would cost around:{" "}
+            <span>{Math.round(predictionValue, 0)} BAM</span>
+          </div>
+        )}
       </div>
       <div className={`home-page-right-side ${prediction && "active"}`}>
         {prediction && (
@@ -297,7 +349,11 @@ const HomePage = () => {
               </div>
             )}
             {detailedDescription && (
-              <CarDetails closeDetailedDescription={closeDetailedDescription} />
+              <CarDetails
+                data={vehicleData}
+                carImage={carImg}
+                closeDetailedDescription={closeDetailedDescription}
+              />
             )}
           </div>
         )}

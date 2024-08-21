@@ -3,51 +3,9 @@ import { motion } from "framer-motion";
 import { Box, Typography } from "@mui/material";
 import CheckIcon from "@mui/icons-material/Check";
 import CloseIcon from "@mui/icons-material/Close";
+import { useEffect } from "react";
 
-function CarDetails({ closeDetailedDescription }) {
-  const carData = {
-    type_encoded: "VW Tiguan",
-    image: "tiguan2023.png",
-    displacement: 2.5,
-    doors: 4,
-    kilowatts: 150,
-    mileage: 6000,
-    year: 2023,
-    cruiseControl: false,
-    parkingSensors: true,
-    transmission: "Automatic",
-    airCondition: true,
-    navigation: true,
-    registration: "Registered",
-    fuel_Benzin: false,
-    fuel_Dizel: true,
-    fuel_Elektro: false,
-    fuel_Hibrid: false,
-    fuel_Plin: false,
-    pogon_Prednji: false,
-    pogon_Sva: true,
-    pogon_Zadnji: false,
-    price: "75000 KM",
-    description:
-      "Ut vestibulum ipsum quam, ac blandit enim sodales ut. Phasellus ac auctor turpis. Morbi vel accumsan nisi, non consectetur libero. Sed facilisis risus id odio tempor finibus. Sed id tincidunt metus. Mauris non gravida elit. Suspendisse pretium pulvinar rhoncus. Nulla sit amet ornare arcu. Nullam posuere quam nec justo vulputate aliquam. Aliquam bibendum imperdiet nibh vel euismod. Donec sed justo quis mauris porttitor accumsan. Ut sit amet quam pretium, imperdiet metus sed, blandit leo. Duis euismod magna sed nisl suscipit, blandit tempor felis fringilla. Quisque mattis lacus enim, ac pharetra eros laoreet vitae.",
-  };
-
-  // Utility functions
-  function getFuelType(carData) {
-    if (carData.fuel_Benzin) return "Benzin";
-    if (carData.fuel_Dizel) return "Dizel";
-    if (carData.fuel_Elektro) return "Electric";
-    if (carData.fuel_Hibrid) return "Hybrid";
-    if (carData.fuel_Plin) return "Gas";
-    return "Unknown";
-  }
-
-  function getDriveType(carData) {
-    if (carData.pogon_Prednji) return "Front";
-    if (carData.pogon_Zadnji) return "Rear";
-    if (carData.pogon_Sva) return "All-wheel";
-    return "Unknown";
-  }
+function CarDetails({ data, carImage, closeDetailedDescription }) {
 
   const CarCardContainer = styled(motion.div)(({ theme }) => ({
     width: "85%",
@@ -79,7 +37,9 @@ function CarDetails({ closeDetailedDescription }) {
 
   const CarImage = styled("img")({
     width: "100%",
-    height: "auto",
+    height: "300px",
+    objectFit: "contain",
+    float: "start",
     borderRadius: "10px",
     marginBottom: "15px",
     objectFit: "cover",
@@ -169,6 +129,10 @@ function CarDetails({ closeDetailedDescription }) {
     );
   };
 
+  useEffect(() => {
+    data && console.log(data)
+  }, [data])
+
   return (
     <CarCardContainer
       onClick={closeDetailedDescription}
@@ -176,82 +140,82 @@ function CarDetails({ closeDetailedDescription }) {
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
     >
-      <CarName variant="h5">{carData.type_encoded || "Tesla Model S"}</CarName>
+      <CarName variant="h5">{data.manufacturer+ " " + data.model}</CarName>
       <CarImage
-        src={carData.image || "https://via.placeholder.com/600x400"}
+        src={carImage || "https://via.placeholder.com/600x400"}
         alt="Car Image"
       />
       <RowStatsContainer>
         <RowStats>
           <Typography>
             <span>Displacement</span>
-            <span>{carData.displacement || "Electric"}</span>
+            <span>{data.displacement || "Electric"}</span>
           </Typography>
           <Typography>
             <span>Doors</span>
-            <span>{carData.doors || 4}</span>
+            <span>{data.doors || 4}</span>
           </Typography>
         </RowStats>
         <RowStats>
           <Typography>
             <span>Power</span>
-            <span>{carData.kilowatts || 340} KW</span>
+            <span>{data.kilowatts || 340} KW</span>
           </Typography>
           <Typography>
             <span>Mileage</span>
-            <span>{carData.mileage || 15000} km</span>
+            <span>{data.mileage || 15000} km</span>
           </Typography>
         </RowStats>
         <RowStats>
           <Typography>
             <span>Year</span>
-            <span>{carData.year || 2022}</span>
+            <span>{data.year || 2022}</span>
           </Typography>
           <Typography>
             <span>Transmission</span>
-            <span>{carData.transmission || "Automatic"}</span>
+            <span>{data.transmission || "Automatic"}</span>
           </Typography>
         </RowStats>
         <RowStats>
           <Typography>
             <span>Cruise Control</span>
-            <FeatureIcon isAvailable={carData.cruiseControl} />
+            <FeatureIcon isAvailable={data.cruisecontrol} />
           </Typography>
           <Typography>
             <span>Parking Sensors</span>
-            <FeatureIcon isAvailable={carData.parkingSensors} />
+            <FeatureIcon isAvailable={data.parkingsensors} />
           </Typography>
         </RowStats>
         <RowStats>
           <Typography>
             <span>Air Condition</span>
-            <FeatureIcon isAvailable={carData.airCondition} />
+            <FeatureIcon isAvailable={data.aircondition} />
           </Typography>
           <Typography>
             <span>Navigation</span>
-            <FeatureIcon isAvailable={carData.navigation} />
+            <FeatureIcon isAvailable={data.navigation} />
           </Typography>
         </RowStats>
         <RowStats>
           <Typography>
             <span>Registration</span>
-            <span>{carData.registration || "Registered"}</span>
+            <span>{data.registration || "Registered"}</span>
           </Typography>
           <Typography>
             <span>Fuel Type</span>
-            <span>{getFuelType(carData) || "Electric"}</span>
+            <span>{data.fuel || "Electric"}</span>
           </Typography>
         </RowStats>
         <RowStatLast>
           <Typography>
             <span>Drive Type</span>
-            <span> {getDriveType(carData) || "All-wheel"}</span>
+            <span> {data.drivetrain || "All-wheel"}</span>
           </Typography>
         </RowStatLast>
-        <Price>{carData.price || "100000 USD"}</Price>
+        <Price>{data.price || "100000 USD"}</Price>
         <Description>
           <Typography variant="body2">
-            {carData.description ||
+            {data.title ||
               "A cutting-edge electric car with top-tier performance and features."}
           </Typography>
         </Description>
