@@ -19,6 +19,7 @@ import CarCard from "../Components/CarCard";
 import CarDetails from "../Components/CarDetails";
 import { motion } from "framer-motion";
 import { usePandas } from "../Context/PandasContext";
+import CircularProgress from '@mui/material/CircularProgress';
 
 const HomePage = () => {
   const [prediction, setPrediction] = useState(false);
@@ -31,30 +32,49 @@ const HomePage = () => {
   const { getPrediction } = usePandas();
   const [loading, setLoading] = useState(false);
 
+  // State hooks for each form input
+  const [displacement, setDisplacement] = useState("");
+  const [kilowatts, setKilowatts] = useState();
+  const [fuelType, setFuelType] = useState("");
+  const [transmission, setTransmission] = useState("");
+  const [doors, setDoors] = useState("");
+  const [drivetrain, setDrivetrain] = useState("");
+  const [mileage, setMileage] = useState();
+  const [carCategory, setCarCategory] = useState("");
+  const [cruiseControl, setCruiseControl] = useState(false);
+  const [airCondition, setAirCondition] = useState(false);
+  const [navigation, setNavigation] = useState(false);
+  const [registration, setRegistration] = useState(false);
+  const [parkingSensors, setParkingSensors] = useState("");
+  const [year, setYear] = useState(2010);
+
   const handlePrediction = async () => {
     const data = {
-      type: "SUV",
-      drivetrain: "Prednji",
-      fuel: "Dizel",
-      doors: "4/5",
-      displacement: 2.5,
-      kilowatts: 150,
-      mileage: 50000,
-      year: 2010,
+      type: carCategory,
+      drivetrain: drivetrain === "FWD" ? "Prednji" : (drivetrain === "RWD" ? "Zadnji" : "Sva četiri"),
+      fuel: fuelType,
+      doors,
+      displacement: parseFloat(displacement),
+      kilowatts: parseInt(kilowatts),
+      mileage: parseInt(mileage),
+      year,
       rimsize: 18,
-      cruisecontrol: 1,
-      aircondition: 1,
-      navigation: 1,
-      registration: 1,
-      parkingsensors: 1,
+      cruisecontrol: cruiseControl ? 1 : 0,
+      aircondition: airCondition ? 1 : 0,
+      navigation: navigation ? 1 : 0,
+      registration: registration ? 1 : 0,
+      parkingsensors: parkingSensors === "Front" ? 3 : (parkingSensors === "Rear" ? 2 : (parkingSensors ==="Front and Rear" ? 1 : 0)),
     };
+
+    console.log(data)
+
     setLoading(true);
     try {
       const response = await getPrediction(data);
       setPredictionValue(response.prediction);
       setPredictedVehicles(response.vehicles);
       setLoading(false);
-      setPrediction(!prediction);
+      setPrediction(true);
     } catch (err) {
       console.error(err);
       setLoading(false);
@@ -90,159 +110,166 @@ const HomePage = () => {
     <div className={`home-page-container ${prediction && "active"}`}>
       <div className="car-specs">
         <h3 className={`heading3 ${prediction && "active"}`}>
-          Lorem ipsum dolor sit amet
+          Find Your Perfect Car Match
         </h3>
-        <p>
-          Ut mattis rutrum nisl et euismod. Nam tincidunt risus id viverra
-          porttitor.
+        <p className="home-page-paragraph">
+        Use our advanced car prediction tool to find vehicles that meet your specific needs. Simply enter your preferences, and we'll match you with the best options available.
         </p>
         <div className="row-inputs">
           <FormControl fullWidth>
-            <InputLabel id="aggregation-function-label">
-              Displacement
-            </InputLabel>
+            <InputLabel id="displacement-label">Displacement</InputLabel>
             <Select
-              labelId="aggregation-function-label"
-              id="aggregation-function"
-              // value={aggregationFunction}
+              labelId="displacement-label"
+              id="displacement"
+              value={displacement}
               label="Displacement"
-              // onChange={handleAggregationFunctionChange}
+              onChange={(e) => setDisplacement(e.target.value)}
             >
-              <MenuItem value="mean">Any</MenuItem>
-              <MenuItem value="mean">1.6</MenuItem>
-              <MenuItem value="sum">1.9</MenuItem>
-              <MenuItem value="count">2.0</MenuItem>
-              <MenuItem value="max">3.0</MenuItem>
+              <MenuItem value="">Any</MenuItem>
+              <MenuItem value="1.6">1.6</MenuItem>
+              <MenuItem value="1.9">1.9</MenuItem>
+              <MenuItem value="2.0">2.0</MenuItem>
+              <MenuItem value="3.0">3.0</MenuItem>
             </Select>
           </FormControl>
           <FormControl fullWidth>
-            <InputLabel id="fillna-label">Kilowatts</InputLabel>
             <TextField
-              id="fillna-input"
-              // value={fillValue}
-              // onChange={handleFillValueChange}
+              id="kilowatts-input"
+              value={kilowatts}
+              onChange={(e) => setKilowatts(e.target.value)}
               label="Kilowatts"
             />
           </FormControl>
         </div>
         <div className="row-inputs">
           <FormControl fullWidth>
-            <InputLabel id="aggregation-function-label">Fuel Type</InputLabel>
+            <InputLabel id="fuel-type-label">Fuel Type</InputLabel>
             <Select
-              labelId="aggregation-function-label"
-              id="aggregation-function"
-              // value={aggregationFunction}
+              labelId="fuel-type-label"
+              id="fuel-type"
+              value={fuelType}
               label="Fuel Type"
-              // onChange={handleAggregationFunctionChange}
+              onChange={(e) => setFuelType(e.target.value)}
             >
-              <MenuItem value="mean">Any</MenuItem>
-              <MenuItem value="mean">Diesel</MenuItem>
-              <MenuItem value="sum">Petrol</MenuItem>
-              <MenuItem value="sum">Hybrid</MenuItem>
-              <MenuItem value="sum">Electro</MenuItem>
+              <MenuItem value="">Any</MenuItem>
+              <MenuItem value="Dizel">Dizel</MenuItem>
+              <MenuItem value="Benzin">Benzin</MenuItem>
+              <MenuItem value="Hibrid">Hibrid</MenuItem>
+              <MenuItem value="Elektro">Elektro</MenuItem>
+              <MenuItem value="Plin">Plin</MenuItem>
             </Select>
           </FormControl>
           <FormControl fullWidth>
-            <InputLabel id="aggregation-function-label">
-              Transmission
-            </InputLabel>
+            <InputLabel id="transmission-label">Transmission</InputLabel>
             <Select
-              labelId="aggregation-function-label"
-              id="aggregation-function"
-              // value={aggregationFunction}
+              labelId="transmission-label"
+              id="transmission"
+              value={transmission}
               label="Transmission"
-              // onChange={handleAggregationFunctionChange}
+              onChange={(e) => setTransmission(e.target.value)}
             >
-              <MenuItem value="mean">Any</MenuItem>
-              <MenuItem value="mean">Manual</MenuItem>
-              <MenuItem value="sum">Automatic</MenuItem>
+              <MenuItem value="">Any</MenuItem>
+              <MenuItem value="Manual">Manuelni</MenuItem>
+              <MenuItem value="Automatic">Automatik</MenuItem>
             </Select>
           </FormControl>
         </div>
         <div className="row-inputs">
           <FormControl fullWidth>
-            <InputLabel id="aggregation-function-label">Doors</InputLabel>
+            <InputLabel id="doors-label">Doors</InputLabel>
             <Select
-              labelId="aggregation-function-label"
-              id="aggregation-function"
-              // value={aggregationFunction}
+              labelId="doors-label"
+              id="doors"
+              value={doors}
               label="Doors"
-              // onChange={handleAggregationFunctionChange}
+              onChange={(e) => setDoors(e.target.value)}
             >
-              <MenuItem value="mean">Any</MenuItem>
-              <MenuItem value="mean">2/3</MenuItem>
-              <MenuItem value="sum">4/5</MenuItem>
+              <MenuItem value="">Any</MenuItem>
+              <MenuItem value="2/3">2/3</MenuItem>
+              <MenuItem value="4/5">4/5</MenuItem>
             </Select>
           </FormControl>
           <FormControl fullWidth>
-            <InputLabel id="aggregation-function-label">Drivetrain</InputLabel>
+            <InputLabel id="drivetrain-label">Drivetrain</InputLabel>
             <Select
-              labelId="aggregation-function-label"
-              id="aggregation-function"
-              // value={aggregationFunction}
+              labelId="drivetrain-label"
+              id="drivetrain"
+              value={drivetrain}
               label="Drivetrain"
-              // onChange={handleAggregationFunctionChange}
+              onChange={(e) => setDrivetrain(e.target.value)}
             >
-              <MenuItem value="mean">Any</MenuItem>
-              <MenuItem value="mean">FWD</MenuItem>
-              <MenuItem value="sum">RWD</MenuItem>
-              <MenuItem value="sum">AWD</MenuItem>
+              <MenuItem value="">Any</MenuItem>
+              <MenuItem value="FWD">FWD</MenuItem>
+              <MenuItem value="RWD">RWD</MenuItem>
+              <MenuItem value="AWD">AWD</MenuItem>
             </Select>
           </FormControl>
         </div>
         <div className={`row-inputs ${!prediction && "smaller"}`}>
           <FormControl fullWidth>
-            <InputLabel id="aggregation-function-label">Type</InputLabel>
+            <InputLabel id="type-label">Type</InputLabel>
             <Select
-              labelId="aggregation-function-label"
-              id="aggregation-function"
-              // value={aggregationFunction}
-              label="Drivetrain"
-              // onChange={handleAggregationFunctionChange}
+              labelId="type-label"
+              id="type"
+              value={carCategory}
+              label="Type"
+              onChange={(e) => setCarCategory(e.target.value)}
             >
-              <MenuItem value="mean">Any</MenuItem>
-              <MenuItem value="mean">SUV</MenuItem>
-              <MenuItem value="sum">Hatchback</MenuItem>
-              <MenuItem value="sum">Sedan</MenuItem>
+              <MenuItem value="">Any</MenuItem>
+              <MenuItem value="SUV">SUV</MenuItem>
+              <MenuItem value="Hatchback">Hatchback</MenuItem>
+              <MenuItem value="Limuzina">Limuzina</MenuItem>
             </Select>
           </FormControl>
           <FormControl fullWidth>
-            <InputLabel id="fillna-label">Milage</InputLabel>
+            {/* <InputLabel id="mileage-label">Mileage</InputLabel> */}
             <TextField
-              id="fillna-input"
-              // value={fillValue}
-              // onChange={handleFillValueChange}
-              label="Milage"
+              id="mileage-input"
+              value={mileage}
+              onChange={(e) => setMileage(e.target.value)}
+              label="Mileage"
             />
           </FormControl>
         </div>
-        <div className={`row-inputs ${!prediction && "smaller"}`}>
-          <FormControlLabel control={<Checkbox />} label="Cruise Control" />
-          <FormControlLabel control={<Checkbox />} label="Air Condition" />
-          <FormControlLabel control={<Checkbox />} label="Navigation" />
-          <FormControlLabel control={<Checkbox />} label="Registered" />
+        <div className={`row-inputs ${!prediction && "smallest"}`}>
+          <FormControlLabel
+            control={<Checkbox checked={cruiseControl} onChange={(e) => setCruiseControl(e.target.checked)} />}
+            label="Cruise Control"
+          />
+          <FormControlLabel
+            control={<Checkbox checked={airCondition} onChange={(e) => setAirCondition(e.target.checked)} />}
+            label="Air Condition"
+          />
+          <FormControlLabel
+            control={<Checkbox checked={navigation} onChange={(e) => setNavigation(e.target.checked)} />}
+            label="Navigation"
+          />
+          <FormControlLabel
+            control={<Checkbox checked={registration} onChange={(e) => setRegistration(e.target.checked)} />}
+            label="Registered"
+          />
         </div>
         <div className={`row-inputs ${!prediction && "smallest"} cols`}>
           <Typography gutterBottom>Parking Sensors</Typography>
           <ToggleButtonGroup
             color="primary"
-            value={alignment}
+            value={parkingSensors}
             exclusive
-            onChange={handleChange}
-            aria-label="Platform"
+            onChange={(event, newAlignment) => setParkingSensors(newAlignment)}
+            aria-label="Parking Sensors"
           >
-            <ToggleButton value="web">Front</ToggleButton>
-            <ToggleButton value="android">Rear</ToggleButton>
-            <ToggleButton value="ios">Front and Rear</ToggleButton>
+            <ToggleButton value="Front">Front</ToggleButton>
+            <ToggleButton value="Rear">Rear</ToggleButton>
+            <ToggleButton value="Front and Rear">Front and Rear</ToggleButton>
           </ToggleButtonGroup>
         </div>
         <div className={`row-inputs ${!prediction && "smallest"} cols`}>
           <Typography gutterBottom>Year</Typography>
           <Slider
             aria-label="Year"
-            defaultValue={30}
+            value={year}
+            onChange={(e, newValue) => setYear(newValue)}
             valueLabelDisplay="auto"
-            shiftStep={30}
             step={1}
             marks={false}
             min={1950}
@@ -250,7 +277,10 @@ const HomePage = () => {
           />
         </div>
         <Button onClick={handlePrediction}>Find cars</Button>
-        <div>{predictionValue}</div>
+        {loading && <div className="loading">Loading Car Price...
+          <CircularProgress />
+          </div>}
+        {!loading && prediction && <div className="predicted-value">Such car would cost around: <span>{Math.round(predictionValue, 0)} BAM</span></div>}
       </div>
       <div className={`home-page-right-side ${prediction && "active"}`}>
         {prediction && (

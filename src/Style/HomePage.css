@@ -12,6 +12,10 @@
   grid-template-columns: 5fr 4fr;
 }
 
+.home-page-paragraph{
+  margin-bottom: 30px;
+}
+
 .home-page-right-side{
   position: relative;
   background-color: 	hsl(221, 100%, 61%);
@@ -192,5 +196,17 @@
   opacity: 0;
   width: 0;
   height: 0;
+}
+
+.predicted-value{
+  font-size: 1.5rem;
+}
+
+.predicted-value span{
+  font-size: 1.1em;
+  color: hsl(221, 100%, 61%);
+  border-radius: 5px;
+  border: 1px solid hsl(221, 100%, 61%);
+  padding: 0 10px;
 }
 
