@@ -1,6 +1,6 @@
 import "../Style/HomePage.css";
 import { Button } from "@mui/material";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   FormControl,
   InputLabel,
@@ -12,49 +12,86 @@ import {
   FormControlLabel,
   Checkbox,
   ToggleButtonGroup,
-  ToggleButton
+  ToggleButton,
 } from "@mui/material";
 
 import CarCard from "../Components/CarCard";
 import CarDetails from "../Components/CarDetails";
 import { motion } from "framer-motion";
+import { usePandas } from "../Context/PandasContext";
 
 const HomePage = () => {
   const [prediction, setPrediction] = useState(false);
-  const [alignment, setAlignment] = useState('Front');
+  const [alignment, setAlignment] = useState("Front");
   const [detailedDescription, setDetailedDescription] = useState(false);
-  const [carType, setCarType] = useState("default-car.png")
+  const [carType, setCarType] = useState("default-car.png");
   const [selectedLogo, setSelectedLogo] = useState("vw");
+  const [predictionValue, setPredictionValue] = useState("");
+  const [predictedVehicles, setPredictedVehicles] = useState([]);
+  const { getPrediction } = usePandas();
+  const [loading, setLoading] = useState(false);
 
-  const changeToAudi = () =>{
-    setCarType("audi-car.png")
+  const handlePrediction = async () => {
+    const data = {
+      type: "SUV",
+      drivetrain: "Prednji",
+      fuel: "Dizel",
+      doors: "4/5",
+      displacement: 2.5,
+      kilowatts: 150,
+      mileage: 50000,
+      year: 2010,
+      rimsize: 18,
+      cruisecontrol: 1,
+      aircondition: 1,
+      navigation: 1,
+      registration: 1,
+      parkingsensors: 1,
+    };
+    setLoading(true);
+    try {
+      const response = await getPrediction(data);
+      setPredictionValue(response.prediction);
+      setPredictedVehicles(response.vehicles);
+      setLoading(false);
+      setPrediction(!prediction);
+    } catch (err) {
+      console.error(err);
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    predictedVehicles && console.log(predictedVehicles);
+  }, [predictedVehicles]);
+
+  const changeToAudi = () => {
+    setCarType("audi-car.png");
     setSelectedLogo("audi");
-  }
-  const changeToVw = () =>{
-    setCarType("default-car.png")
+  };
+  const changeToVw = () => {
+    setCarType("default-car.png");
     setSelectedLogo("vw");
-  }
+  };
 
   const handleDetailedDescription = () => {
     setDetailedDescription(true);
-  }
+  };
 
   const closeDetailedDescription = () => {
     setDetailedDescription(false);
-  }
+  };
 
   const handleChange = (event, newAlignment) => {
     setAlignment(newAlignment);
   };
 
-  const handlePrediction = () => {
-    setPrediction(!prediction);
-  };
-
   return (
     <div className={`home-page-container ${prediction && "active"}`}>
       <div className="car-specs">
-        <h3 className={`heading3 ${prediction && "active"}`}>Lorem ipsum dolor sit amet</h3>
+        <h3 className={`heading3 ${prediction && "active"}`}>
+          Lorem ipsum dolor sit amet
+        </h3>
         <p>
           Ut mattis rutrum nisl et euismod. Nam tincidunt risus id viverra
           porttitor.
@@ -153,8 +190,8 @@ const HomePage = () => {
             </Select>
           </FormControl>
         </div>
-        <div className={`row-inputs ${!prediction && 'smaller'}`}>
-        <FormControl fullWidth>
+        <div className={`row-inputs ${!prediction && "smaller"}`}>
+          <FormControl fullWidth>
             <InputLabel id="aggregation-function-label">Type</InputLabel>
             <Select
               labelId="aggregation-function-label"
@@ -185,8 +222,8 @@ const HomePage = () => {
           <FormControlLabel control={<Checkbox />} label="Navigation" />
           <FormControlLabel control={<Checkbox />} label="Registered" />
         </div>
-        <div className={`row-inputs ${!prediction && 'smallest'} cols`}>
-        <Typography gutterBottom>Parking Sensors</Typography>
+        <div className={`row-inputs ${!prediction && "smallest"} cols`}>
+          <Typography gutterBottom>Parking Sensors</Typography>
           <ToggleButtonGroup
             color="primary"
             value={alignment}
@@ -199,7 +236,7 @@ const HomePage = () => {
             <ToggleButton value="ios">Front and Rear</ToggleButton>
           </ToggleButtonGroup>
         </div>
-        <div className={`row-inputs ${!prediction && 'smallest'} cols`}>
+        <div className={`row-inputs ${!prediction && "smallest"} cols`}>
           <Typography gutterBottom>Year</Typography>
           <Slider
             aria-label="Year"
@@ -213,45 +250,55 @@ const HomePage = () => {
           />
         </div>
         <Button onClick={handlePrediction}>Find cars</Button>
+        <div>{predictionValue}</div>
       </div>
       <div className={`home-page-right-side ${prediction && "active"}`}>
-        {prediction && 
-        <div className="cars-container">
-          {!detailedDescription && <div className="cars-found-container">
-            <CarCard
-              handleDetailedDescription={handleDetailedDescription}/>
-            <CarCard />
-            <CarCard />
-            <CarCard />
-            <CarCard />
-            <CarCard />
-            <CarCard />
-            <CarCard />
-          </div>}
-          {detailedDescription && <CarDetails closeDetailedDescription={closeDetailedDescription}/>}
-        </div>
-        }
+        {prediction && (
+          <div className="cars-container">
+            {!detailedDescription && (
+              <div className="cars-found-container">
+                {predictedVehicles.map((vehicle) => (
+                  <CarCard
+                    key={vehicle.id}
+                    data={vehicle}
+                    handleDetailedDescription={handleDetailedDescription}
+                  />
+                ))}
+              </div>
+            )}
+            {detailedDescription && (
+              <CarDetails closeDetailedDescription={closeDetailedDescription} />
+            )}
+          </div>
+        )}
+
         <motion.img
-          className={`home-page-default-car ${prediction && "active"} ${carType === "audi-car.png" && "audi"}`}
+          className={`home-page-default-car ${prediction && "active"} ${
+            carType === "audi-car.png" && "audi"
+          }`}
           src={carType}
           alt=""
-          key={carType} 
+          key={carType}
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          exit={{ opacity: 0}}
+          exit={{ opacity: 0 }}
           transition={{ duration: 0.5 }}
-          />
+        />
       </div>
-      <img 
-        onClick={changeToVw} 
-        className={`home-page-vw-logo ${selectedLogo === "vw" && "selected-logo"} ${prediction && "prediction-active"}`} 
-        src="vw-logo.png" 
+      <img
+        onClick={changeToVw}
+        className={`home-page-vw-logo ${
+          selectedLogo === "vw" && "selected-logo"
+        } ${prediction && "prediction-active"}`}
+        src="vw-logo.png"
         alt="VW Logo"
       />
-      <img 
-        onClick={changeToAudi} 
-        className={`home-page-audi-logo ${selectedLogo === "audi" && "selected-logo"} ${prediction && "prediction-active"}`} 
-        src="audi-logo.png" 
+      <img
+        onClick={changeToAudi}
+        className={`home-page-audi-logo ${
+          selectedLogo === "audi" && "selected-logo"
+        } ${prediction && "prediction-active"}`}
+        src="audi-logo.png"
         alt="Audi Logo"
       />
     </div>

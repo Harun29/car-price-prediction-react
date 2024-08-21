@@ -3,24 +3,20 @@ import { motion } from 'framer-motion';
 import AutoAwesomeIcon from "@mui/icons-material/AutoAwesome";
 import { useChat } from '../Context/ChatContext';
 
-function CarCard({ handleDetailedDescription }) {
-  const {
-    handleFormSubmit
-  } = useChat();
-  
+function CarCard({ data, handleDetailedDescription }) {
+
   const carDetails = {
-    name: "VW TIGUAN",
-    model: "2.5 TDI",
-    power: "150 KW",
-    year: "2023",
-    mileage: "6000km",
-    price: "75000KM"
+    name: data.manufacturer+ ' ' + data.model,
+    model: data.displacement,
+    power: data.kilowatts + "KW",
+    year: data.year,
+    mileage: data.mileage + "km",
+    price: data.price + "KM"
   };
 
   const handleIconClick = (e) => {
     e.stopPropagation();
     const message = `Tell me more about the (maximum 50 words) ${carDetails.name}.`;
-    handleFormSubmit(e, message);
   };
 
   const CarCardContainer = styled(motion.div)(({ theme }) => ({

@@ -13,6 +13,7 @@
   align-items: center;
   font-family: 'Poppins', sans-serif;
   transition: all 0.3 ease;
+  z-index: 100;
 }
 
 .chat h3{
@@ -111,4 +112,24 @@
   background-color: rgba(255, 255, 255, 0.9);
   align-self: flex-start;
   color: black;
+}
+
+.open-chat{
+  position: fixed;
+  bottom: 15px;
+  right: 110px;
+  z-index: 100;
+}
+
+.open-chat svg{
+  font-size: 2rem;
+}
+
+.open-chat{
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.open-chat:hover{
+  scale: 1.1;
 }

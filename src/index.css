@@ -39,21 +39,3 @@ code {
   right: 15px;
 }
 
-.open-chat{
-  position: fixed;
-  bottom: 15px;
-  right: 110px;
-}
-
-.open-chat svg{
-  font-size: 2rem;
-}
-
-.open-chat{
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
-
-.open-chat:hover{
-  scale: 1.1;
-}
