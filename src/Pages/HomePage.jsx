@@ -90,9 +90,6 @@ const HomePage = () => {
     }
   };
 
-  useEffect(() => {
-    predictedVehicles && console.log(predictedVehicles);
-  }, [predictedVehicles]);
 
   const changeToAudi = () => {
     setCarType("audi-car.png");
@@ -116,6 +113,13 @@ const HomePage = () => {
   const handleChange = (event, newAlignment) => {
     setAlignment(newAlignment);
   };
+
+  useEffect(() => {
+    prediction && handlePrediction();
+  }, [year, parkingSensors, kilowatts, mileage, cruiseControl, airCondition, navigation, registration, carCategory, displacement, fuelType, transmission, doors, drivetrain, mileage])
+
+  // TODO add loading for useEffect above
+  // TODO fix positioning of car logo when active
 
   return (
     <div className={`home-page-container ${prediction && "active"}`}>
@@ -231,7 +235,7 @@ const HomePage = () => {
               <MenuItem value="">Any</MenuItem>
               <MenuItem value="SUV">SUV</MenuItem>
               <MenuItem value="Hatchback">Hatchback</MenuItem>
-              <MenuItem value="Limuzina">Limuzina</MenuItem>
+              <MenuItem value="Sedan">Sedan</MenuItem>
             </Select>
           </FormControl>
           <FormControl fullWidth>
