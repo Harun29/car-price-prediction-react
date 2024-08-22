@@ -7,23 +7,18 @@ import QueryStatsIcon from "@mui/icons-material/QueryStats";
 import PriceChangeIcon from "@mui/icons-material/PriceChange";
 import AssignmentIcon from "@mui/icons-material/Assignment";
 import BarChartIcon from "@mui/icons-material/BarChart";
-import TableChartIcon from '@mui/icons-material/TableChart';
+import TableChartIcon from "@mui/icons-material/TableChart";
 import MarketOverview from "../Charts/Chart Components/MarketOverview";
 
 const DataAnalysisPage = () => {
-
   const [selectedLogo, setSelectedLogo] = useState("vw");
 
-
-
-  const changeToAudi = () =>{
+  const changeToAudi = () => {
     setSelectedLogo("audi");
-  }
-  const changeToVw = () =>{
+  };
+  const changeToVw = () => {
     setSelectedLogo("vw");
-  }
-
-
+  };
 
   const NavbarContainer = styled("div")(({ theme }) => ({
     boxShadow:
@@ -65,19 +60,18 @@ const DataAnalysisPage = () => {
       </NavbarContainer>
       <NavbarContainer className="data-analysis-top-navbar logos">
         <div>
-        <img 
-        onClick={changeToAudi} 
-        className={selectedLogo === "audi" && "data-selected-logo"}
-        src="audi-logo.png" 
-        alt="Audi Logo" 
-      />
-        <img 
-        onClick={changeToVw} 
-        className={selectedLogo === "vw" && "data-selected-logo"} 
-        src="vw-logo.png" 
-        alt="VW Logo" 
-      />
-      
+          <img
+            onClick={changeToAudi}
+            className={selectedLogo === "audi" && "data-selected-logo"}
+            src="audi-logo.png"
+            alt="Audi Logo"
+          />
+          <img
+            onClick={changeToVw}
+            className={selectedLogo === "vw" && "data-selected-logo"}
+            src="vw-logo.png"
+            alt="VW Logo"
+          />
         </div>
       </NavbarContainer>
       <MarketOverview />

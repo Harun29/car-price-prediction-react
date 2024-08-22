@@ -8,12 +8,17 @@ import AveragePriceHistogram from "../Market Overview/ModelsAveragePrice";
 import ModelsPriceBoxPlot from "../Market Overview/ModelsPriceBox";
 import PriceDistributionLineChart from "../Market Overview/LinePlot";
 import { useState, useEffect } from "react";
+import AutoAwesomeIcon from "@mui/icons-material/AutoAwesome";
+import "../../Style/DataAnalysis.css"
 
 const MarketOverview = () => {
   const [meanPrice, setMeanPrice] = useState(0);
   const [medianPrice, setMedianPrice] = useState(0);
   const [firsQuartile, setFirstQuartile] = useState(0);
   const [thirdQuartile, setThirdQuartile] = useState(0);
+  const [loading, setLoading] = useState(true);
+
+  const [mostPopularModelsDescription, setMostPopularModelsDescription] = useState(false)
 
   const getData = async () => {
     const url = "http://127.0.0.1:5000/get_prices";
@@ -34,6 +39,7 @@ const MarketOverview = () => {
       setMedianPrice(result.median_price);
       setFirstQuartile(result.first_quantile);
       setThirdQuartile(result.third_quantile);
+      setLoading(false)
     } catch (error) {
       console.error("Error:", error);
     }
@@ -53,23 +59,32 @@ const MarketOverview = () => {
     backgroundColor: theme.palette.background.paper,
   }));
 
+  const handlePrediction = (model) => {
+    if(model === "mostPopularModels"){
+      setMostPopularModelsDescription(true)
+    }
+  }
+
+  // TODO move handle prediction to chart component so page does not refresh
+
   return (
     <div className="data-analysis-container">
       <h3 className="data-analysis-headers">Top Models by Popularity</h3>
       <HistogramContainer className="plot-box model-ranking">
+        <AutoAwesomeIcon className="get-prediction" onClick={() => handlePrediction("mostPopularModels")}/>
         <span>most popular models</span>
-        <ModelRankingPieChart />
+        {!loading && <ModelRankingPieChart getDescription={mostPopularModelsDescription}/>}
       </HistogramContainer>
 
       <HistogramContainer className="plot-box model-listings">
         <span>model listings</span>
-        <ModelListingsChart />
+        {!loading && <ModelListingsChart />}
       </HistogramContainer>
 
       <h3 className="data-analysis-headers">Price Distribution</h3>
       <HistogramContainer className="plot-box histplot">
         <span>Overall Price Distribution</span>
-        <MyHistogram />
+        {!loading && <MyHistogram />}
       </HistogramContainer>
 
       <DataCard
@@ -95,20 +110,20 @@ const MarketOverview = () => {
 
       <HistogramContainer className="plot-box price-range">
         <span>range of car prices</span>
-        <PriceRangeHorizontalBarChart />
+        {!loading && <PriceRangeHorizontalBarChart />}
       </HistogramContainer>
       <h3 className="data-analysis-headers">Price by Model</h3>
       <HistogramContainer className="plot-box average-price">
         <span>average price for 25 most popular models</span>
-        <AveragePriceHistogram />
+        {!loading && <AveragePriceHistogram />}
       </HistogramContainer>
       <HistogramContainer className="plot-box price-boxplot">
         <span>price variance for 10 most popular models</span>
-        <ModelsPriceBoxPlot />
+        {!loading && <ModelsPriceBoxPlot />}
       </HistogramContainer>
       <HistogramContainer className="plot-box price-line">
         <span>Price distribution for 5 most popular models</span>
-        <PriceDistributionLineChart />
+        {!loading && <PriceDistributionLineChart />}
       </HistogramContainer>
     </div>
   );

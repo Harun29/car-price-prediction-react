@@ -28,6 +28,27 @@
   font-family: 'Poppins', sans-serif;
   transition: all 0.3s ease;
   text-align: center;
+  position: relative;
+}
+
+.plot-box .get-prediction{
+  opacity: 0;
+  width: 0;
+  height: 0;
+  transition: scale 0.3s ease;
+}
+
+.plot-box:hover .get-prediction{
+  position: absolute;
+  top: 0;
+  right: 0;
+  opacity: 1;
+  width: 30px;
+  height: 30px;
+}
+
+.plot-box .get-prediction:hover{
+  scale: 1.1;
 }
 
 .data-analysis-headers{
@@ -196,4 +217,36 @@
   font-size: 1.7rem;
   margin-right: 30px;
   margin-left: 30px;
+}
+
+.plot-holder{
+  position: relative !important;
+  overflow: hidden;
+}
+
+.plot-description{
+  position: absolute;
+  height: 100%;
+  overflow-y: scroll;
+  top: 0;
+  left: 0;
+  right: 0;
+  background-color: black;
+  background-color: inherit;
+  border-radius: 10px;
+  scrollbar-width: none; /* For Firefox */
+  -ms-overflow-style: none;  /* For Internet Explorer and Edge */
+}
+
+.plot-description::-webkit-scrollbar {
+  display: none; /* For Chrome, Safari, and Opera */
+}
+
+.plot-description h3{
+  font-size: 1.5rem;
+}
+
+.plot-description p{
+  font-size: 1.2rem;
+  text-align: start;
 }
