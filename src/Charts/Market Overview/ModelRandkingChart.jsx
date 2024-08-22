@@ -1,21 +1,42 @@
 import { ResponsivePie } from '@nivo/pie';
 import React from 'react';
-import useNivoTheme from "../NivoTheme"
+import useNivoTheme from "../../NivoTheme"
 import { useTheme } from '@emotion/react';
+import { useState, useEffect } from 'react';
 
 const ModelRankingPieChart = () => {
-  const data = [
-    { id: 'Model A', value: 120 },
-    { id: 'Model B', value: 90 },
-    { id: 'Model C', value: 80 },
-    { id: 'Model D', value: 70 },
-    { id: 'Model E', value: 50 },
-  ];
+  const [data, setData] = useState()
+
+  const getData = async () => {
+    const url = "http://127.0.0.1:5000/model_ranking";
+    try {
+      const response = await fetch(url, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      const result = await response.json();
+      setData(result);
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
+
+  useEffect(() => {
+    getData()
+  }, [])
+
   const nivoTheme = useNivoTheme()
   const theme = useTheme()
 
   return (
-
+    data &&
     <div style={{ height: '90%', width: '100%' }}>
       <ResponsivePie
         data={data}

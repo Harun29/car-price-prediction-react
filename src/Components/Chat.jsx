@@ -37,6 +37,7 @@ const Chat = () => {
   }, [chatOpen]);
 
   const [userMessage, setUserMessage] = useState("");
+
   const handleUserMessageChange = (event) => {
     event.preventDefault();
     setUserMessage(event.target.value);

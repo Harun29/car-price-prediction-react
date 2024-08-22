@@ -3,9 +3,49 @@ import { motion } from "framer-motion";
 import { Box, Typography } from "@mui/material";
 import CheckIcon from "@mui/icons-material/Check";
 import CloseIcon from "@mui/icons-material/Close";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import { OpenAI } from "openai";
+import { useTheme } from "@emotion/react";
 
 function CarDetails({ data, carImage, closeDetailedDescription }) {
+
+  const [carDescription, setCarDescription] = useState("Getting Jarvis' description...");
+  const theme = useTheme();
+
+  const openai = new OpenAI({
+    apiKey: process.env.REACT_APP_OPENAI_API_KEY,
+    dangerouslyAllowBrowser: true,
+  });
+
+  const handleSendMessage = async () => {
+    const formatCarData = (data) => {
+      return Object.entries(data)
+        .map(([key, value]) => `${key}: ${value}`)
+        .join(", ");
+    };
+    
+    const formattedData = formatCarData(data);
+    const message = `Give me some clear description about this car. Use maximum of 100 words. Here is data about the car: ${formattedData}`
+    console.log(message)
+    try {
+      const completion = await openai.chat.completions.create({
+        model: "gpt-4o-mini",
+        messages: [
+          { role: "system", content: "You are a helpful assistant." },
+          { role: "user", content: message },
+        ],
+      });
+
+      const aiMessage = completion.choices[0].message.content;
+      setCarDescription(aiMessage);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  useEffect(() => {
+    data && handleSendMessage()
+  }, [data])
 
   const CarCardContainer = styled(motion.div)(({ theme }) => ({
     width: "85%",
@@ -212,11 +252,18 @@ function CarDetails({ data, carImage, closeDetailedDescription }) {
             <span> {data.drivetrain || "All-wheel"}</span>
           </Typography>
         </RowStatLast>
-        <Price>{data.price || "100000 USD"}</Price>
+        <Price>{data.price} KM</Price>
         <Description>
           <Typography variant="body2">
-            {data.title ||
-              "A cutting-edge electric car with top-tier performance and features."}
+            <span style={{color: theme.palette.text.secondary}}>
+            Orignial Title: 
+            </span>
+            {" "}
+            {data.title}
+          </Typography>
+          <Typography variant="body2">
+            <span style={{color: theme.palette.text.secondary}}> Jarvis' description:</span> {"\n"}
+            {carDescription}
           </Typography>
         </Description>
       </RowStatsContainer>

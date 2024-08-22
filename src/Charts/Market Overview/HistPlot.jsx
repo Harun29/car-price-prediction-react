@@ -1,18 +1,41 @@
 import { ResponsiveBar } from '@nivo/bar';
-import useNivoTheme from '../NivoTheme';
+import useNivoTheme from '../../NivoTheme';
+import { useState, useEffect } from 'react';
 
 const MyHistogram = () => {
-  const data = [
-    { priceRange: '$0-$100', count: 20 },
-    { priceRange: '$100-$200', count: 35 },
-    { priceRange: '$200-$300', count: 40 },
-    { priceRange: '$300-$400', count: 40 },
-    { priceRange: '$400-$500', count: 40 }
-  ];
+
+  const [data, setData] = useState()
+
+  const getData = async () => {
+    const url = "http://127.0.0.1:5000/hist_plot";
+    try {
+      const response = await fetch(url, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      const result = await response.json();
+      console.log("Prediction:", result.prediction);
+      console.log("Filtered Vehicles:", result.vehicles);
+      setData(result);
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
+
+  useEffect(() => {
+    getData()
+  }, [])
 
   const nivoTheme=useNivoTheme()
 
-  return (
+  return (data &&
     <div style={{ width: '100%', height: '90%' }}>
       <ResponsiveBar
         data={data}

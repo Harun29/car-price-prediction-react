@@ -2,7 +2,7 @@ import { styled, useTheme } from "@mui/material/styles";
 import { Typography } from "@mui/material";
 
 const DataCard = ({ title, value, color }) => {
-  const theme = useTheme(); // Access the current theme
+  const theme = useTheme();
 
   const HistogramContainer = styled("div")(({ theme }) => ({
     boxShadow:

@@ -1,35 +1,47 @@
 import React from "react";
 import { ResponsiveLine } from "@nivo/line";
-import useNivoTheme from "../NivoTheme";
+import useNivoTheme from "../../NivoTheme";
+import { useState, useEffect } from "react";
 
 const PriceDistributionLineChart = () => {
   const nivoTheme = useNivoTheme();
 
-  const priceData = [
-    {
-      id: "Price Range",
-      data: [
-        { x: "Model A", y: 25000 },
-        { x: "Model B", y: 45000 },
-        { x: "Model C", y: 15000 },
-        // Add other models here
-      ],
-    },
-    {
-      id: "Median Price",
-      data: [
-        { x: "Model A", y: 30000 },
-        { x: "Model B", y: 50000 },
-        { x: "Model C", y: 20000 },
-        // Add other models here
-      ],
-    },
-  ];
 
-  return (
+  const [data, setData] = useState()
+
+  const getData = async () => {
+    const url = "http://127.0.0.1:5000/get_line_plot_data";
+    try {
+      const response = await fetch(url, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      const result = await response.json();
+      setData(result);
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
+
+  useEffect(() => {
+    getData()
+  }, [])
+
+  useEffect(() => {
+    data && console.log("aaaaa: ",data)
+  }, [data])
+
+  return (data &&
     <div style={{ height: "90%", width: "100%" }}>
       <ResponsiveLine
-        data={priceData}
+        data={data}
         theme={nivoTheme}
         margin={{ top: 50, right: 130, bottom: 50, left: 60 }}
         xScale={{ type: "point" }}

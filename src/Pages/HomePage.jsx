@@ -53,12 +53,7 @@ const HomePage = () => {
   const handlePrediction = async () => {
     const data = {
       type: carCategory,
-      drivetrain:
-        drivetrain === "FWD"
-          ? "Prednji"
-          : drivetrain === "RWD"
-          ? "Zadnji"
-          : "Sva četiri",
+      drivetrain,
       fuel: fuelType,
       doors,
       displacement: parseFloat(displacement),
@@ -170,11 +165,11 @@ const HomePage = () => {
               onChange={(e) => setFuelType(e.target.value)}
             >
               <MenuItem value="">Any</MenuItem>
-              <MenuItem value="Dizel">Dizel</MenuItem>
-              <MenuItem value="Benzin">Benzin</MenuItem>
-              <MenuItem value="Hibrid">Hibrid</MenuItem>
-              <MenuItem value="Elektro">Elektro</MenuItem>
-              <MenuItem value="Plin">Plin</MenuItem>
+              <MenuItem value="Diesel">Diesel</MenuItem>
+              <MenuItem value="Petrol">Petrol</MenuItem>
+              <MenuItem value="Hybrid">Hybrid</MenuItem>
+              <MenuItem value="Electro">Electro</MenuItem>
+              <MenuItem value="Gas">Gas</MenuItem>
             </Select>
           </FormControl>
           <FormControl fullWidth>
@@ -187,8 +182,8 @@ const HomePage = () => {
               onChange={(e) => setTransmission(e.target.value)}
             >
               <MenuItem value="">Any</MenuItem>
-              <MenuItem value="Manual">Manuelni</MenuItem>
-              <MenuItem value="Automatic">Automatik</MenuItem>
+              <MenuItem value="Manual">Manual</MenuItem>
+              <MenuItem value="Automatic">Automatic</MenuItem>
             </Select>
           </FormControl>
         </div>

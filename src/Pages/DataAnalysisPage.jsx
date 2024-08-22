@@ -1,26 +1,58 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@mui/material";
 import { styled, useTheme } from "@mui/material/styles";
 import { usePandas } from "../Context/PandasContext";
-import MyHistogram from "../Charts/HistPlot";
+import MyHistogram from "../Charts/Market Overview/HistPlot";
 import "../Style/DataAnalysis.css";
 import { Typography } from "@mui/material";
-import PriceRangeHorizontalBarChart from "../Charts/ResponsiveBar";
-import DataCard from "../Charts/DataCard";
-import ModelRankingPieChart from "../Charts/ModelRandkingChart";
+import PriceRangeHorizontalBarChart from "../Charts/Market Overview/ResponsiveBar";
+import DataCard from "../Charts/Market Overview/DataCard";
+import ModelRankingPieChart from "../Charts/Market Overview/ModelRandkingChart";
 import QueryStatsIcon from "@mui/icons-material/QueryStats";
 import PriceChangeIcon from "@mui/icons-material/PriceChange";
 import AssignmentIcon from "@mui/icons-material/Assignment";
 import BarChartIcon from "@mui/icons-material/BarChart";
-import ModelListingsChart from "../Charts/ModelListings";
-import AveragePriceHistogram from "../Charts/ModelsAveragePrice";
-import ModelsPriceBoxPlot from "../Charts/ModelsPriceBox";
-import PriceDistributionLineChart from "../Charts/LinePlot";
+import ModelListingsChart from "../Charts/Market Overview/ModelListings";
+import AveragePriceHistogram from "../Charts/Market Overview/ModelsAveragePrice";
+import ModelsPriceBoxPlot from "../Charts/Market Overview/ModelsPriceBox";
+import PriceDistributionLineChart from "../Charts/Market Overview/LinePlot";
 import TableChartIcon from '@mui/icons-material/TableChart';
 
 const DataAnalysisPage = () => {
 
   const [selectedLogo, setSelectedLogo] = useState("vw");
+  const [meanPrice, setMeanPrice] = useState(0);
+  const [medianPrice, setMedianPrice] = useState(0);
+  const [firsQuartile, setFirstQuartile] = useState(0);
+  const [thirdQuartile, setThirdQuartile] = useState(0);
+
+  const getData = async () => {
+    const url = "http://127.0.0.1:5000/get_prices";
+    try {
+      const response = await fetch(url, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      const result = await response.json();
+      setMeanPrice(result.mean_price);
+      setMedianPrice(result.median_price);
+      setFirstQuartile(result.first_quantile);
+      setThirdQuartile(result.third_quantile);
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
+
+  useEffect(() => {
+    getData()
+  }, [])
 
   const changeToAudi = () =>{
     setSelectedLogo("audi");
@@ -112,10 +144,10 @@ const DataAnalysisPage = () => {
           <MyHistogram />
         </HistogramContainer>
 
-        <DataCard title="Average Price" value="KM 17500" color="#4caf50" />
-        <DataCard title="Median Price" value="KM 15444" color="#2196f3" />
-        <DataCard title="25% Price" value="KM 32400" color="#ff9800" />
-        <DataCard title="75% Price" value="KM 9500" color="#f44336" />
+        <DataCard title="Average Price" value={`KM ${meanPrice}`} color="#4caf50" />
+        <DataCard title="Median Price" value={`KM ${medianPrice}`} color="#2196f3" />
+        <DataCard title="25% Price" value={`KM ${firsQuartile}`} color="#ff9800" />
+        <DataCard title="75% Price" value={`KM ${thirdQuartile}`} color="#f44336" />
 
         <HistogramContainer className="plot-box price-range">
           <span>range of car prices</span>
