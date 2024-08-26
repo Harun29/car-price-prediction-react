@@ -8,7 +8,6 @@ import AveragePriceHistogram from "../Market Overview/ModelsAveragePrice";
 import ModelsPriceBoxPlot from "../Market Overview/ModelsPriceBox";
 import PriceDistributionLineChart from "../Market Overview/LinePlot";
 import { useState, useEffect } from "react";
-import AutoAwesomeIcon from "@mui/icons-material/AutoAwesome";
 import "../../Style/DataAnalysis.css"
 
 const MarketOverview = () => {
@@ -17,8 +16,6 @@ const MarketOverview = () => {
   const [firsQuartile, setFirstQuartile] = useState(0);
   const [thirdQuartile, setThirdQuartile] = useState(0);
   const [loading, setLoading] = useState(true);
-
-  const [mostPopularModelsDescription, setMostPopularModelsDescription] = useState(false)
 
   const getData = async () => {
     const url = "http://127.0.0.1:5000/get_prices";
@@ -59,11 +56,7 @@ const MarketOverview = () => {
     backgroundColor: theme.palette.background.paper,
   }));
 
-  const handlePrediction = (model) => {
-    if(model === "mostPopularModels"){
-      setMostPopularModelsDescription(true)
-    }
-  }
+  
 
   // TODO move handle prediction to chart component so page does not refresh
 
@@ -71,9 +64,8 @@ const MarketOverview = () => {
     <div className="data-analysis-container">
       <h3 className="data-analysis-headers">Top Models by Popularity</h3>
       <HistogramContainer className="plot-box model-ranking">
-        <AutoAwesomeIcon className="get-prediction" onClick={() => handlePrediction("mostPopularModels")}/>
         <span>most popular models</span>
-        {!loading && <ModelRankingPieChart getDescription={mostPopularModelsDescription}/>}
+        {!loading && <ModelRankingPieChart/>}
       </HistogramContainer>
 
       <HistogramContainer className="plot-box model-listings">

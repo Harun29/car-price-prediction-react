@@ -31,14 +31,16 @@
   position: relative;
 }
 
-.plot-box .get-prediction{
+.plot-holder .get-prediction{
+  position: absolute;
   opacity: 0;
   width: 0;
   height: 0;
   transition: scale 0.3s ease;
+  z-index: 1000;
 }
 
-.plot-box:hover .get-prediction{
+.plot-holder:hover .get-prediction{
   position: absolute;
   top: 0;
   right: 0;
@@ -47,7 +49,7 @@
   height: 30px;
 }
 
-.plot-box .get-prediction:hover{
+.plot-holder .get-prediction:hover{
   scale: 1.1;
 }
 
@@ -232,7 +234,6 @@
   left: 0;
   right: 0;
   background-color: black;
-  background-color: inherit;
   border-radius: 10px;
   scrollbar-width: none; /* For Firefox */
   -ms-overflow-style: none;  /* For Internet Explorer and Edge */
