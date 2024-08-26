@@ -31,7 +31,7 @@
   position: relative;
 }
 
-.plot-holder .get-prediction{
+.get-prediction{
   position: absolute;
   opacity: 0;
   width: 0;
@@ -40,7 +40,11 @@
   z-index: 1000;
 }
 
-.plot-holder:hover .get-prediction{
+.get-prediction.data-card{
+  margin: 15px;
+}
+
+.plot-holder:hover .get-prediction, .small-card:hover .get-prediction{
   position: absolute;
   top: 0;
   right: 0;
@@ -86,13 +90,13 @@
 
 .average-price{
   grid-column: 1/3;
-  grid-row: 8/10;
+  grid-row: 7/9;
   height: 100%;
 }
 
 .price-boxplot{
   grid-column: 3/5;
-  grid-row: 8/9;
+  grid-row: 7/8;
   height: 500px;
 }
 
@@ -105,6 +109,8 @@
   padding: 20px;
   transition: all 0.3s ease;
   cursor: pointer;
+  position: relative;
+  overflow: hidden;
 }
 
 .small-card:hover{
@@ -223,7 +229,6 @@
 
 .plot-holder{
   position: relative !important;
-  overflow: hidden;
 }
 
 .plot-description{
@@ -237,6 +242,15 @@
   border-radius: 10px;
   scrollbar-width: none; /* For Firefox */
   -ms-overflow-style: none;  /* For Internet Explorer and Edge */
+}
+
+.plot-description.data-card{
+  margin: 15px;
+  height: 90%;
+}
+
+.plot-description.data-card h3{
+  margin-top: 0;
 }
 
 .plot-description::-webkit-scrollbar {

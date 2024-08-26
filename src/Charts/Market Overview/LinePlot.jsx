@@ -2,12 +2,73 @@ import React from "react";
 import { ResponsiveLine } from "@nivo/line";
 import useNivoTheme from "../../NivoTheme";
 import { useState, useEffect } from "react";
+import OpenAI from "openai";
+import AutoAwesomeIcon from "@mui/icons-material/AutoAwesome";
+import { motion } from "framer-motion";
+import { useTheme } from "@emotion/react";
 
 const PriceDistributionLineChart = () => {
   const nivoTheme = useNivoTheme();
-
-
   const [data, setData] = useState()
+  const [aiDescription, setAiDescription] = useState(
+    "Getting Jarvis' description..."
+  );
+  const [description, setDescription] = useState(false);
+  const theme = useTheme();
+
+  const openai = new OpenAI({
+    apiKey: process.env.REACT_APP_OPENAI_API_KEY,
+    dangerouslyAllowBrowser: true,
+  });
+
+  const handleSendMessage = async () => {
+    if (!data) return;
+  
+    const dataString = data
+      .map(
+        (series) =>
+          `${series.id}: ` +
+          series.data.map((item) => `${item.x} at ${item.y}`).join(", ")
+      )
+      .join("; ");
+  
+    const message = `You are an AI assistant analyzing a line chart that compares car models across different price ranges. The chart shows the following data: ${dataString}. Describe how the prices of these models compare across the different series ("Price Range", "Median Price", "75% Price"), identify any notable trends, and discuss any significant differences between the models. Provide insights on the distribution of prices for each model. Make it a maximum of 100 words!`;
+  
+    try {
+      const completion = await openai.chat.completions.create({
+        model: "gpt-4o-mini",
+        messages: [
+          { role: "system", content: "You are a helpful assistant." },
+          { role: "user", content: message },
+        ],
+      });
+  
+      const aiMessage = completion.choices[0].message.content;
+      setAiDescription(aiMessage);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+  
+
+  useEffect(() => {
+    if (description && aiDescription === "Getting Jarvis' description...") {
+      handleSendMessage();
+    }
+  }, [description]);
+
+  const handleDescription = () => {
+    setDescription(false);
+  };
+
+  const handlePrediction = (e) => {
+    e.stopPropagation();
+    if (aiDescription === "Getting Jarvis' description...") {
+      setDescription(true);
+    } else {
+      setDescription(true);
+    }
+  };
 
   const getData = async () => {
     const url = "http://127.0.0.1:5000/get_line_plot_data";
@@ -39,7 +100,13 @@ const PriceDistributionLineChart = () => {
   }, [data])
 
   return (data &&
-    <div style={{ height: "90%", width: "100%" }}>
+    <div className="plot-holder" style={{ height: "90%", width: "100%" }}>
+      {!description && (
+          <AutoAwesomeIcon
+            className="get-prediction"
+            onClick={(e) => handlePrediction(e)}
+          />
+        )}
       <ResponsiveLine
         data={data}
         theme={nivoTheme}
@@ -98,6 +165,20 @@ const PriceDistributionLineChart = () => {
         role="application"
         ariaLabel="Line chart showing price distribution"
       />
+      {description && (
+          <motion.div
+            initial={{ x: "-100%", opacity: 0 }}
+            animate={{ x: 0, opacity: 1 }}
+            exit={{ x: "-100%", opacity: 0 }}
+            transition={{ duration: 0.5 }}
+            onClick={handleDescription}
+            className="plot-description"
+            style={{ backgroundColor: theme.palette.background.paper }}
+          >
+            <h3>Jarvis' description:</h3>
+            <p>{aiDescription}</p>
+          </motion.div>
+        )}
     </div>
   );
 };

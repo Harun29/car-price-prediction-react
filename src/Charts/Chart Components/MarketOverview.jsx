@@ -100,10 +100,10 @@ const MarketOverview = () => {
         color="#f44336"
       />
 
-      <HistogramContainer className="plot-box price-range">
+      {/* <HistogramContainer className="plot-box price-range">
         <span>range of car prices</span>
         {!loading && <PriceRangeHorizontalBarChart />}
-      </HistogramContainer>
+      </HistogramContainer> */}
       <h3 className="data-analysis-headers">Price by Model</h3>
       <HistogramContainer className="plot-box average-price">
         <span>average price for 25 most popular models</span>
