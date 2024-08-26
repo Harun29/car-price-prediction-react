@@ -265,3 +265,11 @@
   font-size: 1.2rem;
   text-align: start;
 }
+
+/* price influencers */
+
+.plot-box.heat-map{
+  grid-column: 1/4;
+  grid-row: 2/4;
+  height: 600px;
+}

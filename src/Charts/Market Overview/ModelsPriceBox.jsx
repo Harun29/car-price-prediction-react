@@ -33,7 +33,6 @@ const ModelsPriceBoxPlot = () => {
   const handleSendMessage = async () => {
     if (!data) return;
   
-    // Function to calculate quartiles
     const getQuartiles = (values) => {
       values.sort((a, b) => a - b);
       const q1 = values[Math.floor((values.length / 4))];
@@ -42,7 +41,6 @@ const ModelsPriceBoxPlot = () => {
       return { q1, median, q3 };
     };
   
-    // Aggregate data by group and subgroup
     const groupedData = data.reduce((acc, item) => {
       const key = `${item.group} - ${item.subgroup}`;
       if (!acc[key]) {
@@ -52,7 +50,6 @@ const ModelsPriceBoxPlot = () => {
       return acc;
     }, {});
   
-    // Create data string for the message
     const dataString = Object.entries(groupedData)
       .map(([key, values]) => {
         const min = Math.min(...values);
@@ -62,7 +59,6 @@ const ModelsPriceBoxPlot = () => {
       })
       .join("; ");
   
-    // Construct the message
     const message = `You are an AI assistant analyzing a box plot that compares car models by their prices. The plot shows the following data: ${dataString}. Describe the price distribution across these models, identify any notable trends or outliers, and provide insights on the relative pricing of the models. Make it a maximum of 150 words!`;
   
     try {

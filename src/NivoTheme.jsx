@@ -25,7 +25,7 @@ const useNivoTheme = () => {
     legends: {
       text: {
         fill: theme.palette.text.primary,
-      },
+      }
     },
     grid: {
       line: {
