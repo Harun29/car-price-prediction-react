@@ -9,9 +9,11 @@ import AssignmentIcon from "@mui/icons-material/Assignment";
 import BarChartIcon from "@mui/icons-material/BarChart";
 import TableChartIcon from "@mui/icons-material/TableChart";
 import MarketOverview from "../Charts/Chart Components/MarketOverview";
+import PriceInfluencers from "../Charts/Chart Components/PriceInfluencers";
 
 const DataAnalysisPage = () => {
   const [selectedLogo, setSelectedLogo] = useState("vw");
+  const [selectedData, setSelectedData] = useState("market-overview")
 
   const changeToAudi = () => {
     setSelectedLogo("audi");
@@ -53,6 +55,10 @@ const DataAnalysisPage = () => {
   //   }
   // };
 
+  const handleSelectedData = (type) => {
+    setSelectedData(type)
+  }
+
   return (
     <div className="data-analysis">
       <NavbarContainer className="data-analysis-top-navbar heading">
@@ -74,28 +80,25 @@ const DataAnalysisPage = () => {
           />
         </div>
       </NavbarContainer>
-      <MarketOverview />
+      {selectedData === "market-overview" && <MarketOverview />}
+      {selectedData === "price-influencers" && <PriceInfluencers />}
       <div className="right-side-data-analysis">
         <div className="data-tabs">
           <span className="data-analysis-header">Data Analysis</span>
           <div className="horizontal-line"></div>
-          <Button>
+          <Button onClick={() => handleSelectedData('basic-overview')}>
             <BarChartIcon />
             Basic Overview
           </Button>
-          <Button>
+          <Button onClick={() => handleSelectedData('market-overview')}>
             <QueryStatsIcon />
             Market Overview
           </Button>
-          <Button>
+          <Button onClick={() => handleSelectedData('price-influencers')}>
             <PriceChangeIcon />
             Price Influencers
           </Button>
-          <Button>
-            <AssignmentIcon />
-            Specifications and Features
-          </Button>
-          <Button>
+          <Button onClick={() => handleSelectedData('read-data')}>
             <TableChartIcon />
             Read Data
           </Button>

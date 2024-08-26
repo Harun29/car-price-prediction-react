@@ -71,7 +71,7 @@ const images = [
 
 function selectCarImage(model, year) {
   const parseImageFilename = (filename) => {
-    const modelMatch = filename.match(/^[a-zA-Z\s]+/);
+    const modelMatch = filename.match(/^[\w\s\-!]+/);
     const yearRangeMatch = filename.match(/\((\d{4})-(\d{4})\)/);
 
     if (modelMatch && yearRangeMatch) {
@@ -89,13 +89,15 @@ function selectCarImage(model, year) {
 
   for (let image of images) {
     const parsed = parseImageFilename(image);
-    if (parsed && parsed.model.toLowerCase().includes(modelLowerCase)) {
-      if (year >= parsed.startYear && year <= parsed.endYear) {
-        return `/CarPictures/${image}`;
+    if (parsed) {
+      console.log(`Parsed model: ${parsed.model}, Start Year: ${parsed.startYear}, End Year: ${parsed.endYear}`);
+      if (parsed.model.toLowerCase().includes(modelLowerCase)) {
+        if (year >= parsed.startYear && year <= parsed.endYear) {
+          return `/CarPictures/${image}`;
+        }
       }
     }
   }
-
   return "/CarPictures/default-car.png";
 }
 
@@ -111,6 +113,7 @@ function CarCard({ data, handleDetailedDescription }) {
   };
 
   const carImage = selectCarImage(data.model, data.year);
+  console.log(carImage)
 
   const handleIconClick = (e) => {
     e.stopPropagation();
