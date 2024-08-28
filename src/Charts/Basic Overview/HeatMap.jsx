@@ -131,6 +131,15 @@ const HeatMap = () => {
             legendOffset: -72,
             truncateTickAt: 0
         }}
+        axisRight={{
+          tickSize: 5,
+          tickPadding: 5,
+          tickRotation: 0,
+          legend: 'country',
+          legendPosition: 'middle',
+          legendOffset: 70,
+          truncateTickAt: 0
+      }}
         colors={{
           type: 'diverging',
           scheme: 'red_yellow_blue',

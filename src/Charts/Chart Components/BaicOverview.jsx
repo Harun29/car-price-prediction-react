@@ -5,7 +5,7 @@ import { styled } from "@mui/material/styles";
 import HeatMap from "../Basic Overview/HeatMap";
 import MapComponent from "../../Components/MapComponent";
 
-const PriceInfluencers = () => {
+const BasicOverview = () => {
 
   const theme = useTheme();
   const [loading, setLoading] = useState(false);
@@ -22,7 +22,7 @@ const PriceInfluencers = () => {
 
   return (
     <div className="data-analysis-container">
-      <h3 className="data-analysis-headers">Main Correlations</h3>
+      <h3 className="data-analysis-headers">Quick Overview</h3>
       <HistogramContainer className="plot-box heat-map">
         <span>Correlations Heat Map</span>
         {!loading && <HeatMap />}
@@ -35,4 +35,4 @@ const PriceInfluencers = () => {
   );
 };
 
-export default PriceInfluencers;
+export default BasicOverview;

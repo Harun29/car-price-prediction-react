@@ -10,6 +10,7 @@ import BarChartIcon from "@mui/icons-material/BarChart";
 import TableChartIcon from "@mui/icons-material/TableChart";
 import MarketOverview from "../Charts/Chart Components/MarketOverview";
 import PriceInfluencers from "../Charts/Chart Components/PriceInfluencers";
+import BasicOverview from "../Charts/Chart Components/BaicOverview";
 
 const DataAnalysisPage = () => {
   const [selectedLogo, setSelectedLogo] = useState("vw");
@@ -82,6 +83,7 @@ const DataAnalysisPage = () => {
       </NavbarContainer>
       {selectedData === "market-overview" && <MarketOverview />}
       {selectedData === "price-influencers" && <PriceInfluencers />}
+      {selectedData === "basic-overview" && <BasicOverview />}
       <div className="right-side-data-analysis">
         <div className="data-tabs">
           <span className="data-analysis-header">Data Analysis</span>
