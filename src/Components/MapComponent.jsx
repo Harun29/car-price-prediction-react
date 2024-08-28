@@ -2,11 +2,21 @@ import React, { useEffect, useState, useRef } from 'react';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import 'leaflet.heat'; // Import the Leaflet heatmap plugin
+import { useTheme } from '@emotion/react';
 
 const MapComponent = () => {
     const [mapData, setMapData] = useState(null);
     const mapContainerRef = useRef(null);
     const mapInstanceRef = useRef(null);
+    const theme = useTheme();
+    const [tile, setTile] = useState();
+
+    useEffect(() => {
+      console.log("theme: ",theme.palette.mode)
+      const tileTheme = theme.palette.mode === "dark" ? 'https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png' : 'https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png';
+      theme && setTile(tileTheme)
+    }, [theme])
+
 
     useEffect(() => {
         fetch('http://127.0.0.1:5000/map')
@@ -15,7 +25,7 @@ const MapComponent = () => {
     }, []);
 
     useEffect(() => {
-        if (mapData && mapContainerRef.current) {
+        if (mapData && mapContainerRef.current && tile) {
             if (!mapInstanceRef.current) {
                 // Initialize the Leaflet map inside the container
                 mapInstanceRef.current = L.map(mapContainerRef.current, {
@@ -25,11 +35,13 @@ const MapComponent = () => {
                     zoomControl: false,
                     attributionControl: false,
                 });
-
-                // Add the tile layer (map base)
-                L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                    maxZoom: 19,
-                }).addTo(mapInstanceRef.current);
+                
+                L.tileLayer(tile, {
+                  maxZoom: 19,
+                  attribution: '© OpenStreetMap contributors & CartoDB',
+              }).addTo(mapInstanceRef.current);
+              
+                            
             }
 
             // Clear existing markers and layers before adding new ones

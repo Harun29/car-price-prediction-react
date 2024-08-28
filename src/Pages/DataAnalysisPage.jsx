@@ -14,7 +14,7 @@ import BasicOverview from "../Charts/Chart Components/BaicOverview";
 
 const DataAnalysisPage = () => {
   const [selectedLogo, setSelectedLogo] = useState("vw");
-  const [selectedData, setSelectedData] = useState("market-overview")
+  const [selectedData, setSelectedData] = useState("basic-overview")
 
   const changeToAudi = () => {
     setSelectedLogo("audi");

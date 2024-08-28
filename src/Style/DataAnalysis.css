@@ -280,6 +280,11 @@
   height: 600px;
 }
 
+.plot-box.map:hover .map-holder{
+  outline: none !important;
+  border: none !important;
+}
+
 .map-holder{
 
   width: 100%;    
