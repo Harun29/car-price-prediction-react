@@ -36,7 +36,7 @@ const MapComponent = () => {
                     attributionControl: false,
                 });
                 
-                L.tileLayer(tile, {
+                L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
                   maxZoom: 19,
                   attribution: '© OpenStreetMap contributors & CartoDB',
               }).addTo(mapInstanceRef.current);

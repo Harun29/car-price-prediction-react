@@ -1,15 +1,13 @@
-import useNivoTheme from '../../NivoTheme';
-import { useEffect, useState } from 'react';
+import useNivoTheme from "../../NivoTheme";
+import { useEffect, useState } from "react";
 import OpenAI from "openai";
 import AutoAwesomeIcon from "@mui/icons-material/AutoAwesome";
 import { motion } from "framer-motion";
 import { useTheme } from "@emotion/react";
-import { ResponsiveHeatMap } from '@nivo/heatmap';
+import { ResponsiveBar } from "@nivo/bar";
 
-const HeatMap = () => {
-
+const BarChart = () => {
   const nivoTheme = useNivoTheme();
-
   const [data, setData] = useState();
   const [aiDescription, setAiDescription] = useState(
     "Getting Jarvis' description..."
@@ -17,24 +15,16 @@ const HeatMap = () => {
   const [description, setDescription] = useState(false);
   const theme = useTheme();
 
-  useEffect(() => { 
-    data && console.log("box plot: ", data)
-  }, [data])
-
   const openai = new OpenAI({
     apiKey: process.env.REACT_APP_OPENAI_API_KEY,
     dangerouslyAllowBrowser: true,
   });
 
-  useEffect(() => {
-    data && console.log(data)
-  }, [data])
-
   const handleSendMessage = async () => {
     if (!data) return;
-  
-    const message = `You are an AI assistant analyzing a heatmap representing correlations between various car features. The heatmap shows the following data: ${JSON.stringify(data)}. Identify significant correlations for price mainly, trends, clusters, and any outliers. Summarize your findings in 150 words.`;
-  
+
+    const message = `You are an AI assistant analyzing a Bar chart. The bar chart shows the following data: ${JSON.stringify(data)}. Summarize your findings in 150 words.`;
+
     try {
       const completion = await openai.chat.completions.create({
         model: "gpt-4o-mini",
@@ -43,15 +33,14 @@ const HeatMap = () => {
           { role: "user", content: message },
         ],
       });
-  
+
       const aiMessage = completion.choices[0].message.content;
       setAiDescription(aiMessage);
     } catch (err) {
       console.error("Error fetching AI description:", err);
     }
   };
-  
-  
+
   useEffect(() => {
     if (description && aiDescription === "Getting Jarvis' description...") {
       handleSendMessage();
@@ -64,15 +53,11 @@ const HeatMap = () => {
 
   const handlePrediction = (e) => {
     e.stopPropagation();
-    if (aiDescription === "Getting Jarvis' description...") {
-      setDescription(true);
-    } else {
-      setDescription(true);
-    }
+    setDescription(true);
   };
 
   const getData = async () => {
-    const url = "http://127.0.0.1:5000/get_correlation_heatmap";
+    const url = "http://127.0.0.1:5000/get_top5models_barplot_data";
     try {
       const response = await fetch(url, {
         method: "GET",
@@ -93,81 +78,85 @@ const HeatMap = () => {
   };
 
   useEffect(() => {
-    getData()
-  }, [])
+    getData();
+  }, []);
 
-
-  useEffect(() => { 
-    data && console.log("heat map data: ", data)
-  }, [data])
-  
-
-  return (data && <div className="plot-holder" style={{ height: "90%", width: "100%" }}>
-    {!description && (
+  return (
+    data && (
+      <div className="plot-holder" style={{ height: "90%", width: "100%" }}>
+        {!description && (
           <AutoAwesomeIcon
             className="get-prediction"
             onClick={(e) => handlePrediction(e)}
           />
         )}
-        <ResponsiveHeatMap
-        data={data}
-        theme={nivoTheme}
-        margin={{ top: 60, right: 100, bottom: 60, left: 60 }}
-        
-        axisTop={{
-            tickSize: 5,
-            tickPadding: 5,
-            tickRotation: -90,
-            legend: '',
-            legendOffset: 46,
-            truncateTickAt: 0
-        }}
-        axisLeft={{
+        <ResponsiveBar
+          data={data}
+          theme={nivoTheme}
+          indexBy="year_range"
+          keys={["Golf", "Passat", "Polo", "Tiguan", "Touran"]} // Specify the keys
+          margin={{ top: 50, right: 130, bottom: 50, left: 60 }}
+          padding={0.3}
+          valueScale={{ type: "linear" }}
+          indexScale={{ type: "band", round: true }}
+          colors={{ scheme: "nivo" }}
+          groupMode="grouped"
+          borderColor={{
+            from: "color",
+            modifiers: [["darker", 1.6]],
+          }}
+          axisTop={null}
+          axisRight={null}
+          axisBottom={{
             tickSize: 5,
             tickPadding: 5,
             tickRotation: 0,
-            legend: 'country',
-            legendPosition: 'middle',
-            legendOffset: -72,
-            truncateTickAt: 0
-        }}
-        axisRight={{
-          tickSize: 5,
-          tickPadding: 5,
-          tickRotation: 0,
-          legend: 'country',
-          legendPosition: 'middle',
-          legendOffset: 70,
-          truncateTickAt: 0
-      }}
-        colors={{
-          type: 'diverging',
-          scheme: 'red_yellow_blue',
-          divergeAt: 0.5,
-          minValue: -1,
-          maxValue: 1
-      }}
-        
-        emptyColor="#555555"
-        legends={[
+            legend: "Year Range",
+            legendPosition: "middle",
+            legendOffset: 32,
+          }}
+          axisLeft={{
+            tickSize: 5,
+            tickPadding: 5,
+            tickRotation: 0,
+            legend: "Average Price",
+            legendPosition: "middle",
+            legendOffset: -40,
+          }}
+          labelSkipWidth={12}
+          labelSkipHeight={12}
+          labelTextColor={theme.palette.text.primary}
+          legends={[
             {
-                anchor: 'bottom',
-                translateX: 0,
-                translateY: 30,
-                length: 400,
-                thickness: 8,
-                direction: 'row',
-                tickPosition: 'after',
-                tickSize: 3,
-                tickSpacing: 4,
-                tickOverlap: false,
-                tickFormat: '>-.2s',
-                title: 'Value →',
-                titleAlign: 'start',
-                titleOffset: 4
-            }
-        ]}
-    />
+              dataFrom: "keys",
+              anchor: "bottom-right",
+              direction: "column",
+              justify: false,
+              translateX: 120,
+              translateY: 0,
+              itemsSpacing: 2,
+              itemWidth: 100,
+              itemHeight: 20,
+              itemDirection: "left-to-right",
+              itemOpacity: 0.85,
+              symbolSize: 20,
+              effects: [
+                {
+                  on: "hover",
+                  style: {
+                    itemOpacity: 1,
+                  },
+                },
+              ],
+            },
+          ]}
+          role="application"
+          ariaLabel="Nivo bar chart demo"
+          barAriaLabel={(e) =>
+            `${e.id}: ${e.formattedValue} in year range: ${e.indexValue}`
+          }
+        />
+
         {description && (
           <motion.div
             initial={{ x: "-100%", opacity: 0 }}
@@ -182,8 +171,9 @@ const HeatMap = () => {
             <p>{aiDescription}</p>
           </motion.div>
         )}
+      </div>
+    )
+  );
+};
 
-  </div> );
-}
- 
-export default HeatMap;
+export default BarChart;

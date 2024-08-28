@@ -57,22 +57,14 @@ const HomePage = () => {
       fuel: fuelType,
       doors,
       displacement: parseFloat(displacement),
-      kilowatts: parseInt(kilowatts),
-      mileage: parseInt(mileage),
-      year,
-      rimsize: 18,
+      kilowatts: parseFloat(kilowatts),
+      mileage: parseFloat(mileage),
+      year: parseFloat(year),
       cruisecontrol: cruiseControl ? 1 : 0,
       aircondition: airCondition ? 1 : 0,
       navigation: navigation ? 1 : 0,
       registration: registration ? 1 : 0,
-      parkingsensors:
-        parkingSensors === "Front"
-          ? 3
-          : parkingSensors === "Rear"
-          ? 2
-          : parkingSensors === "Front and Rear"
-          ? 1
-          : 0,
+      parkingsensors: parkingSensors
     };
 
     console.log(data);

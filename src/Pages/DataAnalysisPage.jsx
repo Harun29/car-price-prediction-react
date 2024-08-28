@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import { Button } from "@mui/material";
 import { styled } from "@mui/material/styles";
-
 import "../Style/DataAnalysis.css";
 import QueryStatsIcon from "@mui/icons-material/QueryStats";
 import PriceChangeIcon from "@mui/icons-material/PriceChange";
@@ -14,7 +13,7 @@ import BasicOverview from "../Charts/Chart Components/BaicOverview";
 
 const DataAnalysisPage = () => {
   const [selectedLogo, setSelectedLogo] = useState("vw");
-  const [selectedData, setSelectedData] = useState("basic-overview")
+  const [selectedData, setSelectedData] = useState("price-influencers")
 
   const changeToAudi = () => {
     setSelectedLogo("audi");

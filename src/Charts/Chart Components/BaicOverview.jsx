@@ -2,7 +2,7 @@ import { useTheme } from "@nivo/core";
 import "../../Style/DataAnalysis.css"
 import { useState } from "react";
 import { styled } from "@mui/material/styles";
-import HeatMap from "../Basic Overview/HeatMap";
+import HeatMap from "../Price Influencers/HeatMap";
 import MapComponent from "../../Components/MapComponent";
 
 const BasicOverview = () => {

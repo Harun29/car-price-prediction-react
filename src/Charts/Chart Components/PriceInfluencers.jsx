@@ -2,8 +2,11 @@ import { useTheme } from "@nivo/core";
 import "../../Style/DataAnalysis.css"
 import { useState } from "react";
 import { styled } from "@mui/material/styles";
-import HeatMap from "../Basic Overview/HeatMap";
-import MapComponent from "../../Components/MapComponent";
+import HeatMap from "../Price Influencers/HeatMap";
+import LinePlot from "../Price Influencers/LinePlot";
+import PiePlot from "../Price Influencers/PiePlot";
+import BarChart from "../Price Influencers/BarChart";
+import BarChart2 from "../Price Influencers/BarChart2";
 
 const PriceInfluencers = () => {
 
@@ -27,9 +30,21 @@ const PriceInfluencers = () => {
         <span>Correlations Heat Map</span>
         {!loading && <HeatMap />}
       </HistogramContainer>
-      <HistogramContainer className="plot-box map">
-        <span>Car Count per City</span>
-        <MapComponent />
+      <HistogramContainer className="plot-box pie-plot">
+        <span>Pie Plot</span>
+        {!loading && <PiePlot />}
+      </HistogramContainer>
+      <HistogramContainer className="plot-box line-plot">
+        <span>Line Plot</span>
+        {!loading && <LinePlot />}
+      </HistogramContainer>
+      <HistogramContainer className="plot-box bar-chart">
+        <span>Bar Chart</span>
+        {!loading && <BarChart />}
+      </HistogramContainer>
+      <HistogramContainer className="plot-box bar-chart-2">
+        <span>Bar Chart 2</span>
+        {!loading && <BarChart2 />}
       </HistogramContainer>
     </div>
   );
