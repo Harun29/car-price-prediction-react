@@ -13,7 +13,7 @@ import BasicOverview from "../Charts/Chart Components/BaicOverview";
 
 const DataAnalysisPage = () => {
   const [selectedLogo, setSelectedLogo] = useState("vw");
-  const [selectedData, setSelectedData] = useState("price-influencers")
+  const [selectedData, setSelectedData] = useState("basic-overview")
 
   const changeToAudi = () => {
     setSelectedLogo("audi");
@@ -62,7 +62,7 @@ const DataAnalysisPage = () => {
   return (
     <div className="data-analysis">
       <NavbarContainer className="data-analysis-top-navbar heading">
-        <span>Market Overview</span>
+        <span>{selectedData === "basic-overview" ? "Quick Overview" : selectedData === 'market-overview' ? "Market Overview" : selectedData === "price-influencers" ? "Price Influencers" : "Reading Data"}</span>
       </NavbarContainer>
       <NavbarContainer className="data-analysis-top-navbar logos">
         <div>
@@ -87,19 +87,19 @@ const DataAnalysisPage = () => {
         <div className="data-tabs">
           <span className="data-analysis-header">Data Analysis</span>
           <div className="horizontal-line"></div>
-          <Button onClick={() => handleSelectedData('basic-overview')}>
+          <Button className={`data-tabs-button ${selectedData === 'basic-overview' ? 'active' : ''}`} onClick={() => handleSelectedData('basic-overview')}>
             <BarChartIcon />
             Basic Overview
           </Button>
-          <Button onClick={() => handleSelectedData('market-overview')}>
+          <Button className={`data-tabs-button ${selectedData === 'market-overview' ? 'active' : ''}`} onClick={() => handleSelectedData('market-overview')}>
             <QueryStatsIcon />
             Market Overview
           </Button>
-          <Button onClick={() => handleSelectedData('price-influencers')}>
+          <Button className={`data-tabs-button ${selectedData === 'price-influencers' ? 'active' : ''}`} onClick={() => handleSelectedData('price-influencers')}>
             <PriceChangeIcon />
             Price Influencers
           </Button>
-          <Button onClick={() => handleSelectedData('read-data')}>
+          <Button className={`data-tabs-button ${selectedData === 'read-data' ? 'active' : ''}`} onClick={() => handleSelectedData('read-data')}>
             <TableChartIcon />
             Read Data
           </Button>

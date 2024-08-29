@@ -39,11 +39,11 @@ const PriceInfluencers = () => {
         {!loading && <LinePlot />}
       </HistogramContainer>
       <HistogramContainer className="plot-box bar-chart">
-        <span>Bar Chart</span>
+        <span>Most popular models - price by years</span>
         {!loading && <BarChart />}
       </HistogramContainer>
       <HistogramContainer className="plot-box bar-chart-2">
-        <span>Bar Chart 2</span>
+        <span>Most popular types - price by years</span>
         {!loading && <BarChart2 />}
       </HistogramContainer>
     </div>
