@@ -14,12 +14,17 @@ import {
   ToggleButtonGroup,
   ToggleButton,
 } from "@mui/material";
+import {
+  Unstable_NumberInput as BaseNumberInput,
+  numberInputClasses,
+} from '@mui/base/Unstable_NumberInput';
 
 import CarCard from "../Components/CarCard";
 import CarDetails from "../Components/CarDetails";
 import { motion } from "framer-motion";
 import { usePandas } from "../Context/PandasContext";
 import CircularProgress from "@mui/material/CircularProgress";
+import NumberInputBasic from "../Components/NumberInput";
 
 const HomePage = () => {
   const [prediction, setPrediction] = useState(false);
@@ -113,6 +118,14 @@ const HomePage = () => {
   // TODO add loading for useEffect above
   // TODO fix positioning of car logo when active
 
+  const handleDisplacement = (value) => {
+    setDisplacement(value)
+  }
+
+  useEffect(() => {
+    console.log("displacement: ", displacement)
+  }, [displacement])
+
   return (
     <div className={`home-page-container ${prediction && "active"}`}>
       <div className="car-specs">
@@ -126,20 +139,8 @@ const HomePage = () => {
         </p>
         <div className="row-inputs">
           <FormControl fullWidth>
-            <InputLabel id="displacement-label">Displacement</InputLabel>
-            <Select
-              labelId="displacement-label"
-              id="displacement"
-              value={displacement}
-              label="Displacement"
-              onChange={(e) => setDisplacement(e.target.value)}
-            >
-              <MenuItem value="">Any</MenuItem>
-              <MenuItem value="1.6">1.6</MenuItem>
-              <MenuItem value="1.9">1.9</MenuItem>
-              <MenuItem value="2.0">2.0</MenuItem>
-              <MenuItem value="3.0">3.0</MenuItem>
-            </Select>
+            <NumberInputBasic value={displacement} setValue={handleDisplacement} />
+
           </FormControl>
           <FormControl fullWidth>
             <TextField

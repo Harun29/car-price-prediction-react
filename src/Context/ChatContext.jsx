@@ -16,6 +16,47 @@ export function ChatProvider({ children }) {
   ]);
 
   const [typingMessage, setTypingMessage] = useState("");
+  // const [data, setData] = useState();
+
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     try {
+  //       const response = await fetch('http://127.0.0.1:5000/get_csv', {
+  //         method: "GET",
+  //         headers: {
+  //           "Content-Type": "application/json",
+  //         },
+  //       });
+  
+  //       console.log("Response status:", response.status);
+  //       console.log("Response headers:", response.headers);
+        
+  //       if (!response.ok) {
+  //         throw new Error('Network response was not ok');
+  //       }
+  
+  //       console.log("About to parse JSON");
+  //       try {
+  //         const data = await response.json();
+  //         console.log("Fetched data:", data);
+  //         setData(data);
+  //       } catch (jsonError) {
+  //         console.error("Error parsing JSON:", jsonError);
+  //       }
+  
+  //       setData(data);
+  
+  //     } catch (error) {
+  //       console.error("Fetch error:", error);
+  //     }
+  //   };
+  
+  //   fetchData();
+  // }, []);
+  
+  // useEffect(() => {
+  //   data && console.log("dataaa: ", data)
+  // }, [data])
 
   const openai = new OpenAI({
     apiKey: process.env.REACT_APP_OPENAI_API_KEY,
@@ -35,6 +76,7 @@ export function ChatProvider({ children }) {
         model: "gpt-4o-mini",
         messages: [
           { role: "system", content: "You are a helpful assistant." },
+          // { role: "system", content: `Relevant data: ${data}` },
           ...messages,
           { role: "user", content: message },
         ],
