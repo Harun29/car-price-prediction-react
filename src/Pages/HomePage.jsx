@@ -120,9 +120,24 @@ const HomePage = () => {
   // TODO add loading for useEffect above
   // TODO fix positioning of car logo when active
 
-  const handleDisplacement = (value) => {
-    setDisplacement(value)
-  }
+  const handleDisplacementChange = (e) => {
+    let value = e.target.value;
+
+    // Remove any non-numeric characters, except for the decimal point
+    value = value.replace(/[^0-9.]/g, '');
+
+    // Split the string on the decimal point to separate the integer and decimal parts
+    const parts = value.split('.');
+
+    // Keep only the first decimal point and allow only one decimal place
+    if (parts.length > 2) {
+      value = `${parts[0]}.${parts[1]}`;
+    } else if (parts[1] && parts[1].length > 1) {
+      value = `${parts[0]}.${parts[1].substring(0, 1)}`;
+    }
+
+    setDisplacement(value);
+  };
 
   useEffect(() => {
     console.log("displacement: ", displacement)
@@ -141,8 +156,14 @@ const HomePage = () => {
         </p>
         <div className="row-inputs">
           <FormControl fullWidth>
-            <NumberInputBasic value={displacement} setValue={handleDisplacement} />
-            {/* <NumberInput /> */}
+          <FormControl fullWidth>
+            <TextField
+              id="displacement-input"
+              value={displacement}
+              onChange={handleDisplacementChange}
+              label="Displacement"
+            />
+          </FormControl>
           </FormControl>
           <FormControl fullWidth>
             <TextField
