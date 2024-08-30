@@ -106,14 +106,14 @@ const Navbar = ({theme, handleThemeChange}) => {
           </ListItem>
         </Link>
         <ListItem disablePadding>
-          {/* <Link to="/update-data" style={{ textDecoration: 'none', color: 'inherit' }}> */}
+          <Link to="/update-data" style={{ textDecoration: 'none', color: 'inherit' }}>
           <ListItemButton>
             <ListItemIcon>
               <CloudUploadIcon />
             </ListItemIcon>
             <ListItemText primary="Update Data" />
           </ListItemButton>
-          {/* </Link> */}
+          </Link>
         </ListItem>
       </List>
     </Box>

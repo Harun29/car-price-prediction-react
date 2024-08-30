@@ -10,6 +10,7 @@ import DataAnalysisPage from "./Pages/DataAnalysisPage";
 import HomePage from "./Pages/HomePage";
 import Chat from "./Components/Chat";
 import { ChatProvider } from "./Context/ChatContext";
+import UpdateCsv from "./Pages/UpdateCsv";
 
 function App() {
   const [theme, setTheme] = useState("dark");
@@ -38,6 +39,7 @@ function App() {
                   <Route path="/" element={<HomePage />} />
                   <Route path="/price-prediction" element={<HomePage />} />
                   <Route path="/data-analysis" element={<DataAnalysisPage />} />
+                  <Route path="/update-data" element={<UpdateCsv />} />
                 </Routes>
                 <img
                   className="home-page-bloomteq-symbol"

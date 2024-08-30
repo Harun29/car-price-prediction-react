@@ -95,7 +95,6 @@ export function ChatProvider({ children }) {
     }
   };
   
-
   const simulateTypingEffect = (message) => {
     let index = 0;
     setTypingMessage("");
