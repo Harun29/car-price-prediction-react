@@ -65,29 +65,36 @@ export function ChatProvider({ children }) {
 
   const handleSendMessage = async (message) => {
     if (message.trim() === "") return;
-
-    setMessages((prevMessages) => [
-      ...prevMessages,
+  
+    // Update the messages state first
+    const updatedMessages = [
+      ...messages,
       { role: "user", content: message },
-    ]);
-
+    ];
+  
+    setMessages(updatedMessages);
+  
     try {
-      const completion = await openai.chat.completions.create({
-        model: "gpt-4o-mini",
-        messages: [
-          { role: "system", content: "You are a helpful assistant." },
-          // { role: "system", content: `Relevant data: ${data}` },
-          ...messages,
-          { role: "user", content: message },
-        ],
+      const response = await fetch("http://127.0.0.1:5000/get_ai_message", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ message, messages: updatedMessages }),
       });
-
-      const aiMessage = completion.choices[0].message.content;
+  
+      if (!response.ok) {
+        throw new Error("Failed to get AI message");
+      }
+      
+      const data = await response.json();
+      const aiMessage = data.ai_message;
       simulateTypingEffect(aiMessage);
     } catch (err) {
       console.error(err);
     }
   };
+  
 
   const simulateTypingEffect = (message) => {
     let index = 0;

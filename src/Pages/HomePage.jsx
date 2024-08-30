@@ -18,6 +18,8 @@ import {
   Unstable_NumberInput as BaseNumberInput,
   numberInputClasses,
 } from '@mui/base/Unstable_NumberInput';
+import { Unstable_NumberInput as NumberInput } from '@mui/base/Unstable_NumberInput';
+
 
 import CarCard from "../Components/CarCard";
 import CarDetails from "../Components/CarDetails";
@@ -140,7 +142,7 @@ const HomePage = () => {
         <div className="row-inputs">
           <FormControl fullWidth>
             <NumberInputBasic value={displacement} setValue={handleDisplacement} />
-
+            {/* <NumberInput /> */}
           </FormControl>
           <FormControl fullWidth>
             <TextField
