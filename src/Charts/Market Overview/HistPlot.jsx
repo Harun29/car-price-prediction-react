@@ -9,7 +9,7 @@ import { useTheme } from "@emotion/react";
 const MyHistogram = () => {
   const [data, setData] = useState();
   const [aiDescription, setAiDescription] = useState(
-    "Getting Jarvis' description..."
+    "Getting Jarvis' description...",
   );
   const [description, setDescription] = useState(false);
   const theme = useTheme();

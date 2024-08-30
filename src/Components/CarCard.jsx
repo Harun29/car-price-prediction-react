@@ -68,7 +68,6 @@ const images = [
   "Up! Mk1 (2011-2024).png",
 ];
 
-
 function selectCarImage(model, year) {
   const parseImageFilename = (filename) => {
     const modelMatch = filename.match(/^[\w\s\-!]+/);
@@ -90,7 +89,9 @@ function selectCarImage(model, year) {
   for (let image of images) {
     const parsed = parseImageFilename(image);
     if (parsed) {
-      console.log(`Parsed model: ${parsed.model}, Start Year: ${parsed.startYear}, End Year: ${parsed.endYear}`);
+      console.log(
+        `Parsed model: ${parsed.model}, Start Year: ${parsed.startYear}, End Year: ${parsed.endYear}`,
+      );
       if (parsed.model.toLowerCase().includes(modelLowerCase)) {
         if (year >= parsed.startYear && year <= parsed.endYear) {
           return `/CarPictures/${image}`;
@@ -100,7 +101,6 @@ function selectCarImage(model, year) {
   }
   return "/CarPictures/default-car.png";
 }
-
 
 function CarCard({ data, handleDetailedDescription }) {
   const carDetails = {
@@ -113,7 +113,7 @@ function CarCard({ data, handleDetailedDescription }) {
   };
 
   const carImage = selectCarImage(data.model, data.year);
-  console.log(carImage)
+  console.log(carImage);
 
   const handleIconClick = (e) => {
     e.stopPropagation();
@@ -187,7 +187,7 @@ function CarCard({ data, handleDetailedDescription }) {
         boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.8)",
       }}
       style={{
-        height: "100%"
+        height: "100%",
       }}
     >
       <CarName>{carDetails.name}</CarName>

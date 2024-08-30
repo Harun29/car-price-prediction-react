@@ -1,5 +1,5 @@
 import { useTheme } from "@nivo/core";
-import "../../Style/DataAnalysis.css"
+import "../../Style/DataAnalysis.css";
 import { useState } from "react";
 import { styled } from "@mui/material/styles";
 import HeatMap from "../Price Influencers/HeatMap";
@@ -9,7 +9,6 @@ import BarChart from "../Price Influencers/BarChart";
 import BarChart2 from "../Price Influencers/BarChart2";
 
 const PriceInfluencers = () => {
-
   const theme = useTheme();
   const [loading, setLoading] = useState(false);
 

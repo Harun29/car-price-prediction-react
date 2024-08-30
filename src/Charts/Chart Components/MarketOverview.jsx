@@ -8,7 +8,7 @@ import AveragePriceHistogram from "../Market Overview/ModelsAveragePrice";
 import ModelsPriceBoxPlot from "../Market Overview/ModelsPriceBox";
 import PriceDistributionLineChart from "../Market Overview/LinePlot";
 import { useState, useEffect } from "react";
-import "../../Style/DataAnalysis.css"
+import "../../Style/DataAnalysis.css";
 
 const MarketOverview = () => {
   const [meanPrice, setMeanPrice] = useState(0);
@@ -36,7 +36,7 @@ const MarketOverview = () => {
       setMedianPrice(result.median_price);
       setFirstQuartile(result.first_quantile);
       setThirdQuartile(result.third_quantile);
-      setLoading(false)
+      setLoading(false);
     } catch (error) {
       console.error("Error:", error);
     }
@@ -56,8 +56,6 @@ const MarketOverview = () => {
     backgroundColor: theme.palette.background.paper,
   }));
 
-  
-
   // TODO move handle prediction to chart component so page does not refresh
 
   return (
@@ -65,7 +63,7 @@ const MarketOverview = () => {
       <h3 className="data-analysis-headers">Top Models by Popularity</h3>
       <HistogramContainer className="plot-box model-ranking">
         <span>most popular models</span>
-        {!loading && <ModelRankingPieChart/>}
+        {!loading && <ModelRankingPieChart />}
       </HistogramContainer>
 
       <HistogramContainer className="plot-box model-listings">

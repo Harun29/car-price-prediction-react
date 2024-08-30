@@ -1,5 +1,5 @@
 import { useTheme } from "@nivo/core";
-import "../../Style/DataAnalysis.css"
+import "../../Style/DataAnalysis.css";
 import { useState, useEffect } from "react";
 import { styled } from "@mui/material/styles";
 import MapComponent from "../../Components/MapComponent";
@@ -35,7 +35,7 @@ const BasicOverview = () => {
       setMedianPrice(result.median_price);
       setFirstQuartile(result.first_quantile);
       setThirdQuartile(result.third_quantile);
-      setLoading(false)
+      setLoading(false);
     } catch (error) {
       console.error("Error:", error);
     }
@@ -87,7 +87,7 @@ const BasicOverview = () => {
       />
       <HistogramContainer className="plot-box model-ranking quick-overview">
         <span>most popular models</span>
-        {!loading && <ModelRankingPieChart/>}
+        {!loading && <ModelRankingPieChart />}
       </HistogramContainer>
       <HistogramContainer className="plot-box price-line quick-overview">
         <span>Price distribution for 5 most popular models</span>
@@ -105,7 +105,6 @@ const BasicOverview = () => {
         <span>Most popular models - price by years</span>
         {!loading && <BarChart />}
       </HistogramContainer>
-      
     </div>
   );
 };

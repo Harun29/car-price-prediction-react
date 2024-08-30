@@ -4,14 +4,14 @@ import OpenAI from "openai";
 import AutoAwesomeIcon from "@mui/icons-material/AutoAwesome";
 import { motion } from "framer-motion";
 import { useTheme } from "@emotion/react";
-import { ResponsivePie } from '@nivo/pie'
+import { ResponsivePie } from "@nivo/pie";
 
 const PiePlot = () => {
   const nivoTheme = useNivoTheme();
 
   const [data, setData] = useState();
   const [aiDescription, setAiDescription] = useState(
-    "Getting Jarvis' description..."
+    "Getting Jarvis' description...",
   );
   const [description, setDescription] = useState(false);
   const theme = useTheme();
@@ -25,7 +25,7 @@ const PiePlot = () => {
     if (!data) return;
 
     const message = `You are an AI assistant analyzing a Line plot. The line plot shows the following data: ${JSON.stringify(
-      data
+      data,
     )}. Summarize your findings in 150 words.`;
 
     try {
@@ -89,8 +89,8 @@ const PiePlot = () => {
   }, []);
 
   useEffect(() => {
-    data && console.log("pie data: ", data)
-  }, [data])
+    data && console.log("pie data: ", data);
+  }, [data]);
 
   return (
     data && (

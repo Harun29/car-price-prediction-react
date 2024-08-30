@@ -77,56 +77,56 @@ const UpdateCsv = () => {
             </a>
             <div className="line"></div>
           </nav>
-        <div className="update-data-content">
-          {activeLink === 0 && (
-            <div className="instructions">
-              <p>
-                Updating old data is essential to ensure that your models and
-                insights are accurate and relevant. To update your data, follow
-                these steps:
-              </p>
-              <ol>
-                <li>Upload your CSV file with the required columns.</li>
-                <li>Click "Update Data" to process the uploaded file.</li>
-                <li>Select and train a model based on the updated data.</li>
-              </ol>
-            </div>
-          )}
+          <div className="update-data-content">
+            {activeLink === 0 && (
+              <div className="instructions">
+                <p>
+                  Updating old data is essential to ensure that your models and
+                  insights are accurate and relevant. To update your data,
+                  follow these steps:
+                </p>
+                <ol>
+                  <li>Upload your CSV file with the required columns.</li>
+                  <li>Click "Update Data" to process the uploaded file.</li>
+                  <li>Select and train a model based on the updated data.</li>
+                </ol>
+              </div>
+            )}
 
-          {activeLink === 1 && (
-            <div className="upload-csv">
-              <input type="file" onChange={handleFileUpload} />
-              <p>
-                Please ensure your file contains the required columns: [Column1,
-                Column2, Column3].
-              </p>
-              {loading && <CircularProgress />}
-              {file && !loading && (
-                <p>File "{file.name}" uploaded successfully.</p>
-              )}
-            </div>
-          )}
+            {activeLink === 1 && (
+              <div className="upload-csv">
+                <input type="file" onChange={handleFileUpload} />
+                <p>
+                  Please ensure your file contains the required columns:
+                  [Column1, Column2, Column3].
+                </p>
+                {loading && <CircularProgress />}
+                {file && !loading && (
+                  <p>File "{file.name}" uploaded successfully.</p>
+                )}
+              </div>
+            )}
 
-          {activeLink === 2 && (
-            <div className="update-data">
-              <button onClick={handleUpdateData}>Update Data</button>
-              {updateLoading && <CircularProgress />}
-              {!updateLoading && !loading && <a href="/">Go to Home</a>}
-            </div>
-          )}
+            {activeLink === 2 && (
+              <div className="update-data">
+                <button onClick={handleUpdateData}>Update Data</button>
+                {updateLoading && <CircularProgress />}
+                {!updateLoading && !loading && <a href="/">Go to Home</a>}
+              </div>
+            )}
 
-          {activeLink === 3 && (
-            <div className="train-model">
-              <label>Select Model:</label>
-              <select>
-                <option value="model1">Model 1</option>
-                <option value="model2">Model 2</option>
-              </select>
-              <button>Train Model</button>
-              {/* Add loading state here if needed */}
-            </div>
-          )}
-        </div>
+            {activeLink === 3 && (
+              <div className="train-model">
+                <label>Select Model:</label>
+                <select>
+                  <option value="model1">Model 1</option>
+                  <option value="model2">Model 2</option>
+                </select>
+                <button>Train Model</button>
+                {/* Add loading state here if needed */}
+              </div>
+            )}
+          </div>
         </div>
         {/* Moved content below the navigation */}
       </div>

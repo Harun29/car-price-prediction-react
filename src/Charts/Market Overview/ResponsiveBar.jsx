@@ -1,10 +1,9 @@
-import { ResponsiveBar } from '@nivo/bar';
-import useNivoTheme from '../../NivoTheme';
-import { useState, useEffect } from 'react';
+import { ResponsiveBar } from "@nivo/bar";
+import useNivoTheme from "../../NivoTheme";
+import { useState, useEffect } from "react";
 
 const PriceRangeHorizontalBarChart = () => {
-
-  const [data, setData] = useState()
+  const [data, setData] = useState();
 
   const getData = async () => {
     const url = "http://127.0.0.1:5000/type_minmax_price";
@@ -28,52 +27,54 @@ const PriceRangeHorizontalBarChart = () => {
   };
 
   useEffect(() => {
-    getData()
-  }, [])
+    getData();
+  }, []);
 
   useEffect(() => {
-    data && console.log("bbbbb:", data)
-  }, [data])
+    data && console.log("bbbbb:", data);
+  }, [data]);
 
-  const nivoTheme = useNivoTheme()
+  const nivoTheme = useNivoTheme();
 
-  return (data &&
-    <div style={{ width: '100%', height: '90%' }}>
-      <ResponsiveBar
-        data={data}
-        theme={nivoTheme}
-        keys={['minPrice', 'maxPrice']}
-        indexBy="priceRange"
-        margin={{ top: 20, right: 20, bottom: 50, left: 50 }}
-        padding={0.2}
-        colors={{ scheme: 'nivo' }}
-        borderColor={{ from: 'color', modifiers: [['darker', 1.6]] }}
-        axisTop={null}
-        axisRight={null}
-        axisBottom={{
-          tickSize: 5,
-          tickPadding: 5,
-          tickRotation: 0,
-          legend: 'Price Range',
-          legendPosition: 'middle',
-          legendOffset: 32
-        }}
-        axisLeft={{
-          tickSize: 5,
-          tickPadding: 5,
-          tickRotation: 0,
-          legend: 'Price',
-          legendPosition: 'middle',
-          legendOffset: -40
-        }}
-        labelSkipWidth={12}
-        labelSkipHeight={12}
-        labelTextColor={{ from: 'color', modifiers: [['darker', 1.6]] }}
-        animate={true}
-        motionStiffness={90}
-        motionDamping={15}
-      />
-    </div>
+  return (
+    data && (
+      <div style={{ width: "100%", height: "90%" }}>
+        <ResponsiveBar
+          data={data}
+          theme={nivoTheme}
+          keys={["minPrice", "maxPrice"]}
+          indexBy="priceRange"
+          margin={{ top: 20, right: 20, bottom: 50, left: 50 }}
+          padding={0.2}
+          colors={{ scheme: "nivo" }}
+          borderColor={{ from: "color", modifiers: [["darker", 1.6]] }}
+          axisTop={null}
+          axisRight={null}
+          axisBottom={{
+            tickSize: 5,
+            tickPadding: 5,
+            tickRotation: 0,
+            legend: "Price Range",
+            legendPosition: "middle",
+            legendOffset: 32,
+          }}
+          axisLeft={{
+            tickSize: 5,
+            tickPadding: 5,
+            tickRotation: 0,
+            legend: "Price",
+            legendPosition: "middle",
+            legendOffset: -40,
+          }}
+          labelSkipWidth={12}
+          labelSkipHeight={12}
+          labelTextColor={{ from: "color", modifiers: [["darker", 1.6]] }}
+          animate={true}
+          motionStiffness={90}
+          motionDamping={15}
+        />
+      </div>
+    )
   );
 };
 

@@ -1,4 +1,4 @@
-import { useTheme } from '@mui/material/styles';
+import { useTheme } from "@mui/material/styles";
 
 const useNivoTheme = () => {
   const theme = useTheme();
@@ -7,7 +7,7 @@ const useNivoTheme = () => {
     axis: {
       ticks: {
         line: {
-          stroke: theme.palette.mode === 'dark' ? '#fff' : '#333', // Dynamic color based on theme
+          stroke: theme.palette.mode === "dark" ? "#fff" : "#333", // Dynamic color based on theme
         },
         text: {
           fill: theme.palette.text.primary,
@@ -15,7 +15,7 @@ const useNivoTheme = () => {
       },
       legend: {
         line: {
-          stroke: theme.palette.mode === 'dark' ? '#fff' : '#333', // Dynamic color based on theme
+          stroke: theme.palette.mode === "dark" ? "#fff" : "#333", // Dynamic color based on theme
         },
         text: {
           fill: theme.palette.text.primary,
@@ -25,17 +25,17 @@ const useNivoTheme = () => {
     legends: {
       text: {
         fill: theme.palette.text.primary,
-      }
+      },
     },
     grid: {
       line: {
-        stroke: theme.palette.mode === 'dark' ? '#888' : '#ccc', // Dynamic color based on theme
+        stroke: theme.palette.mode === "dark" ? "#888" : "#ccc", // Dynamic color based on theme
         strokeWidth: 1,
       },
     },
     arc: {
       borderWidth: 1,
-      borderColor: theme.palette.mode === 'dark' ? '#333' : '#fff',
+      borderColor: theme.palette.mode === "dark" ? "#333" : "#fff",
     },
     tooltip: {
       container: {

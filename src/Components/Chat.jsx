@@ -68,42 +68,46 @@ const Chat = () => {
       >
         <AutoAwesomeIcon />
       </div>
-      {chatOpen && <HistogramContainer className="chat" ref={chatRef}>
-        <div className="chat-heading">
-          <h3>Chat with Jarvis</h3>
-        </div>
-        <div className="chat-messages">
-          {messages.map((message, index) => (
-            <div
-              key={index}
-              className={message.role === "user" ? "my-message" : "ai-message"}
-            >
-              {message.content}
-            </div>
-          ))}
-          {typingMessage && (
-            <div className="ai-message">
-              {typingMessage}
-              <span className="cursor">|</span>
-            </div>
-          )}
-        </div>
-        <div className="chat-input-container">
-          <form onSubmit={submitForm} style={{ width: "100%" }}>
-            <input
-              className="chat-input"
-              type="text"
-              placeholder="Type a message..."
-              value={userMessage}
-              onChange={handleUserMessageChange}
-              autoFocus
-            />
-            <button type="submit">
-              <SendIcon />
-            </button>
-          </form>
-        </div>
-      </HistogramContainer>}
+      {chatOpen && (
+        <HistogramContainer className="chat" ref={chatRef}>
+          <div className="chat-heading">
+            <h3>Chat with Jarvis</h3>
+          </div>
+          <div className="chat-messages">
+            {messages.map((message, index) => (
+              <div
+                key={index}
+                className={
+                  message.role === "user" ? "my-message" : "ai-message"
+                }
+              >
+                {message.content}
+              </div>
+            ))}
+            {typingMessage && (
+              <div className="ai-message">
+                {typingMessage}
+                <span className="cursor">|</span>
+              </div>
+            )}
+          </div>
+          <div className="chat-input-container">
+            <form onSubmit={submitForm} style={{ width: "100%" }}>
+              <input
+                className="chat-input"
+                type="text"
+                placeholder="Type a message..."
+                value={userMessage}
+                onChange={handleUserMessageChange}
+                autoFocus
+              />
+              <button type="submit">
+                <SendIcon />
+              </button>
+            </form>
+          </div>
+        </HistogramContainer>
+      )}
     </div>
   );
 };

@@ -11,7 +11,7 @@ const ScatterPlot = () => {
 
   const [data, setData] = useState();
   const [aiDescription, setAiDescription] = useState(
-    "Getting Jarvis' description..."
+    "Getting Jarvis' description...",
   );
   const [description, setDescription] = useState(false);
   const theme = useTheme();
@@ -25,7 +25,7 @@ const ScatterPlot = () => {
     if (!data) return;
 
     const message = `You are an AI assistant analyzing a scatter plot representing different average price for each year range and model. The scatter plot shows the following data: ${JSON.stringify(
-      data
+      data,
     )}. Summarize your findings in 150 words.`;
 
     try {

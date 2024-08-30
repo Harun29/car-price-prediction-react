@@ -1,5 +1,5 @@
-.chat{
-  position: fixed; 
+.chat {
+  position: fixed;
   bottom: 70px;
   right: 20px;
   background: rgba(255, 255, 255, 0);
@@ -11,18 +11,18 @@
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
-  font-family: 'Poppins', sans-serif;
+  font-family: "Poppins", sans-serif;
   transition: all 0.3 ease;
   z-index: 100;
 }
 
-.chat h3{
+.chat h3 {
   margin-top: 0;
   margin-bottom: 15px;
   font-size: 1.5rem;
 }
 
-.chat-messages{
+.chat-messages {
   width: 100%;
   height: 100%;
   display: flex;
@@ -32,7 +32,7 @@
   border-radius: 10px;
   overflow-y: scroll;
   scrollbar-width: none; /* For Firefox */
-  -ms-overflow-style: none;  /* For Internet Explorer and Edge */
+  -ms-overflow-style: none; /* For Internet Explorer and Edge */
 }
 
 .chat-messages::-webkit-scrollbar {
@@ -62,7 +62,7 @@
   color: inherit;
 }
 
-.chat-input-container form{
+.chat-input-container form {
   width: 100%;
   height: 100%;
   display: flex;
@@ -70,66 +70,67 @@
   justify-content: center;
 }
 
-.chat-input::placeholder{
+.chat-input::placeholder {
   color: inherit;
 }
 
-.chat-input-container button{
+.chat-input-container button {
   background: none;
   border: none;
   color: inherit;
 }
 
-.chat-input-container svg{
+.chat-input-container svg {
   color: inherit;
   cursor: pointer;
   transition: all 0.3s ease;
 }
 
-.chat-input-container svg:hover{
+.chat-input-container svg:hover {
   scale: 1.1;
 }
 
-.chat-messages{
+.chat-messages {
   display: flex;
   flex-direction: column;
 }
 
-.my-message, .ai-message{
+.my-message,
+.ai-message {
   padding: 10px;
   border-radius: 10px;
   margin: 10px 0;
 }
 
-.my-message{
+.my-message {
   background-color: rgba(0, 0, 255, 0.7);
   align-self: flex-end;
   margin-left: 10%;
 }
 
-.ai-message{
+.ai-message {
   margin-right: 10%;
   background-color: rgba(255, 255, 255, 0.9);
   align-self: flex-start;
   color: black;
 }
 
-.open-chat{
+.open-chat {
   position: fixed;
   bottom: 15px;
   right: 110px;
   z-index: 100;
 }
 
-.open-chat svg{
+.open-chat svg {
   font-size: 2rem;
 }
 
-.open-chat{
+.open-chat {
   cursor: pointer;
   transition: all 0.3s ease;
 }
 
-.open-chat:hover{
+.open-chat:hover {
   scale: 1.1;
 }

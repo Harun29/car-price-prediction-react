@@ -33,7 +33,7 @@ function App() {
             <Router>
               <div className="App">
                 <Navbar theme={theme} handleThemeChange={handleThemeChange} />
-                <Chat/>
+                <Chat />
                 <CssBaseline />
                 <Routes>
                   <Route path="/" element={<HomePage />} />

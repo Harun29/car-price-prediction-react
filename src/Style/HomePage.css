@@ -1,4 +1,4 @@
-.home-page-container{
+.home-page-container {
   display: grid;
   grid-template-columns: 5fr 2fr;
   height: 100%;
@@ -7,32 +7,31 @@
   align-items: center;
 }
 
-
-.home-page-container.active{
+.home-page-container.active {
   grid-template-columns: 5fr 4fr;
 }
 
-.home-page-paragraph{
+.home-page-paragraph {
   margin-bottom: 30px;
 }
 
-.home-page-right-side{
+.home-page-right-side {
   position: relative;
-  background-color: 	hsl(221, 100%, 61%);
+  background-color: hsl(221, 100%, 61%);
   transform: rotate(30deg);
   width: 160%;
   height: 170%;
   transition: 0.5s all ease;
 }
 
-.home-page-right-side.active{
+.home-page-right-side.active {
   transform: rotate(0deg);
   height: 100%;
   border-radius: 30px;
   box-shadow: -15px 0 20px -10px rgba(0, 0, 0, 0.5);
 }
 
-.home-page-default-car{
+.home-page-default-car {
   position: absolute;
   top: 55%;
   right: 30%;
@@ -41,24 +40,22 @@
   transition: 0.5s all ease;
 }
 
-.home-page-default-car.active{
+.home-page-default-car.active {
   transform: rotate(0deg) !important;
   opacity: 0 !important;
   width: 180px !important;
   top: 90% !important;
   right: 50% !important;
-  }
+}
 
-.home-page-default-car.audi{
+.home-page-default-car.audi {
   width: 90%;
   right: 45%;
 }
 
-
-
 /* CAR SPECS */
 
-.css-1eme1u9 svg{
+.css-1eme1u9 svg {
   position: absolute;
   right: 0;
   opacity: 0;
@@ -66,18 +63,18 @@
   scale: 1;
 }
 
-.css-1eme1u9 svg:hover{
+.css-1eme1u9 svg:hover {
   scale: 1.1;
 }
 
-.css-1eme1u9:hover svg{
+.css-1eme1u9:hover svg {
   position: absolute;
   top: -15px;
   right: 0;
   opacity: 1;
 }
 
-.car-specs{
+.car-specs {
   padding: 50px 100px;
   height: 100%;
   display: flex;
@@ -86,49 +83,51 @@
   justify-content: start;
 }
 
-.car-specs .heading3{
+.car-specs .heading3 {
   font-size: 3rem;
   margin: 0;
   transition: all 0.3s ease;
 }
 
-.heading3.active{
+.heading3.active {
   font-size: 2.5rem;
 }
 
-.row-inputs{
+.row-inputs {
   width: 100%;
   display: flex;
   margin-bottom: 20px;
   transition: all 0.3s ease;
 }
 
-.row-inputs label, .row-inputs p, .row-inputs label span{
-  font-family: 'Poppins', sans-serif;
+.row-inputs label,
+.row-inputs p,
+.row-inputs label span {
+  font-family: "Poppins", sans-serif;
   transition: all 0.3s ease;
 }
 
-.row-inputs.smaller{
+.row-inputs.smaller {
   width: 80%;
 }
 
-.row-inputs.smallest{
+.row-inputs.smallest {
   width: 50%;
 }
 
-.row-inputs.cols{
+.row-inputs.cols {
   flex-direction: column;
 }
 
-.row-inputs.cols:not(.smallest){
-  width:94%;
+.row-inputs.cols:not(.smallest) {
+  width: 94%;
 }
 
-.row-inputs.cols span{
+.row-inputs.cols span {
   margin-left: 5px;
 }
 
-.row-inputs div{
+.row-inputs div {
   margin-right: 40px;
   width: 100%;
 }
@@ -149,7 +148,7 @@
 
   /* Hide scrollbar */
   scrollbar-width: none; /* For Firefox */
-  -ms-overflow-style: none;  /* For Internet Explorer and Edge */
+  -ms-overflow-style: none; /* For Internet Explorer and Edge */
 }
 
 .cars-found-container::-webkit-scrollbar {
@@ -160,22 +159,26 @@
   width: 66%;
 }
 
-.home-page-vw-logo{
+.home-page-vw-logo {
   position: fixed;
   top: 20px;
   right: 20px;
   width: 100px;
   cursor: pointer;
-  transition: transform 0.3s ease, opacity 0.3s ease;
+  transition:
+    transform 0.3s ease,
+    opacity 0.3s ease;
 }
 
-.home-page-audi-logo{
+.home-page-audi-logo {
   position: fixed;
   top: 70px;
   right: 20px;
   width: 100px;
   cursor: pointer;
-  transition: transform 0.3s ease, opacity 0.3s ease;
+  transition:
+    transform 0.3s ease,
+    opacity 0.3s ease;
 }
 
 .selected-logo {
@@ -188,23 +191,23 @@
   opacity: 0.6;
 }
 
-.selected-logo.prediction-active{
+.selected-logo.prediction-active {
   top: 91.5%;
   right: 130px;
 }
 
-.prediction-active:not(.selected-logo){
+.prediction-active:not(.selected-logo) {
   opacity: 0;
   width: 0;
   height: 0;
 }
 
-.predicted-value{
+.predicted-value {
   font-size: 1.5rem;
   margin-top: 20px;
 }
 
-.predicted-value span{
+.predicted-value span {
   font-size: 1.1em;
   color: hsl(221, 100%, 61%);
   border-radius: 5px;
@@ -212,7 +215,6 @@
   padding: 0 10px;
 }
 
-.find-cars-button{
+.find-cars-button {
   font-size: 1.2rem !important;
 }
-

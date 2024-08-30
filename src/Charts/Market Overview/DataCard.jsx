@@ -8,7 +8,7 @@ import AutoAwesomeIcon from "@mui/icons-material/AutoAwesome";
 const DataCard = ({ title, value, color }) => {
   const theme = useTheme();
   const [aiDescription, setAiDescription] = useState(
-    "Getting Jarvis' description..."
+    "Getting Jarvis' description...",
   );
   const [description, setDescription] = useState(false);
 
@@ -68,10 +68,12 @@ const DataCard = ({ title, value, color }) => {
   }));
   return (
     <HistogramContainer className="small-card">
-      {!description && <AutoAwesomeIcon
+      {!description && (
+        <AutoAwesomeIcon
           className="get-prediction data-card"
           onClick={(e) => handlePrediction(e)}
-        />}
+        />
+      )}
       <Typography variant="h6" component="div">
         {title}
       </Typography>
@@ -86,14 +88,13 @@ const DataCard = ({ title, value, color }) => {
           transition={{ duration: 0.5 }}
           onClick={handleDescription}
           className="plot-description data-card"
-          style={{backgroundColor: theme.palette.background.paper}}
+          style={{ backgroundColor: theme.palette.background.paper }}
         >
           <h3>Jarvis' description:</h3>
           <p>{aiDescription}</p>
         </motion.div>
       )}
     </HistogramContainer>
-
   );
 };
 

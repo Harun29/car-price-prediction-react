@@ -13,7 +13,7 @@ const ModelListingsChart = () => {
     data: [],
   });
   const [aiDescription, setAiDescription] = useState(
-    "Getting Jarvis' description..."
+    "Getting Jarvis' description...",
   );
   const [descriptionVisible, setDescriptionVisible] = useState(false);
 
@@ -33,7 +33,7 @@ const ModelListingsChart = () => {
           Object.entries(series)
             .filter(([key]) => key !== "type")
             .map(([model, count]) => `${model} at ${count}`)
-            .join(", ")
+            .join(", "),
       )
       .join("; ");
 
@@ -56,7 +56,10 @@ const ModelListingsChart = () => {
   };
 
   useEffect(() => {
-    if (descriptionVisible && aiDescription === "Getting Jarvis' description...") {
+    if (
+      descriptionVisible &&
+      aiDescription === "Getting Jarvis' description..."
+    ) {
       handleSendMessage();
     }
   }, [descriptionVisible]);
@@ -82,16 +85,23 @@ const ModelListingsChart = () => {
       const result = await response.json();
       const { model_to_type, modelCounts } = result;
 
-      const carTypeData = Object.entries(model_to_type).reduce((acc, [model, type]) => {
-        if (!acc[type]) {
-          acc[type] = { type };
-        }
-        acc[type][model] = modelCounts[model] || 0;
-        return acc;
-      }, {});
+      const carTypeData = Object.entries(model_to_type).reduce(
+        (acc, [model, type]) => {
+          if (!acc[type]) {
+            acc[type] = { type };
+          }
+          acc[type][model] = modelCounts[model] || 0;
+          return acc;
+        },
+        {},
+      );
 
       const modelListingsData = Object.values(carTypeData);
-      setModelData({ modelToType: model_to_type, modelCounts, data: modelListingsData });
+      setModelData({
+        modelToType: model_to_type,
+        modelCounts,
+        data: modelListingsData,
+      });
     } catch (error) {
       console.error("Error fetching data:", error);
     }

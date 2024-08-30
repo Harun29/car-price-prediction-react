@@ -22,17 +22,13 @@ export function MLProvider({ children }) {
 
   const [columnsAIResponse, setColumnsAIResponse] = useState("");
 
-
-
   // useEffect(() => {
   //   handleInitialData();
   // }, []);
 
-
   useEffect(() => {
     columnsList && console.log("columns: ", columnsList);
   }, [columnsList]);
-
 
   useEffect(() => {
     columnsAIResponse && console.log("ai response: ", columnsAIResponse);

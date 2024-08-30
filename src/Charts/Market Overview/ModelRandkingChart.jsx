@@ -10,7 +10,7 @@ import AutoAwesomeIcon from "@mui/icons-material/AutoAwesome";
 const ModelRankingPieChart = () => {
   const [data, setData] = useState();
   const [aiDescription, setAiDescription] = useState(
-    "Getting Jarvis' description..."
+    "Getting Jarvis' description...",
   );
   const [description, setDescription] = useState(false);
 
@@ -98,10 +98,12 @@ const ModelRankingPieChart = () => {
   return (
     data && (
       <div className="plot-holder" style={{ height: "90%", width: "100%" }}>
-        {!description && <AutoAwesomeIcon
-          className="get-prediction"
-          onClick={(e) => handlePrediction(e)}
-        />}
+        {!description && (
+          <AutoAwesomeIcon
+            className="get-prediction"
+            onClick={(e) => handlePrediction(e)}
+          />
+        )}
         <ResponsivePie
           data={data}
           theme={nivoTheme}
@@ -175,7 +177,7 @@ const ModelRankingPieChart = () => {
             transition={{ duration: 0.5 }}
             onClick={handleDescription}
             className="plot-description"
-            style={{backgroundColor: theme.palette.background.paper}}
+            style={{ backgroundColor: theme.palette.background.paper }}
           >
             <h3>Jarvis' description:</h3>
             <p>{aiDescription}</p>

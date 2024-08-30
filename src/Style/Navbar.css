@@ -1,16 +1,16 @@
-.navbar-container{
+.navbar-container {
   position: fixed;
   top: 20px;
-  left:20px;
+  left: 20px;
 }
 
-.MuiDrawer-paper{
+.MuiDrawer-paper {
   margin: 15px;
   border-radius: 20px;
   height: calc(100% - 30px) !important;
 }
 
 .MuiListItemText-root .MuiTypography-root {
-  font-family: 'Poppins', sans-serif;
+  font-family: "Poppins", sans-serif;
   font-size: 1.2rem;
 }

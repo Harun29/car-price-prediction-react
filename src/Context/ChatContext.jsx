@@ -11,7 +11,8 @@ export function ChatProvider({ children }) {
   const [messages, setMessages] = useState([
     {
       role: "assistant",
-      content: "Hello! I'm Jarvis, your AI assistant powered by GPT-4o-mini. I'm here to help you with any questions or tasks you have. Just type in your message, and I'll do my best to assist you. How can I help you today?",
+      content:
+        "Hello! I'm Jarvis, your AI assistant powered by GPT-4o-mini. I'm here to help you with any questions or tasks you have. Just type in your message, and I'll do my best to assist you. How can I help you today?",
     },
   ]);
 
@@ -27,14 +28,14 @@ export function ChatProvider({ children }) {
   //           "Content-Type": "application/json",
   //         },
   //       });
-  
+
   //       console.log("Response status:", response.status);
   //       console.log("Response headers:", response.headers);
-        
+
   //       if (!response.ok) {
   //         throw new Error('Network response was not ok');
   //       }
-  
+
   //       console.log("About to parse JSON");
   //       try {
   //         const data = await response.json();
@@ -43,17 +44,17 @@ export function ChatProvider({ children }) {
   //       } catch (jsonError) {
   //         console.error("Error parsing JSON:", jsonError);
   //       }
-  
+
   //       setData(data);
-  
+
   //     } catch (error) {
   //       console.error("Fetch error:", error);
   //     }
   //   };
-  
+
   //   fetchData();
   // }, []);
-  
+
   // useEffect(() => {
   //   data && console.log("dataaa: ", data)
   // }, [data])
@@ -65,15 +66,12 @@ export function ChatProvider({ children }) {
 
   const handleSendMessage = async (message) => {
     if (message.trim() === "") return;
-  
+
     // Update the messages state first
-    const updatedMessages = [
-      ...messages,
-      { role: "user", content: message },
-    ];
-  
+    const updatedMessages = [...messages, { role: "user", content: message }];
+
     setMessages(updatedMessages);
-  
+
     try {
       const response = await fetch("http://127.0.0.1:5000/get_ai_message", {
         method: "POST",
@@ -82,11 +80,11 @@ export function ChatProvider({ children }) {
         },
         body: JSON.stringify({ message, messages: updatedMessages }),
       });
-  
+
       if (!response.ok) {
         throw new Error("Failed to get AI message");
       }
-      
+
       const data = await response.json();
       const aiMessage = data.ai_message;
       simulateTypingEffect(aiMessage);
@@ -94,7 +92,7 @@ export function ChatProvider({ children }) {
       console.error(err);
     }
   };
-  
+
   const simulateTypingEffect = (message) => {
     let index = 0;
     setTypingMessage("");
@@ -124,23 +122,16 @@ export function ChatProvider({ children }) {
   };
 
   useEffect(() => {
-    console.log(messages)
-  }, [messages])
-  
+    console.log(messages);
+  }, [messages]);
 
-  const values ={
+  const values = {
     messages,
     typingMessage,
     handleFormSubmit,
-  }
+  };
 
-  return (
-    <ChatContext.Provider
-      value={values}
-    >
-      {children}
-    </ChatContext.Provider>
-  );
+  return <ChatContext.Provider value={values}>{children}</ChatContext.Provider>;
 }
 
 export default ChatContext;

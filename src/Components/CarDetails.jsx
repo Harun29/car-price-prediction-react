@@ -8,8 +8,9 @@ import { OpenAI } from "openai";
 import { useTheme } from "@emotion/react";
 
 function CarDetails({ data, carImage, closeDetailedDescription }) {
-
-  const [carDescription, setCarDescription] = useState("Getting Jarvis' description...");
+  const [carDescription, setCarDescription] = useState(
+    "Getting Jarvis' description...",
+  );
   const theme = useTheme();
 
   const openai = new OpenAI({
@@ -23,10 +24,10 @@ function CarDetails({ data, carImage, closeDetailedDescription }) {
         .map(([key, value]) => `${key}: ${value}`)
         .join(", ");
     };
-    
+
     const formattedData = formatCarData(data);
-    const message = `Give me some clear description about this car. Use maximum of 100 words. Here is data about the car: ${formattedData}`
-    console.log(message)
+    const message = `Give me some clear description about this car. Use maximum of 100 words. Here is data about the car: ${formattedData}`;
+    console.log(message);
     try {
       const completion = await openai.chat.completions.create({
         model: "gpt-4o-mini",
@@ -44,8 +45,8 @@ function CarDetails({ data, carImage, closeDetailedDescription }) {
   };
 
   useEffect(() => {
-    data && handleSendMessage()
-  }, [data])
+    data && handleSendMessage();
+  }, [data]);
 
   const CarCardContainer = styled(motion.div)(({ theme }) => ({
     width: "85%",
@@ -120,7 +121,7 @@ function CarDetails({ data, carImage, closeDetailedDescription }) {
     },
     "& p:nth-child(2)": {
       alignItems: "start",
-    }
+    },
   }));
 
   const RowStatLast = styled(Box)(({ theme }) => ({
@@ -143,7 +144,7 @@ function CarDetails({ data, carImage, closeDetailedDescription }) {
       "& span:nth-child(1)": {
         color: theme.palette.text.disabled,
       },
-    }
+    },
   }));
 
   const Price = styled(Typography)(({ theme }) => ({
@@ -158,7 +159,7 @@ function CarDetails({ data, carImage, closeDetailedDescription }) {
     margin: "10px 30px",
     "& p": {
       fontFamily: "'Poppins', sans-serif",
-    }
+    },
   }));
 
   const FeatureIcon = ({ isAvailable }) => {
@@ -170,8 +171,8 @@ function CarDetails({ data, carImage, closeDetailedDescription }) {
   };
 
   useEffect(() => {
-    data && console.log(data)
-  }, [data])
+    data && console.log(data);
+  }, [data]);
 
   return (
     <CarCardContainer
@@ -180,7 +181,7 @@ function CarDetails({ data, carImage, closeDetailedDescription }) {
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
     >
-      <CarName variant="h5">{data.manufacturer+ " " + data.model}</CarName>
+      <CarName variant="h5">{data.manufacturer + " " + data.model}</CarName>
       <CarImage
         src={carImage || "https://via.placeholder.com/600x400"}
         alt="Car Image"
@@ -255,14 +256,17 @@ function CarDetails({ data, carImage, closeDetailedDescription }) {
         <Price>{data.price} KM</Price>
         <Description>
           <Typography variant="body2">
-            <span style={{color: theme.palette.text.secondary}}>
-            Orignial Title: 
-            </span>
-            {" "}
+            <span style={{ color: theme.palette.text.secondary }}>
+              Orignial Title:
+            </span>{" "}
             {data.title}
           </Typography>
           <Typography variant="body2">
-            <span style={{color: theme.palette.text.secondary}}> Jarvis' description:</span> {"\n"}
+            <span style={{ color: theme.palette.text.secondary }}>
+              {" "}
+              Jarvis' description:
+            </span>{" "}
+            {"\n"}
             {carDescription}
           </Typography>
         </Description>

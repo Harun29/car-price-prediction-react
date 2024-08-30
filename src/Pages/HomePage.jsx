@@ -17,9 +17,8 @@ import {
 import {
   Unstable_NumberInput as BaseNumberInput,
   numberInputClasses,
-} from '@mui/base/Unstable_NumberInput';
-import { Unstable_NumberInput as NumberInput } from '@mui/base/Unstable_NumberInput';
-
+} from "@mui/base/Unstable_NumberInput";
+import { Unstable_NumberInput as NumberInput } from "@mui/base/Unstable_NumberInput";
 
 import CarCard from "../Components/CarCard";
 import CarDetails from "../Components/CarDetails";
@@ -71,7 +70,7 @@ const HomePage = () => {
       aircondition: airCondition ? 1 : 0,
       navigation: navigation ? 1 : 0,
       registration: registration ? 1 : 0,
-      parkingsensors: parkingSensors
+      parkingsensors: parkingSensors,
     };
 
     console.log(data);
@@ -88,7 +87,6 @@ const HomePage = () => {
       setLoading(false);
     }
   };
-
 
   const changeToAudi = () => {
     setCarType("audi-car.png");
@@ -115,7 +113,23 @@ const HomePage = () => {
 
   useEffect(() => {
     prediction && handlePrediction();
-  }, [year, parkingSensors, kilowatts, mileage, cruiseControl, airCondition, navigation, registration, carCategory, displacement, fuelType, transmission, doors, drivetrain, mileage])
+  }, [
+    year,
+    parkingSensors,
+    kilowatts,
+    mileage,
+    cruiseControl,
+    airCondition,
+    navigation,
+    registration,
+    carCategory,
+    displacement,
+    fuelType,
+    transmission,
+    doors,
+    drivetrain,
+    mileage,
+  ]);
 
   // TODO add loading for useEffect above
   // TODO fix positioning of car logo when active
@@ -124,10 +138,10 @@ const HomePage = () => {
     let value = e.target.value;
 
     // Remove any non-numeric characters, except for the decimal point
-    value = value.replace(/[^0-9.]/g, '');
+    value = value.replace(/[^0-9.]/g, "");
 
     // Split the string on the decimal point to separate the integer and decimal parts
-    const parts = value.split('.');
+    const parts = value.split(".");
 
     // Keep only the first decimal point and allow only one decimal place
     if (parts.length > 2) {
@@ -140,8 +154,8 @@ const HomePage = () => {
   };
 
   useEffect(() => {
-    console.log("displacement: ", displacement)
-  }, [displacement])
+    console.log("displacement: ", displacement);
+  }, [displacement]);
 
   return (
     <div className={`home-page-container ${prediction && "active"}`}>
@@ -156,14 +170,14 @@ const HomePage = () => {
         </p>
         <div className="row-inputs">
           <FormControl fullWidth>
-          <FormControl fullWidth>
-            <TextField
-              id="displacement-input"
-              value={displacement}
-              onChange={handleDisplacementChange}
-              label="Displacement"
-            />
-          </FormControl>
+            <FormControl fullWidth>
+              <TextField
+                id="displacement-input"
+                value={displacement}
+                onChange={handleDisplacementChange}
+                label="Displacement"
+              />
+            </FormControl>
           </FormControl>
           <FormControl fullWidth>
             <TextField
