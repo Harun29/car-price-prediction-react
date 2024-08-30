@@ -17,8 +17,7 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import { styled } from "@mui/material/styles";
 import Switch from "@mui/material/Switch";
 
-
-const Navbar = ({theme, handleThemeChange}) => {
+const Navbar = ({ theme, handleThemeChange }) => {
   const [open, setOpen] = useState(false);
 
   const toggleDrawer = (newOpen) => () => {
@@ -105,16 +104,19 @@ const Navbar = ({theme, handleThemeChange}) => {
             </ListItemButton>
           </ListItem>
         </Link>
+          <Link
+            to="/update-csv"
+            style={{ textDecoration: "none", color: "inherit" }}
+          >
         <ListItem disablePadding>
-          <Link to="/update-data" style={{ textDecoration: 'none', color: 'inherit' }}>
-          <ListItemButton>
-            <ListItemIcon>
-              <CloudUploadIcon />
-            </ListItemIcon>
-            <ListItemText primary="Update Data" />
-          </ListItemButton>
-          </Link>
+            <ListItemButton>
+              <ListItemIcon>
+                <CloudUploadIcon />
+              </ListItemIcon>
+              <ListItemText primary="Update Data" />
+            </ListItemButton>
         </ListItem>
+          </Link>
       </List>
     </Box>
   );
@@ -128,15 +130,15 @@ const Navbar = ({theme, handleThemeChange}) => {
       <Drawer open={open} onClose={toggleDrawer(false)}>
         {DrawerList}
         <FormControlLabel
-            className="theme-change"
-            control={
-              <MaterialUISwitch
-                checked={theme === "dark"}
-                onChange={handleThemeChange}
-              />
-            }
-            label=""
-          />
+          className="theme-change"
+          control={
+            <MaterialUISwitch
+              checked={theme === "dark"}
+              onChange={handleThemeChange}
+            />
+          }
+          label=""
+        />
       </Drawer>
     </div>
   );

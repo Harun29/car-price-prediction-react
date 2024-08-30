@@ -39,7 +39,7 @@ function App() {
                   <Route path="/" element={<HomePage />} />
                   <Route path="/price-prediction" element={<HomePage />} />
                   <Route path="/data-analysis" element={<DataAnalysisPage />} />
-                  <Route path="/update-data" element={<UpdateCsv />} />
+                  <Route path="/update-csv" element={<UpdateCsv />} />
                 </Routes>
                 <img
                   className="home-page-bloomteq-symbol"

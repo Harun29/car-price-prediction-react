@@ -34,7 +34,7 @@
 	width:100%;
 	min-height:100vh;
 	font-family:sans-serif;
-  padding-right: 250px;
+  padding: 0 250px 0 150px;
 	h1 {
 		position:relative;
 		font-size:2.5em;
@@ -60,7 +60,7 @@
 	nav {
 		position:relative;
 		width:600px;
-		margin:0 auto auto;
+		margin:0 auto 60px;
 		display:flex;
 		justify-content:space-between;
 		
