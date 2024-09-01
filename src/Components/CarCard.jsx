@@ -115,12 +115,6 @@ function CarCard({ data, handleDetailedDescription }) {
   const carImage = selectCarImage(data.model, data.year);
   console.log(carImage);
 
-  const handleIconClick = (e) => {
-    e.stopPropagation();
-    const message = `Tell me more about the (maximum 50 words) ${carDetails.name}.`;
-    // Handle the icon click event (e.g., send the message to a chat or console log)
-  };
-
   const CarCardContainer = styled(motion.div)(({ theme }) => ({
     width: "90%",
     padding: "15px",
@@ -211,10 +205,6 @@ function CarCard({ data, handleDetailedDescription }) {
         <span>{carDetails.mileage}</span>
       </RowStats>
       <Price>{carDetails.price}</Price>
-      <AutoAwesomeIcon
-        onClick={(e) => handleIconClick(e)}
-        style={{ cursor: "pointer", marginTop: "10px" }}
-      />
     </CarCardContainer>
   );
 }

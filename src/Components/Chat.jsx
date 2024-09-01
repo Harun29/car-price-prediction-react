@@ -1,19 +1,19 @@
-import "../Style/Chat.css";
+import { useState, useRef, useEffect, useCallback } from "react";
 import { styled } from "@mui/material/styles";
 import SendIcon from "@mui/icons-material/Send";
-import { useChat } from "../Context/ChatContext";
-import { useState, useRef, useEffect } from "react";
 import AutoAwesomeIcon from "@mui/icons-material/AutoAwesome";
+import { useChat } from "../Context/ChatContext";
+import "../Style/Chat.css"; // Import your CSS here
 
 const Chat = () => {
   const [chatOpen, setChatOpen] = useState(false);
   const chatRef = useRef(null);
   const iconRef = useRef(null);
+  const messagesEndRef = useRef(null);
 
   const { messages, typingMessage, handleFormSubmit } = useChat();
 
   const handleOpenChat = () => {
-    console.log("Toggling chatOpen:", !chatOpen); // Debugging log
     setChatOpen((prev) => !prev);
   };
 
@@ -38,10 +38,10 @@ const Chat = () => {
 
   const [userMessage, setUserMessage] = useState("");
 
-  const handleUserMessageChange = (event) => {
+  const handleUserMessageChange = useCallback((event) => {
     event.preventDefault();
     setUserMessage(event.target.value);
-  };
+  }, []);
 
   const HistogramContainer = styled("div")(({ theme }) => ({
     boxShadow:
@@ -54,9 +54,16 @@ const Chat = () => {
 
   const submitForm = async (event) => {
     event.preventDefault();
-    await handleFormSubmit(event, userMessage);
+    const message = userMessage;
     setUserMessage("");
+    await handleFormSubmit(event, message);
   };
+
+  useEffect(() => {
+    if (messagesEndRef.current) {
+      messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
+    }
+  }, [messages]);
 
   return (
     <div>
@@ -90,7 +97,9 @@ const Chat = () => {
                 <span className="cursor">|</span>
               </div>
             )}
+            <div ref={messagesEndRef} id="bottom-of-chat"></div> 
           </div>
+
           <div className="chat-input-container">
             <form onSubmit={submitForm} style={{ width: "100%" }}>
               <input

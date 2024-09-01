@@ -67,7 +67,6 @@ export function ChatProvider({ children }) {
   const handleSendMessage = async (message) => {
     if (message.trim() === "") return;
 
-    // Update the messages state first
     const updatedMessages = [...messages, { role: "user", content: message }];
 
     setMessages(updatedMessages);

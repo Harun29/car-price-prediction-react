@@ -53,6 +53,10 @@
   right: 45%;
 }
 
+.home-page-input{
+  z-index: 1000 !important;
+}
+
 /* CAR SPECS */
 
 .css-1eme1u9 svg {

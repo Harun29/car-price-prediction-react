@@ -128,7 +128,6 @@ const UpdateCsv = () => {
             )}
           </div>
         </div>
-        {/* Moved content below the navigation */}
       </div>
 
       <div className="update-data-right-side">

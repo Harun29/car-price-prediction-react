@@ -60,7 +60,6 @@ const BasicOverview = () => {
 
   return (
     <div className="data-analysis-container">
-      <h3 className="data-analysis-headers">Quick Overview</h3>
       <HistogramContainer className="plot-box map-quick-overview">
         <span>Car Count per City</span>
         <MapComponent />

@@ -236,7 +236,7 @@ const HomePage = () => {
               <MenuItem value="4/5">4/5</MenuItem>
             </Select>
           </FormControl>
-          <FormControl fullWidth>
+          <FormControl className="home-page-input" fullWidth>
             <InputLabel id="drivetrain-label">Drivetrain</InputLabel>
             <Select
               labelId="drivetrain-label"
