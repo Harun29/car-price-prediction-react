@@ -33,7 +33,7 @@
   flex-direction: column;
   width: 100%;
   min-height: 100vh;
-  font-family: sans-serif;
+  font-family: "Poppins", sans-serif;
   padding: 0 250px 0 150px;
   h1 {
     position: relative;
@@ -63,7 +63,6 @@
     margin: 0 auto 60px;
     display: flex;
     justify-content: space-between;
-
     a {
       position: relative;
       display: flex;
@@ -176,4 +175,68 @@
       transition: width 0.5s cubic-bezier(1, 0, 0.5, 1.01);
     }
   }
+}
+
+.update-data-content{
+  width: 80%;
+  align-self: center;
+}
+
+.update-data-content .instructions{
+  font-size: 1.3rem;
+}
+
+.update-data-content .instructions ol li{
+  margin: 15px 0;
+}
+
+.next-button{
+  height: 50px;
+  width: 100px;
+}
+
+.upload-csv{
+  margin-top: 15px;
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  font-size: 1.2rem;
+}
+
+.upload-csv-result{
+  display: flex;
+  align-items: center;
+}
+
+.upload-file-button{
+  height: 50px;
+  margin-bottom: 15px !important;
+  margin-right: 15px !important;
+}
+
+.update-data{
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+}
+
+.update-data-button{
+  height: 50px;
+  margin-bottom: 20px !important;
+}
+
+.train-model{
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  font-size: 1.3rem;
+}
+
+.train-model label{
+  margin-bottom: 15px;
+}
+
+.train-model-buttons button{
+  margin: 15px 15px 0 0;
+  height: 50px;
 }

@@ -105,7 +105,7 @@ function selectCarImage(model, year) {
 function CarCard({ data, handleDetailedDescription }) {
   const carDetails = {
     name: `${data.manufacturer} ${data.model}`,
-    model: data.displacement,
+    model: `${data.displacement.toFixed(1)}L`,
     power: `${data.kilowatts}KW`,
     year: data.year,
     mileage: `${data.mileage}km`,
