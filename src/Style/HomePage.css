@@ -197,24 +197,18 @@
   opacity: 0.6;
 }
 
-.selected-logo.prediction-active {
+.home-page-vw-logo.prediction-active {
   position: fixed !important;
   top: auto;
-  bottom: 15px !important;
+  bottom: 10px !important;
   right: 130px;
 }
 
-.home-page-audi-logo.selected-logo.prediction-active {
+.home-page-audi-logo.prediction-active {
   position: fixed !important;
   top: auto;
-  bottom: 5px !important;
-  right: 160px;
-}
-
-.prediction-active:not(.selected-logo) {
-  opacity: 0;
-  width: 0;
-  height: 0;
+  bottom: 0px !important;
+  right: 230px;
 }
 
 .predicted-value {

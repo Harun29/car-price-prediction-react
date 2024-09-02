@@ -63,6 +63,7 @@ const HomePage = () => {
       drivetrain,
       fuel: fuelType,
       doors,
+      transmission,
       displacement: parseFloat(displacement),
       kilowatts: parseFloat(kilowatts),
       mileage: parseFloat(mileage),
