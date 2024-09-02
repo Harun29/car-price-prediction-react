@@ -141,14 +141,15 @@
   display: grid;
   grid-template-columns: 1fr 1fr;
   grid-template-rows: 1fr 1fr 1fr 1fr 1fr;
-  width: 66%;
-  padding: 50px;
+  width: 60%;
+  margin: 50px;
   gap: 30px;
   overflow-y: scroll;
   overflow-x: hidden;
   height: 90%;
-  justify-items: center;
+  justify-items: start;
   align-items: center;
+  height: calc(100% - 150px);
 
   /* Hide scrollbar */
   scrollbar-width: none; /* For Firefox */
@@ -161,6 +162,7 @@
 
 .cars-container {
   width: 66%;
+  height: 100%;
 }
 
 .home-page-vw-logo {
@@ -196,8 +198,17 @@
 }
 
 .selected-logo.prediction-active {
-  top: 91.5%;
+  position: fixed !important;
+  top: auto;
+  bottom: 15px !important;
   right: 130px;
+}
+
+.home-page-audi-logo.selected-logo.prediction-active {
+  position: fixed !important;
+  top: auto;
+  bottom: 5px !important;
+  right: 160px;
 }
 
 .prediction-active:not(.selected-logo) {

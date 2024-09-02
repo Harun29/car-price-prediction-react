@@ -50,7 +50,7 @@ function CarDetails({ data, carImage, closeDetailedDescription }) {
 
   const CarCardContainer = styled(motion.div)(({ theme }) => ({
     width: "85%",
-    height: "100%",
+    height: "calc(100vh - 150px)",
     margin: "5%",
     padding: "20px",
     display: "flex",
@@ -78,17 +78,16 @@ function CarDetails({ data, carImage, closeDetailedDescription }) {
 
   const CarImage = styled("img")({
     width: "100%",
-    height: "300px",
-    objectFit: "contain",
+    height: "40%",
     float: "start",
     borderRadius: "10px",
     marginBottom: "15px",
-    objectFit: "cover",
+    objectFit: "contain",
   });
 
   const RowStatsContainer = styled(Box)(({ theme }) => ({
     width: "100%",
-    height: "360px",
+    height: "auto",
     overflowY: "auto",
     padding: "10px 0",
     borderTop: `1px solid ${theme.palette.divider}`,
@@ -176,6 +175,7 @@ function CarDetails({ data, carImage, closeDetailedDescription }) {
 
   return (
     <CarCardContainer
+      className="car-details-container"
       onClick={closeDetailedDescription}
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}

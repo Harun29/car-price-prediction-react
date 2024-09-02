@@ -56,7 +56,8 @@ const HomePage = () => {
   const [vehicleData, setVehicleData] = useState([]);
   const [carImg, setCarImg] = useState("");
 
-  const handlePrediction = async () => {
+  const handlePrediction = async (event) => {
+    event && event.preventDefault();
     const data = {
       type: carCategory,
       drivetrain,
@@ -159,7 +160,7 @@ const HomePage = () => {
 
   return (
     <div className={`home-page-container ${prediction && "active"}`}>
-      <div className="car-specs">
+      <form onSubmit={handlePrediction} className="car-specs">
         <h3 className={`heading3 ${prediction && "active"}`}>
           Find Your Perfect Car Match
         </h3>
@@ -207,7 +208,7 @@ const HomePage = () => {
             </Select>
           </FormControl>
           <FormControl fullWidth>
-            <InputLabel id="transmission-label">Transmission</InputLabel>
+            <InputLabel className="home-page-input" id="transmission-label">Transmission</InputLabel>
             <Select
               labelId="transmission-label"
               id="transmission"
@@ -256,6 +257,7 @@ const HomePage = () => {
           <FormControl fullWidth>
             <InputLabel id="type-label">Type</InputLabel>
             <Select
+              required
               labelId="type-label"
               id="type"
               value={carCategory}
@@ -268,7 +270,7 @@ const HomePage = () => {
               <MenuItem value="Sedan">Sedan</MenuItem>
             </Select>
           </FormControl>
-          <FormControl fullWidth>
+          <FormControl className="home-page-input" fullWidth>
             {/* <InputLabel id="mileage-label">Mileage</InputLabel> */}
             <TextField
               id="mileage-input"
@@ -344,9 +346,9 @@ const HomePage = () => {
           />
         </div>
         <Button
+          type="submit"
           variant="outlined"
           className="find-cars-button"
-          onClick={handlePrediction}
         >
           Find cars
         </Button>
@@ -362,7 +364,7 @@ const HomePage = () => {
             <span>{Math.round(predictionValue, 0)} BAM</span>
           </div>
         )}
-      </div>
+      </form>
       <div className={`home-page-right-side ${prediction && "active"}`}>
         {prediction && (
           <div className="cars-container">
