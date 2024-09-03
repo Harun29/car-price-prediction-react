@@ -171,7 +171,7 @@
 }
 
 .data-tabs-button:hover {
-  background-color: hsl(221, 100%, 70%) !important;
+  background-color: hsla(221, 100%, 61%, 0.5) !important; 
   transform: translateX(-10px);
 }
 

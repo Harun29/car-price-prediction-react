@@ -138,7 +138,7 @@ const ReadData = () => {
           <HistogramContainer>
             {tableData.length > 0 && (
               <MaterialTable
-                title={`CSV Data`}
+                title={`All The Data`}
                 columns={columns}
                 data={tableData}
                 options={{

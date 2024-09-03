@@ -26,7 +26,7 @@ function CarDetails({ data, carImage, closeDetailedDescription }) {
     };
 
     const formattedData = formatCarData(data);
-    const message = `Give me some clear description about this car. Use maximum of 100 words. Here is data about the car: ${formattedData}`;
+    const message = `Give me some clear description about this car. Use maximum of 100 words. Price is in KM. Here is data about the car: ${formattedData}`;
     console.log(message);
     try {
       const completion = await openai.chat.completions.create({
