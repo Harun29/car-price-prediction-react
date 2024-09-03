@@ -403,6 +403,18 @@
 /* read data - tables */
 
 .table-data-container{
-  width: 100%;
   height: 100%;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 100px;
+  width: calc(100% - 120px);
 }
+
+.group-by-container{
+  display: grid;
+  grid-template-columns: 2fr 2fr 2fr 1fr 1fr;
+  gap: 15px;
+}
+
+
+

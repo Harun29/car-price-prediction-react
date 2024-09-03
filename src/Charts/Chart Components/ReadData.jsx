@@ -15,10 +15,12 @@ const ReadData = () => {
   const [groupBy, setGroupBy] = useState("");
   const [valueColumn, setValueColumn] = useState("");
   const [aggregationFunction, setAggregationFunction] = useState("");
+  const [originalData, setOriginalData] = useState([]);
+  const [originalColumns, setOriginalColumns] = useState([]);
 
   useEffect(() => {
     handleFileFetch();
-  }, [])
+  }, []);
 
   const handleFileFetch = async () => {
     setLoading(true);
@@ -30,21 +32,12 @@ const ReadData = () => {
         },
       });
       
-      console.log("Response status: ", response.status);
-  
       if (!response.ok) {
         throw new Error("Failed to fetch file");
       }
       
-      try{
-        const result = await response.json();
-      }catch(err){
-        console.log("error: ", err)
-      }
-      
       const result = await response.json();
-      console.log("Fetched data: ", result.data);
-      const data = result;
+      const data = result.data;
       
       if (data.length > 0) {
         const columns = Object.keys(data[0]).map((key) => ({
@@ -52,7 +45,11 @@ const ReadData = () => {
           field: key,
         }));
         setColumns(columns);
+        setOriginalColumns(columns);
         setTableData(data);
+        setOriginalData(data);
+      } else {
+        console.log("Data length is zero");
       }
     } catch (error) {
       console.error("Error fetching file:", error);
@@ -108,9 +105,17 @@ const ReadData = () => {
     }
   };
 
-  useEffect(() => {
-    tableData && console.log(tableData)
-  }, [tableData])
+  const handleRefresh = () => {
+    const columns = Object.keys(originalData[0]).map((key) => ({
+      title: key,
+      field: key,
+    }));
+    setColumns(columns);
+    setTableData(originalData);
+    setGroupBy("");
+    setValueColumn("");
+    setAggregationFunction("");
+  };
 
   const HistogramContainer = styled("div")(({ theme }) => ({
     boxShadow:
@@ -123,13 +128,14 @@ const ReadData = () => {
   }));
 
   return (
-    <div className="data-analysis-container">
-      <div>
+    <div className="data-analysis-container table-data-container">
+      <div className="table-data">
         {loading ? (
           <div className="spinner-container">
             <CircularProgress className="custom-loader" />
           </div>
-        ) : (<HistogramContainer >
+        ) : (
+          <HistogramContainer>
             {tableData.length > 0 && (
               <MaterialTable
                 title={`CSV Data`}
@@ -143,7 +149,7 @@ const ReadData = () => {
                 }}
               />
             )}
-            </HistogramContainer>
+          </HistogramContainer>
         )}
       </div>
       <div className="control-buttons group-by-container">
@@ -158,7 +164,7 @@ const ReadData = () => {
                 label="Group By"
                 onChange={handleGroupByChange}
               >
-                {columns.map((column) => (
+                {originalColumns.map((column) => (
                   <MenuItem key={column.field} value={column.field}>
                     {column.title}
                   </MenuItem>
@@ -175,7 +181,7 @@ const ReadData = () => {
                 label="Value Column"
                 onChange={handleValueColumnChange}
               >
-                {columns.map((column) => (
+                {originalColumns.map((column) => (
                   <MenuItem key={column.field} value={column.field}>
                     {column.title}
                   </MenuItem>
@@ -202,8 +208,12 @@ const ReadData = () => {
               </Select>
             </FormControl>
 
-            <Button onClick={handleGroupBy} variant="outlined">
+            <Button className="group-by-button" onClick={handleGroupBy} variant="outlined">
               Group By
+            </Button>
+
+            <Button className="group-by-button" onClick={handleRefresh} variant="outlined">
+              Original Data
             </Button>
           </>
         )}

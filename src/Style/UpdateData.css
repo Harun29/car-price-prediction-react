@@ -220,6 +220,10 @@
   align-items: start;
 }
 
+.update-data p{
+  font-size: 1.3rem;
+}
+
 .update-data-button{
   height: 50px;
   margin-bottom: 20px !important;

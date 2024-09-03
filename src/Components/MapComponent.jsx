@@ -1,7 +1,6 @@
 import React, { useEffect, useState, useRef } from "react";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
-import "leaflet.heat";
 import { useTheme } from "@emotion/react";
 
 const MapComponent = () => {
@@ -13,16 +12,11 @@ const MapComponent = () => {
   const [tile, setTile] = useState();
 
   useEffect(() => {
-    try {
-      const tileTheme =
-        theme.palette.mode === "dark"
-          ? "https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png"
-          : "https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png";
-      theme && setTile(tileTheme);
-    } catch (err) {
-      console.error("Error setting tile theme:", err);
-      setError("Failed to load the map theme.");
-    }
+    const tileTheme =
+      theme.palette.mode === "dark"
+        ? "https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png"
+        : "https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png";
+    theme && setTile(tileTheme);
   }, [theme]);
 
   useEffect(() => {
@@ -42,7 +36,15 @@ const MapComponent = () => {
 
   useEffect(() => {
     if (mapData && mapContainerRef.current && tile) {
-      try {
+      const resizeObserver = new ResizeObserver(() => {
+        if (mapInstanceRef.current) {
+          mapInstanceRef.current.invalidateSize();
+        }
+      });
+
+      resizeObserver.observe(mapContainerRef.current);
+
+      const initializeMap = () => {
         if (!mapInstanceRef.current) {
           mapInstanceRef.current = L.map(mapContainerRef.current, {
             center: mapData.center,
@@ -58,26 +60,10 @@ const MapComponent = () => {
           }).addTo(mapInstanceRef.current);
         }
 
-        mapInstanceRef.current.eachLayer((layer) => {
-          if (
-            layer instanceof L.Marker ||
-            layer instanceof L.CircleMarker ||
-            layer instanceof L.LayerGroup
-          ) {
-            mapInstanceRef.current.removeLayer(layer);
-          }
-        });
+        addMarkers();
+      };
 
-        const heatData = mapData.locations.map((location) => {
-          return [location.latitude, location.longitude, location.count];
-        });
-
-        L.heatLayer(heatData, {
-          radius: 30, // Adjust the radius of heat points
-          blur: 30, // Adjust the blur of heat points
-          maxZoom: mapInstanceRef.current.getMaxZoom(), // Max zoom for heat intensity
-        }).addTo(mapInstanceRef.current);
-
+      const addMarkers = () => {
         mapData.locations.forEach((location) => {
           const customIcon = L.divIcon({
             className: "custom-car-icon",
@@ -106,10 +92,31 @@ const MapComponent = () => {
 
           marker.addTo(mapInstanceRef.current);
         });
-      } catch (err) {
-        console.error("Error initializing the map or adding layers:", err);
-        setError("Failed to initialize the map.");
+      };
+
+      if (
+        mapContainerRef.current.offsetWidth > 0 &&
+        mapContainerRef.current.offsetHeight > 0
+      ) {
+        initializeMap();
+      } else {
+        const resizeCheckInterval = setInterval(() => {
+          if (
+            mapContainerRef.current.offsetWidth > 0 &&
+            mapContainerRef.current.offsetHeight > 0
+          ) {
+            clearInterval(resizeCheckInterval);
+            initializeMap();
+          }
+        }, 100);
       }
+
+      return () => {
+        resizeObserver.disconnect();
+        if (mapInstanceRef.current) {
+          mapInstanceRef.current.off();
+        }
+      };
     }
   }, [mapData, tile]);
 
