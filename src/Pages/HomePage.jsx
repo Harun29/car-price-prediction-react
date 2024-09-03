@@ -266,9 +266,19 @@ const HomePage = () => {
               onChange={(e) => setCarCategory(e.target.value)}
             >
               <MenuItem value="">Any</MenuItem>
+              <MenuItem value="Sedan">Sedan</MenuItem>
+              <MenuItem value="Caravan">Caravan</MenuItem>
+              <MenuItem value="Sports/Coupe">Sports/Coupe</MenuItem>
               <MenuItem value="SUV">SUV</MenuItem>
               <MenuItem value="Hatchback">Hatchback</MenuItem>
-              <MenuItem value="Sedan">Sedan</MenuItem>
+              <MenuItem value="Monovolume">Monovolume</MenuItem>
+              <MenuItem value="Small car">Small car</MenuItem>
+              <MenuItem value="Caddy">Caddy</MenuItem>
+              <MenuItem value="Van">Van</MenuItem>
+              <MenuItem value="Pick-up">Pick-up</MenuItem>
+              <MenuItem value="Off-Road">Off-Road</MenuItem>
+              <MenuItem value="Convertible">Convertible</MenuItem>
+              <MenuItem value="Oldtimer">Oldtimer</MenuItem>
             </Select>
           </FormControl>
           <FormControl className="home-page-input" fullWidth>
