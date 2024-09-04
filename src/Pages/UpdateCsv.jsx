@@ -158,7 +158,7 @@ const UpdateCsv = () => {
     }
   };
 
-  const handleTrainModel = async (message) => {
+  const handleTrainModel = async () => {
     try {
       const response = await fetch("http://127.0.0.1:5000/train_model", {
         method: "POST",
@@ -171,8 +171,10 @@ const UpdateCsv = () => {
       if (!response.ok) {
         throw new Error("Failed to train model");
       }
+      const result = await response.json()
+      console.log("metrics: ",result.metrics)
 
-      return await response.json();
+      return result;
     } catch (err) {
       console.error(err);
     }
