@@ -8,7 +8,7 @@ export function usePandas() {
 
 export function PandasProvider({ children }) {
   const getPrediction = async (data) => {
-    const url = "http://127.0.0.1:5000/get_XGBoost_prediction";
+    const url = "http://127.0.0.1:5000/get_prediction";
 
     try {
       const response = await fetch(url, {
