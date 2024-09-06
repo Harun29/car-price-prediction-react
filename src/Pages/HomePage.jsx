@@ -84,11 +84,35 @@ const HomePage = () => {
     }
   };
 
-  const changeToAudi = () => {
+  const changeCarModel = async(model) => {
+    try{
+      const response = await fetch("http://127.0.0.1:5000/select_brand", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ "brand": model }),
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to change brand");
+      } else {
+        return "successful";
+      }
+
+    }catch(err){
+      console.error("Error in changing car model: ", err)
+    }
+  }
+
+  const changeToAudi = async () => {
+    await changeCarModel("audi")
     setCarType("audi-car.png");
     setSelectedLogo("audi");
   };
-  const changeToVw = () => {
+  
+  const changeToVw = async () => {
+    await changeCarModel("volkswagen")
     setCarType("default-car.png");
     setSelectedLogo("vw");
   };
@@ -125,6 +149,7 @@ const HomePage = () => {
     doors,
     drivetrain,
     mileage,
+    carType
   ]);
 
   // TODO add loading for useEffect above
