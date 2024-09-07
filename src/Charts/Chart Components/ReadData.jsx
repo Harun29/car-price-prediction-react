@@ -8,7 +8,7 @@ import Select from "@mui/material/Select";
 import Button from "@mui/material/Button";
 import { styled } from "@mui/material/styles";
 
-const ReadData = () => {
+const ReadData = ({selectedCar}) => {
   const [tableData, setTableData] = useState([]);
   const [columns, setColumns] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -20,7 +20,7 @@ const ReadData = () => {
 
   useEffect(() => {
     handleFileFetch();
-  }, []);
+  }, [selectedCar]);
 
   const handleFileFetch = async () => {
     setLoading(true);

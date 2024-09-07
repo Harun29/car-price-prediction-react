@@ -10,7 +10,7 @@ import PriceDistributionLineChart from "../Market Overview/LinePlot";
 import BarChart from "../Price Influencers/BarChart";
 import PiePlot from "../Price Influencers/PiePlot";
 
-const BasicOverview = () => {
+const BasicOverview = ({selectedCar}) => {
   const [meanPrice, setMeanPrice] = useState(0);
   const [medianPrice, setMedianPrice] = useState(0);
   const [firsQuartile, setFirstQuartile] = useState(0);
@@ -43,7 +43,7 @@ const BasicOverview = () => {
 
   useEffect(() => {
     getData();
-  }, []);
+  }, [selectedCar]);
 
   const theme = useTheme();
   const [loading, setLoading] = useState(false);
@@ -86,7 +86,7 @@ const BasicOverview = () => {
       />
       <HistogramContainer className="plot-box model-ranking quick-overview">
         <span>most popular models</span>
-        {!loading && <ModelRankingPieChart />}
+        {!loading && <ModelRankingPieChart/>}
       </HistogramContainer>
       <HistogramContainer className="plot-box price-line quick-overview">
         <span>Price distribution for 5 most popular models</span>

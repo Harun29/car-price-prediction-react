@@ -14,6 +14,7 @@ const BarChart = () => {
   );
   const [description, setDescription] = useState(false);
   const theme = useTheme();
+  const [keys, setKeys] = useState([]);
 
   const openai = new OpenAI({
     apiKey: process.env.REACT_APP_OPENAI_API_KEY,
@@ -81,8 +82,24 @@ const BarChart = () => {
     getData();
   }, []);
 
+  useEffect(() => {
+    const updateKeys = () => {
+      const keySet = new Set();
+      data.forEach(obj => {
+        Object.keys(obj).forEach(key => {
+          if (key !== 'year_range') {
+            keySet.add(key);
+          }
+        });
+      });
+      setKeys([...keySet]);
+    };
+
+    if (data) updateKeys();
+  }, [data]);
+
   return (
-    data && (
+    data && keys && (
       <div className="plot-holder" style={{ height: "90%", width: "100%" }}>
         {!description && (
           <AutoAwesomeIcon
@@ -94,7 +111,7 @@ const BarChart = () => {
           data={data}
           theme={nivoTheme}
           indexBy="year_range"
-          keys={["Golf", "Passat", "Polo", "Tiguan", "Touran"]} // Specify the keys
+          keys={keys}
           margin={{ top: 50, right: 130, bottom: 50, left: 60 }}
           padding={0.3}
           valueScale={{ type: "linear" }}

@@ -89,10 +89,10 @@ const DataAnalysisPage = () => {
           />
         </div>
       </NavbarContainer>
-      {selectedData === "market-overview" && <MarketOverview />}
+      {selectedData === "basic-overview" && <BasicOverview selectedCar={selectedLogo}/>}
+      {selectedData === "market-overview" && <MarketOverview/>}
       {selectedData === "price-influencers" && <PriceInfluencers />}
-      {selectedData === "basic-overview" && <BasicOverview />}
-      {selectedData === "read-data" && <ReadData />}
+      {selectedData === "read-data" && <ReadData selectedCar={selectedLogo}/>}
       <div className="right-side-data-analysis">
         <div className="data-tabs">
           <span className="data-analysis-header">Data Analysis</span>
