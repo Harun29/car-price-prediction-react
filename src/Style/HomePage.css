@@ -31,6 +31,20 @@
   box-shadow: -15px 0 20px -10px rgba(0, 0, 0, 0.5);
 }
 
+.car-predictions-loading{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  font-size: 2rem;
+}
+
+.car-predictions-loading span:nth-child(1){
+  margin-right: 20px;
+}
+
+
 .home-page-default-car {
   position: absolute;
   top: 55%;

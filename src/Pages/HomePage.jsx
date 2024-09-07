@@ -20,8 +20,8 @@ import CarDetails from "../Components/CarDetails";
 import { motion } from "framer-motion";
 import { usePandas } from "../Context/PandasContext";
 import CircularProgress from "@mui/material/CircularProgress";
-import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
-import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
+import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
+import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import { useTheme } from "@emotion/react";
 
 const HomePage = () => {
@@ -35,6 +35,7 @@ const HomePage = () => {
   const [predictedVehicles, setPredictedVehicles] = useState([]);
   const { getPrediction } = usePandas();
   const [loading, setLoading] = useState(false);
+  const [carsLoading, setCarsLoading] = useState(false);
 
   const [displacement, setDisplacement] = useState("");
   const [kilowatts, setKilowatts] = useState("");
@@ -53,6 +54,17 @@ const HomePage = () => {
 
   const [vehicleData, setVehicleData] = useState([]);
   const [carImg, setCarImg] = useState("");
+
+  const [tempValue, setTempValue] = useState(year);
+
+  const handleYearChange = (e, newValue) => {
+    setCarsLoading(true);
+    setTempValue(newValue); // Update tempValue while sliding
+  };
+
+  const handleChangeCommitted = (e, newValue) => {
+    setYear(newValue);
+  };
 
   const handlePrediction = async (event) => {
     event && event.preventDefault();
@@ -76,12 +88,14 @@ const HomePage = () => {
     console.log(data);
 
     setLoading(true);
+    setCarsLoading(true);
     try {
       const response = await getPrediction(data);
       setPredictionValue(response.prediction);
       setPredictedVehicles(response.vehicles);
-      setRange(response.score)
+      setRange(response.score);
       setLoading(false);
+      setCarsLoading(false);
       setPrediction(true);
     } catch (err) {
       console.error(err);
@@ -89,14 +103,14 @@ const HomePage = () => {
     }
   };
 
-  const changeCarModel = async(model) => {
-    try{
+  const changeCarModel = async (model) => {
+    try {
       const response = await fetch("http://127.0.0.1:5000/select_brand", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ "brand": model }),
+        body: JSON.stringify({ brand: model }),
       });
 
       if (!response.ok) {
@@ -104,20 +118,19 @@ const HomePage = () => {
       } else {
         return "successful";
       }
-
-    }catch(err){
-      console.error("Error in changing car model: ", err)
+    } catch (err) {
+      console.error("Error in changing car model: ", err);
     }
-  }
+  };
 
   const changeToAudi = async () => {
-    await changeCarModel("audi")
+    await changeCarModel("audi");
     setCarType("audi-car.png");
     setSelectedLogo("audi");
   };
-  
+
   const changeToVw = async () => {
-    await changeCarModel("volkswagen")
+    await changeCarModel("volkswagen");
     setCarType("default-car.png");
     setSelectedLogo("vw");
   };
@@ -154,11 +167,9 @@ const HomePage = () => {
     doors,
     drivetrain,
     mileage,
-    carType
+    carType,
   ]);
 
-  // TODO add loading for useEffect above
-  // TODO fix positioning of car logo when active
 
   const handleDisplacementChange = (e) => {
     let value = e.target.value;
@@ -178,10 +189,6 @@ const HomePage = () => {
 
     setDisplacement(value);
   };
-
-  useEffect(() => {
-    console.log("displacement: ", displacement);
-  }, [displacement]);
 
   const theme = useTheme();
 
@@ -235,7 +242,9 @@ const HomePage = () => {
             </Select>
           </FormControl>
           <FormControl fullWidth>
-            <InputLabel className="home-page-input" id="transmission-label">Transmission</InputLabel>
+            <InputLabel className="home-page-input" id="transmission-label">
+              Transmission
+            </InputLabel>
             <Select
               labelId="transmission-label"
               id="transmission"
@@ -373,8 +382,9 @@ const HomePage = () => {
           <Typography gutterBottom>Year</Typography>
           <Slider
             aria-label="Year"
-            value={year}
-            onChange={(e, newValue) => setYear(newValue)}
+            value={tempValue}
+            onChange={handleYearChange}
+            onChangeCommitted={handleChangeCommitted}
             valueLabelDisplay="auto"
             step={1}
             marks={false}
@@ -382,16 +392,12 @@ const HomePage = () => {
             max={2024}
           />
         </div>
-        <Button
-          type="submit"
-          variant="outlined"
-          className="find-cars-button"
-        >
+        <Button type="submit" variant="outlined" className="find-cars-button">
           Find cars
         </Button>
         {loading && (
           <div className="loading">
-            Loading Car Price...
+              Loading Car Price...
             <CircularProgress />
           </div>
         )}
@@ -404,7 +410,9 @@ const HomePage = () => {
                 <ArrowDropUpIcon />
                 <ArrowDropDownIcon />
               </div>
-              <span style={{color: theme.palette.text.secondary}}>{Math.round(range, 0)} KM</span>
+              <span style={{ color: theme.palette.text.secondary }}>
+                {Math.round(range, 0)} KM
+              </span>
             </div>
           </div>
         )}
@@ -412,7 +420,7 @@ const HomePage = () => {
       <div className={`home-page-right-side ${prediction && "active"}`}>
         {prediction && (
           <div className="cars-container">
-            {!detailedDescription && (
+            {!detailedDescription && !carsLoading && !loading && (
               <div className="cars-found-container">
                 {predictedVehicles.map((vehicle) => (
                   <CarCard
@@ -423,12 +431,20 @@ const HomePage = () => {
                 ))}
               </div>
             )}
-            {detailedDescription && (
+            {detailedDescription && !carsLoading && !loading && (
               <CarDetails
                 data={vehicleData}
                 carImage={carImg}
                 closeDetailedDescription={closeDetailedDescription}
               />
+            )}
+            {carsLoading && (
+              <div className="car-predictions-loading">
+                <span>
+                  Loading Cars...
+                </span>
+                <CircularProgress />
+              </div>
             )}
           </div>
         )}
