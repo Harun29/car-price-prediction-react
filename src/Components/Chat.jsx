@@ -73,7 +73,7 @@ const Chat = () => {
         className="open-chat"
         role="button"
       >
-        <AutoAwesomeIcon />
+        <AutoAwesomeIcon style={{color: "white"}}/>
       </div>
       {chatOpen && (
         <HistogramContainer className="chat" ref={chatRef}>
