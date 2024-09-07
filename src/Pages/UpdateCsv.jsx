@@ -17,6 +17,7 @@ import "../Style/UpdateData.css";
 import Checkbox from "@mui/material/Checkbox";
 import Papa from "papaparse";
 import CheckIcon from "@mui/icons-material/Check";
+import { Link } from "react-router-dom";
 
 const UpdateCsv = () => {
   const [activeLink, setActiveLink] = useState(0);
@@ -24,6 +25,7 @@ const UpdateCsv = () => {
   const [loading, setLoading] = useState(false);
   const [page, setPage] = useState(0);
   const [model, setModel] = useState();
+  const [metrics, setMetrics] = useState();
 
   const [modelLoading, setModelLoading] = useState(false);
   const [modelTrainedMessage, setModelTrainedMessage] = useState("");
@@ -171,10 +173,8 @@ const UpdateCsv = () => {
       if (!response.ok) {
         throw new Error("Failed to train model");
       }
-      const result = await response.json()
-      console.log("metrics: ",result.metrics)
-
-      return result;
+      const result = await response.json();
+      setMetrics(result.results);
     } catch (err) {
       console.error(err);
     }
@@ -192,6 +192,10 @@ const UpdateCsv = () => {
       setModelLoading(false);
     }
   };
+
+  useEffect(() => {
+    metrics && console.log(metrics);
+  }, [metrics]);
 
   return (
     <div className="update-data-container">
@@ -401,11 +405,19 @@ const UpdateCsv = () => {
                 </FormControl>
                 <div className="train-model-buttons">
                   <div className="checkbox-container">
-                    <Checkbox disabled checked={file} />
+                    {file ? 
+                    <Checkbox disabled checked={true} />
+                    : 
+                    <Checkbox disabled checked={false} />
+                    }
                     <span>Uploaded data</span>
                   </div>
                   <div className="checkbox-container">
-                    <Checkbox disabled checked={model} />
+                  {model ? 
+                    <Checkbox disabled checked={true} />
+                    : 
+                    <Checkbox disabled checked={false} />
+                    }
                     <span>Selected model</span>
                   </div>
                   {modelLoading && (
@@ -413,11 +425,76 @@ const UpdateCsv = () => {
                       style={{ padding: "0", marginBottom: "20px" }}
                     />
                   )}
+                  {metrics &&
+                    !modelLoading &&
+                    modelTrainedMessage ===
+                      "New model trained successfully!" && (
+                      <div className="model-metrics">
+                        <div className="audi-metrics">
+                          <div>Audi: </div>
+                          <span className="r2">
+                            R2: {Math.round(metrics.audi.R2Score, 2)}
+                            <div className="tooltip">
+                              R2 is the coefficient of determination
+                            </div>
+                          </span>
+                          <span className="rmse">
+                            RMSE: {Math.round(metrics.audi.RMSE, 1)}
+                            <div className="tooltip">
+                              RMSE is the Root Mean Squared Error
+                            </div>
+                          </span>
+                          <span className="mae">
+                            MAE: {Math.round(metrics.audi.MAE, 1)}
+                            <div className="tooltip">
+                              MAE is the Mean Absolute Error
+                            </div>
+                          </span>
+                        </div>
+                        <div className="vw-metrics">
+                          <div>Volkswagen: </div>
+                          <span className="r2">
+                            R2: {Math.round(metrics.volkswagen.R2Score, 2)}
+                            <div className="tooltip">
+                              R2 is the coefficient of determination
+                            </div>
+                          </span>
+                          <span className="rmse">
+                            RMSE: {Math.round(metrics.volkswagen.RMSE, 1)}
+                            <div className="tooltip">
+                              RMSE is the Root Mean Squared Error
+                            </div>
+                          </span>
+                          <span className="mae">
+                            MAE: {Math.round(metrics.volkswagen.MAE, 1)}
+                            <div className="tooltip">
+                              MAE is the Mean Absolute Error
+                            </div>
+                          </span>
+                        </div>
+                      </div>
+                    )}
+
+                  <Button
+                    onClick={handleTraining}
+                    disabled={!model || !file}
+                    variant="contained"
+                  >
+                    Train Model
+                  </Button>
+                  <Link to="/price-prediction">
+                    <Button variant="outlined">Back to home</Button>
+                  </Link>
+                  {modelLoading && (
+                    <CircularProgress
+                      style={{ padding: "0", marginTop: "20px" }}
+                    />
+                  )}
                   {!modelLoading && modelTrainedMessage && (
                     <Alert
                       style={{
                         padding: "0",
-                        marginBottom: "20px",
+                        marginTop: "20px",
                         width: "60%",
                       }}
                       icon={
@@ -440,14 +517,6 @@ const UpdateCsv = () => {
                         : "Failed to train new model! :("}
                     </Alert>
                   )}
-                  <Button
-                    onClick={handleTraining}
-                    disabled={!model || !file}
-                    variant="contained"
-                  >
-                    Train Model
-                  </Button>
-                  <Button variant="outlined">Back to home</Button>
                 </div>
               </div>
             )}
