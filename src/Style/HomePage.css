@@ -214,6 +214,42 @@
 .predicted-value {
   font-size: 1.5rem;
   margin-top: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: start;
+}
+
+.prediction-range{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.prediction-range div{
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  height: 60px;
+  width: 30px;
+}
+
+.prediction-range div svg:nth-child(1){
+  color: green;
+  font-size: 3rem;
+  position: absolute;
+  top: 0;
+}
+.prediction-range div svg:nth-child(2){
+  color: red;
+  font-size: 3rem;
+  position: absolute;
+  bottom: 0;
+}
+
+.prediction-range span{
+  font-size: 1.3rem !important;
+  border: none !important;
+  margin: 0 !important;
 }
 
 .predicted-value span {
@@ -222,6 +258,7 @@
   border-radius: 5px;
   border: 1px solid hsl(221, 100%, 61%);
   padding: 0 10px;
+  margin: 0 20px;
 }
 
 .find-cars-button {

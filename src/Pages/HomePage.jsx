@@ -20,6 +20,9 @@ import CarDetails from "../Components/CarDetails";
 import { motion } from "framer-motion";
 import { usePandas } from "../Context/PandasContext";
 import CircularProgress from "@mui/material/CircularProgress";
+import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
+import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
+import { useTheme } from "@emotion/react";
 
 const HomePage = () => {
   const [prediction, setPrediction] = useState(false);
@@ -28,6 +31,7 @@ const HomePage = () => {
   const [carType, setCarType] = useState("default-car.png");
   const [selectedLogo, setSelectedLogo] = useState("vw");
   const [predictionValue, setPredictionValue] = useState("");
+  const [range, setRange] = useState();
   const [predictedVehicles, setPredictedVehicles] = useState([]);
   const { getPrediction } = usePandas();
   const [loading, setLoading] = useState(false);
@@ -76,6 +80,7 @@ const HomePage = () => {
       const response = await getPrediction(data);
       setPredictionValue(response.prediction);
       setPredictedVehicles(response.vehicles);
+      setRange(response.score)
       setLoading(false);
       setPrediction(true);
     } catch (err) {
@@ -177,6 +182,8 @@ const HomePage = () => {
   useEffect(() => {
     console.log("displacement: ", displacement);
   }, [displacement]);
+
+  const theme = useTheme();
 
   return (
     <div className={`home-page-container ${prediction && "active"}`}>
@@ -391,7 +398,14 @@ const HomePage = () => {
         {!loading && prediction && (
           <div className="predicted-value">
             Such car would cost around:{" "}
-            <span>{Math.round(predictionValue, 0)} BAM</span>
+            <span>{Math.round(predictionValue, 0)} KM</span>
+            <div className="prediction-range">
+              <div>
+                <ArrowDropUpIcon />
+                <ArrowDropDownIcon />
+              </div>
+              <span style={{color: theme.palette.text.secondary}}>{Math.round(range, 0)} KM</span>
+            </div>
           </div>
         )}
       </form>
