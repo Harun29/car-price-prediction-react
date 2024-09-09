@@ -29,7 +29,7 @@ const PriceInfluencers = () => {
         {!loading && <HeatMap />}
       </HistogramContainer>
       <HistogramContainer className="plot-box pie-plot">
-        <span>Pie Plot</span>
+        <span>Average prices per model</span>
         {!loading && <PiePlot />}
       </HistogramContainer>
       <HistogramContainer className="plot-box line-plot">
@@ -37,11 +37,11 @@ const PriceInfluencers = () => {
         {!loading && <LinePlot />}
       </HistogramContainer>
       <HistogramContainer className="plot-box bar-chart">
-        <span>Most popular models - price by years</span>
+        <span>Most popular models - price by production year</span>
         {!loading && <BarChart />}
       </HistogramContainer>
       <HistogramContainer className="plot-box bar-chart-2">
-        <span>Most popular types - price by years</span>
+        <span>Most popular types - price by production year</span>
         {!loading && <BarChart2 />}
       </HistogramContainer>
     </div>

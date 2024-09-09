@@ -23,7 +23,7 @@ const BarChart2 = () => {
   const handleSendMessage = async () => {
     if (!data) return;
 
-    const message = `You are an AI assistant analyzing a Bar chart. The bar chart shows the following data: ${JSON.stringify(data)}. Summarize your findings in 150 words.`;
+    const message = `You are an AI assistant analyzing a bar chart. The chart compares the average prices of the most popular car types by their production year. The data contains various car types and their average prices across different year ranges: ${JSON.stringify(data)}. Your task is to provide insights into the price trends over the years, highlight which types have seen price increases or decreases, and identify any notable patterns or outliers. Summarize your findings in 150 words, focusing on how the types compare and what can be inferred about the pricing dynamics.`;
 
     try {
       const completion = await openai.chat.completions.create({
