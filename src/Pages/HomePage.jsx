@@ -57,6 +57,9 @@ const HomePage = () => {
 
   const [tempValue, setTempValue] = useState(year);
 
+  const [modelSelection, setModelSelection] = useState();
+  const [dataSelection, setDataSelection] = useState();
+
   const handleYearChange = (e, newValue) => {
     setCarsLoading(true);
     setTempValue(newValue); // Update tempValue while sliding
@@ -197,6 +200,34 @@ const HomePage = () => {
       <form onSubmit={handlePrediction} className="car-specs">
         <h3 className={`heading3 ${prediction && "active"}`}>
           Find Your Perfect Car Match
+          <FormControl className="home-page-input model-selection">
+            <InputLabel id="data-label">Data</InputLabel>
+            <Select
+              labelId="data-label"
+              id="data"
+              value={dataSelection}
+              label="Data"
+              onChange={(e) => setDataSelection(e.target.value)}
+            >
+              <MenuItem value="XGBoost(old)">Data updated on: 17. 07. 24.</MenuItem>
+              <MenuItem value="XGBoost(old)">Data updated on: 09. 09. 24.</MenuItem>
+            </Select>
+          </FormControl>
+          <FormControl className="home-page-input model-selection">
+            <InputLabel id="ml-model-label">Model</InputLabel>
+            <Select
+              labelId="ml-model"
+              id="ml-model"
+              value={modelSelection}
+              label="Model"
+              onChange={(e) => setModelSelection(e.target.value)}
+            >
+              <MenuItem value="XGBoost(old)">XGBoost<span style={{color: theme.palette.text.secondary}}>(17. 07. 24)</span></MenuItem>
+              <MenuItem value="RandomForest(old)">Random Forest <span style={{color: theme.palette.text.secondary}}>(17. 07. 24)</span></MenuItem>
+              <MenuItem value="XGBoost">XGBoost <span style={{color: theme.palette.text.secondary}}>(recommended)</span></MenuItem>
+              <MenuItem value="RandomForest">Random Forest</MenuItem>
+            </Select>
+          </FormControl>
         </h3>
         <p className="home-page-paragraph">
           Use our advanced car prediction tool to find vehicles that meet your

@@ -2,8 +2,10 @@ import React, { useState, useRef, useEffect } from "react";
 import { styled } from "@mui/material/styles";
 import SendIcon from "@mui/icons-material/Send";
 import AutoAwesomeIcon from "@mui/icons-material/AutoAwesome";
+import Tooltip, { tooltipClasses } from '@mui/material/Tooltip';
 import { useChat } from "../Context/ChatContext";
 import "../Style/Chat.css";
+import CloseIcon from "@mui/icons-material/Close";
 
 const Chat = () => {
   const [chatOpen, setChatOpen] = useState(false);
@@ -41,7 +43,7 @@ const Chat = () => {
     event.preventDefault();
     const message = typingMessageRef.current.value;
     await handleFormSubmit(event, message);
-    typingMessageRef.current.value = '';
+    typingMessageRef.current.value = "";
   };
 
   useEffect(() => {
@@ -50,29 +52,44 @@ const Chat = () => {
     }
   }, [messages]);
 
-  const HistogramContainer = styled("div")(({ theme }) => ({
-    boxShadow:
-      theme.palette.mode === "light"
-        ? "9px 9px 18px #bcbcbc, -9px -9px 18px #ffffff"
-        : "4px 4px 12px #000000, -4px -4px 12px #000000",
-    borderRadius: "20px",
-    padding: "20px",
+  const LightTooltip = styled(({ className, ...props }) => (
+    <Tooltip {...props} classes={{ popper: className }} />
+  ))(({ theme }) => ({
+    [`& .${tooltipClasses.tooltip}`]: {
+      backgroundColor: theme.palette.common.white,
+      color: 'black',
+      boxShadow: theme.shadows[1],
+      fontSize: 16,
+    },
   }));
 
   return (
     <div>
-      <div
-        ref={iconRef}
-        onClick={handleOpenChat}
-        className="open-chat"
-        role="button"
-      >
-        <AutoAwesomeIcon style={{ color: "white" }} />
-      </div>
+      <LightTooltip title="Chat with Jarvis" placement="left">
+        <div
+          ref={iconRef}
+          onClick={handleOpenChat}
+          className="open-chat"
+          role="button"
+        >
+          <AutoAwesomeIcon style={{ color: "white" }} />
+        </div>
+      </LightTooltip>
       {chatOpen && (
-        <HistogramContainer className="chat" ref={chatRef}>
+        <div className="chat" ref={chatRef}>
           <div className="chat-heading">
-            <h3>Chat with Jarvis</h3>
+            <div>
+              <img
+                className="chat-bot-image"
+                src="chat-bot.avif"
+                alt="chat bot"
+              />
+              <h3>Jarvis</h3>
+            </div>
+            <CloseIcon
+              onClick={handleOpenChat}
+              className="close-icon"
+            ></CloseIcon>
           </div>
           <div className="chat-messages">
             {messages.map((message, index) => (
@@ -82,6 +99,16 @@ const Chat = () => {
                   message.role === "user" ? "my-message" : "ai-message"
                 }
               >
+                <img
+                  className="chat-bot-image in-chat ai-image"
+                  src="chat-bot.avif"
+                  alt="chat bot"
+                />
+                <img
+                  className="chat-bot-image in-chat user-image"
+                  src="user-image.jpeg"
+                  alt="user"
+                />
                 {message.content}
               </div>
             ))}
@@ -102,7 +129,7 @@ const Chat = () => {
               </button>
             </form>
           </div>
-        </HistogramContainer>
+        </div>
       )}
     </div>
   );

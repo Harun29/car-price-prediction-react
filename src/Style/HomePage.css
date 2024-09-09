@@ -72,6 +72,11 @@
   z-index: 1000 !important;
 }
 
+.home-page-input.model-selection{
+  width: 150px;
+  margin-left: 20px;
+}
+
 /* CAR SPECS */
 
 .css-1eme1u9 svg {
@@ -106,6 +111,7 @@
   font-size: 3rem;
   margin: 0;
   transition: all 0.3s ease;
+  display: flex;
 }
 
 .heading3.active {

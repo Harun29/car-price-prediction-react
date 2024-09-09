@@ -85,7 +85,7 @@ const BasicOverview = ({selectedCar}) => {
         color="#f44336"
       />
       <HistogramContainer className="plot-box model-ranking quick-overview">
-        <span>most popular models</span>
+        <span>Most popular models</span>
         {!loading && <ModelRankingPieChart/>}
       </HistogramContainer>
       <HistogramContainer className="plot-box price-line quick-overview">
@@ -93,7 +93,7 @@ const BasicOverview = ({selectedCar}) => {
         {!loading && <PriceDistributionLineChart />}
       </HistogramContainer>
       <HistogramContainer className="plot-box pie-plot quick-overview">
-        <span>Pie Plot</span>
+        <span>Average prices</span>
         {!loading && <PiePlot />}
       </HistogramContainer>
       <HistogramContainer className="plot-box histplot quick-overview">
@@ -101,7 +101,7 @@ const BasicOverview = ({selectedCar}) => {
         {!loading && <MyHistogram />}
       </HistogramContainer>
       <HistogramContainer className="plot-box bar-chart quick-overview">
-        <span>Most popular models - price by years</span>
+        <span>Most popular models - price by production year</span>
         {!loading && <BarChart />}
       </HistogramContainer>
     </div>

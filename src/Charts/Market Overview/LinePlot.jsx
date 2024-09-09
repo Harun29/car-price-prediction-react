@@ -32,7 +32,7 @@ const PriceDistributionLineChart = () => {
       )
       .join("; ");
 
-    const message = `You are an AI assistant analyzing a line chart that compares car models across different price ranges. The chart shows the following data: ${dataString}. Describe how the prices of these models compare across the different series ("Price Range", "Median Price", "75% Price"), identify any notable trends, and discuss any significant differences between the models. Provide insights on the distribution of prices for each model. Make it a maximum of 100 words!`;
+    const message = `You are an AI assistant analyzing a line chart that compares car models across different price ranges. The chart shows the following data: ${dataString}. Describe how the prices of these models compare across the different series ("25% Price", "Median Price", "75% Price"), identify any notable trends, and discuss any significant differences between the models. Provide insights on the distribution of prices for each model. Make it a maximum of 100 words!`;
 
     try {
       const completion = await openai.chat.completions.create({

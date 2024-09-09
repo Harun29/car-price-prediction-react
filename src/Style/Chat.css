@@ -14,12 +14,57 @@
   font-family: "Poppins", sans-serif;
   transition: all 0.3 ease;
   z-index: 100;
+  border-radius: 20px;
+  padding: 20px;
+  border: 2px solid white;
 }
 
 .chat h3 {
   margin-top: 0;
-  margin-bottom: 15px;
+  margin-bottom: 0;
   font-size: 1.5rem;
+}
+
+.chat-heading{
+  background-color: white;
+  color: black;
+  width: calc(100% + 42px);
+  transform: translateY(-21px);
+  border-radius: 20px 20px 0 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px;
+}
+
+.chat-heading div{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.chat-bot-image{
+  object-fit: contain;
+  height: 40px;
+  width: 40px;
+  margin-right: 15px;
+}
+
+.chat h3 {
+  margin-top: 0;
+  margin-bottom: 0;
+  font-size: 1.2rem;
+  font-weight: 300;
+}
+
+.close-icon{
+  margin-right: 10px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.close-icon:hover{
+  scale: 1.1;
 }
 
 .chat-messages {
@@ -108,6 +153,7 @@
   border-radius: 10px;
   margin: 10px 0;
   scroll-snap-align: end;
+  position: relative;
 }
 
 .my-message {
@@ -115,6 +161,31 @@
   align-self: flex-end;
   margin-left: 10%;
   color: white;
+  margin-top: 50px;
+}
+
+.my-message .ai-image{
+  display: none;
+}
+
+.ai-message .user-image{
+  display: none;
+}
+
+.chat-bot-image.in-chat{
+  position: absolute;
+  top: -45px;
+  border-radius: 7px;
+  margin: 0;
+}
+
+.chat-bot-image.ai-image{
+  left: 0;
+}
+
+.chat-bot-image.user-image{
+  right: 0;
+  background-color: white;
 }
 
 .ai-message {
@@ -122,6 +193,7 @@
   background-color: rgba(255, 255, 255, 0.9);
   align-self: flex-start;
   color: black;
+  margin-top: 50px;
 }
 
 .open-chat {

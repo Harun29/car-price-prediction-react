@@ -24,7 +24,7 @@ const PiePlot = () => {
   const handleSendMessage = async () => {
     if (!data) return;
 
-    const message = `You are an AI assistant analyzing a Line plot. The line plot shows the following data: ${JSON.stringify(
+    const message = `You are an AI assistant analyzing a pie chart. The pie chart shows the following data representing average car prices for different models: ${JSON.stringify(
       data,
     )}. Summarize your findings in 150 words.`;
 
