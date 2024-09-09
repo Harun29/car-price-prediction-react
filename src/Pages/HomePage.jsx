@@ -25,6 +25,7 @@ import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import { useTheme } from "@emotion/react";
 
 const HomePage = () => {
+  const theme = useTheme();
   const [prediction, setPrediction] = useState(false);
   const [alignment, setAlignment] = useState("Front");
   const [detailedDescription, setDetailedDescription] = useState(false);
@@ -59,6 +60,8 @@ const HomePage = () => {
 
   const [modelSelection, setModelSelection] = useState();
   const [dataSelection, setDataSelection] = useState();
+  const [models, setModels] = useState([]);
+  const [oldModels, setOldModels] = useState([]);
 
   const handleYearChange = (e, newValue) => {
     setCarsLoading(true);
@@ -171,8 +174,8 @@ const HomePage = () => {
     drivetrain,
     mileage,
     carType,
+    modelSelection,
   ]);
-
 
   const handleDisplacementChange = (e) => {
     let value = e.target.value;
@@ -193,14 +196,92 @@ const HomePage = () => {
     setDisplacement(value);
   };
 
-  const theme = useTheme();
+  const getModels = async (modelType) => {
+    try {
+      const response = await fetch(
+        `http://127.0.0.1:5000/get_models?model_type=${modelType}`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(`Error: ${errorData.message}`);
+      }
+
+      const models = await response.json();
+      modelType === "old"
+        ? setOldModels(models.models)
+        : setModels(models.models);
+    } catch (err) {
+      console.error("error loading models: ", err);
+    }
+  };
+
+  useEffect(() => {
+    try {
+      getModels("old");
+      getModels("new");
+    } catch (Err) {
+      console.error(Err);
+    }
+  }, [selectedLogo]);
+
+  const selectModel = async (model, type) => {
+    try {
+      const response = await fetch("http://127.0.0.1:5000/set_selected_model", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ model_name: model, model_type: type }),
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(`Error: ${errorData.message}`);
+      }
+
+      const data = await response.json();
+      console.log("Model set successfully:", data);
+    } catch (err) {
+      console.error("Error changing model: ", err);
+    }
+  };
+
+  useEffect(() => {
+    models && console.log(models);
+  }, [models]);
+
+  const formatModelName = (model) => {
+    const parts = model.split("_");
+  
+    const modelName = parts
+      .slice(0, -2)
+      .filter(word => word.toLowerCase() !== 'model')
+      .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+      .join(" ");
+  
+    const rawDate = parts[parts.length - 2];
+    const year = rawDate.slice(0, 4);
+    const month = rawDate.slice(4, 6);
+    const day = rawDate.slice(6, 8);
+    const formattedDate = `${day}. ${month}. ${year}.`;
+  
+    return `${modelName} (${formattedDate})`;
+  };
+  
 
   return (
     <div className={`home-page-container ${prediction && "active"}`}>
       <form onSubmit={handlePrediction} className="car-specs">
         <h3 className={`heading3 ${prediction && "active"}`}>
           Find Your Perfect Car Match
-          <FormControl className="home-page-input model-selection">
+          {/* <FormControl className="home-page-input model-selection">
             <InputLabel id="data-label">Data</InputLabel>
             <Select
               labelId="data-label"
@@ -212,20 +293,61 @@ const HomePage = () => {
               <MenuItem value="XGBoost(old)">Data updated on: 17. 07. 24.</MenuItem>
               <MenuItem value="XGBoost(old)">Data updated on: 09. 09. 24.</MenuItem>
             </Select>
-          </FormControl>
-          <FormControl className="home-page-input model-selection">
+          </FormControl> */}
+          <FormControl
+            variant="standard"
+            className="home-page-input model-selection"
+          >
             <InputLabel id="ml-model-label">Model</InputLabel>
             <Select
               labelId="ml-model"
               id="ml-model"
               value={modelSelection}
               label="Model"
-              onChange={(e) => setModelSelection(e.target.value)}
+              onChange={(e) => {
+                const selectedModel = e.target.value;
+                setModelSelection(selectedModel);
+                const type = oldModels.includes(selectedModel) ? "old" : "new";
+                selectModel(selectedModel, type);
+              }}
             >
-              <MenuItem value="XGBoost(old)">XGBoost<span style={{color: theme.palette.text.secondary}}>(17. 07. 24)</span></MenuItem>
-              <MenuItem value="RandomForest(old)">Random Forest <span style={{color: theme.palette.text.secondary}}>(17. 07. 24)</span></MenuItem>
-              <MenuItem value="XGBoost">XGBoost <span style={{color: theme.palette.text.secondary}}>(recommended)</span></MenuItem>
-              <MenuItem value="RandomForest">Random Forest</MenuItem>
+              <span
+                style={{
+                  color: theme.palette.text.secondary,
+                  marginLeft: 15,
+                  fontSize: 14,
+                }}
+              >
+                Latest models
+              </span>
+              {models.map((model) => {
+                const formattedModel = formatModelName(model);
+                return (
+                  <MenuItem value={model} key={model}>
+                    {formattedModel}
+                  </MenuItem>
+                );
+              })}
+
+              {oldModels.length > 0 && (
+                <span
+                  style={{
+                    color: theme.palette.text.secondary,
+                    marginLeft: 15,
+                    fontSize: 14,
+                  }}
+                >
+                  Old models
+                </span>
+              )}
+              {oldModels.map((model) => {
+                const formattedModel = formatModelName(model);
+                return (
+                  <MenuItem value={model} key={model}>
+                    {formattedModel}
+                  </MenuItem>
+                );
+              })}
             </Select>
           </FormControl>
         </h3>
@@ -428,7 +550,7 @@ const HomePage = () => {
         </Button>
         {loading && (
           <div className="loading">
-              Loading Car Price...
+            Loading Car Price...
             <CircularProgress />
           </div>
         )}
@@ -471,9 +593,7 @@ const HomePage = () => {
             )}
             {carsLoading && (
               <div className="car-predictions-loading">
-                <span>
-                  Loading Cars...
-                </span>
+                <span>Loading Cars...</span>
                 <CircularProgress />
               </div>
             )}
