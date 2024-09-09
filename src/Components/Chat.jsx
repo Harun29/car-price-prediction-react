@@ -1,17 +1,18 @@
-import { useState, useRef, useEffect, useCallback } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { styled } from "@mui/material/styles";
 import SendIcon from "@mui/icons-material/Send";
 import AutoAwesomeIcon from "@mui/icons-material/AutoAwesome";
 import { useChat } from "../Context/ChatContext";
-import "../Style/Chat.css"; // Import your CSS here
+import "../Style/Chat.css";
 
 const Chat = () => {
   const [chatOpen, setChatOpen] = useState(false);
   const chatRef = useRef(null);
   const iconRef = useRef(null);
   const messagesEndRef = useRef(null);
+  const typingMessageRef = useRef(null);
 
-  const { messages, typingMessage, handleFormSubmit } = useChat();
+  const { messages, handleFormSubmit } = useChat();
 
   const handleOpenChat = () => {
     setChatOpen((prev) => !prev);
@@ -36,12 +37,18 @@ const Chat = () => {
     };
   }, [chatOpen]);
 
-  const [userMessage, setUserMessage] = useState("");
-
-  const handleUserMessageChange = useCallback((event) => {
+  const submitForm = async (event) => {
     event.preventDefault();
-    setUserMessage(event.target.value);
-  }, []);
+    const message = typingMessageRef.current.value;
+    await handleFormSubmit(event, message);
+    typingMessageRef.current.value = '';
+  };
+
+  useEffect(() => {
+    if (messagesEndRef.current) {
+      messagesEndRef.current.scrollIntoView();
+    }
+  }, [messages]);
 
   const HistogramContainer = styled("div")(({ theme }) => ({
     boxShadow:
@@ -52,19 +59,6 @@ const Chat = () => {
     padding: "20px",
   }));
 
-  const submitForm = async (event) => {
-    event.preventDefault();
-    const message = userMessage;
-    setUserMessage("");
-    await handleFormSubmit(event, message);
-  };
-
-  useEffect(() => {
-    if (messagesEndRef.current) {
-      messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
-    }
-  }, [messages]);
-
   return (
     <div>
       <div
@@ -73,7 +67,7 @@ const Chat = () => {
         className="open-chat"
         role="button"
       >
-        <AutoAwesomeIcon style={{color: "white"}}/>
+        <AutoAwesomeIcon style={{ color: "white" }} />
       </div>
       {chatOpen && (
         <HistogramContainer className="chat" ref={chatRef}>
@@ -91,13 +85,7 @@ const Chat = () => {
                 {message.content}
               </div>
             ))}
-            {typingMessage && (
-              <div className="ai-message">
-                {typingMessage}
-                <span className="cursor">|</span>
-              </div>
-            )}
-            <div ref={messagesEndRef} id="bottom-of-chat"></div> 
+            <div ref={messagesEndRef} id="bottom-of-chat"></div>
           </div>
 
           <div className="chat-input-container">
@@ -106,8 +94,7 @@ const Chat = () => {
                 className="chat-input"
                 type="text"
                 placeholder="Type a message..."
-                value={userMessage}
-                onChange={handleUserMessageChange}
+                ref={typingMessageRef}
                 autoFocus
               />
               <button type="submit">

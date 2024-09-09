@@ -16,49 +16,6 @@ export function ChatProvider({ children }) {
     },
   ]);
 
-  const [typingMessage, setTypingMessage] = useState("");
-  // const [data, setData] = useState();
-
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     try {
-  //       const response = await fetch('http://127.0.0.1:5000/get_csv', {
-  //         method: "GET",
-  //         headers: {
-  //           "Content-Type": "application/json",
-  //         },
-  //       });
-
-  //       console.log("Response status:", response.status);
-  //       console.log("Response headers:", response.headers);
-
-  //       if (!response.ok) {
-  //         throw new Error('Network response was not ok');
-  //       }
-
-  //       console.log("About to parse JSON");
-  //       try {
-  //         const data = await response.json();
-  //         console.log("Fetched data:", data);
-  //         setData(data);
-  //       } catch (jsonError) {
-  //         console.error("Error parsing JSON:", jsonError);
-  //       }
-
-  //       setData(data);
-
-  //     } catch (error) {
-  //       console.error("Fetch error:", error);
-  //     }
-  //   };
-
-  //   fetchData();
-  // }, []);
-
-  // useEffect(() => {
-  //   data && console.log("dataaa: ", data)
-  // }, [data])
-
   const openai = new OpenAI({
     apiKey: process.env.REACT_APP_OPENAI_API_KEY,
     dangerouslyAllowBrowser: true,
@@ -86,29 +43,14 @@ export function ChatProvider({ children }) {
 
       const data = await response.json();
       const aiMessage = data.ai_message;
-      simulateTypingEffect(aiMessage);
+
+      setMessages((prevMessages) => [
+        ...prevMessages,
+        { role: "assistant", content: aiMessage },
+      ]);
     } catch (err) {
       console.error(err);
     }
-  };
-
-  const simulateTypingEffect = (message) => {
-    let index = 0;
-    setTypingMessage("");
-
-    const typingInterval = setInterval(() => {
-      if (index < message.length) {
-        setTypingMessage((prev) => prev + message[index]);
-        index++;
-      } else {
-        clearInterval(typingInterval);
-        setMessages((prevMessages) => [
-          ...prevMessages,
-          { role: "assistant", content: message },
-        ]);
-        setTypingMessage("");
-      }
-    }, 10);
   };
 
   const handleFormSubmit = async (event, message) => {
@@ -126,7 +68,6 @@ export function ChatProvider({ children }) {
 
   const values = {
     messages,
-    typingMessage,
     handleFormSubmit,
   };
 
