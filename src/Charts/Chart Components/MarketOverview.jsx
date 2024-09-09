@@ -10,7 +10,7 @@ import PriceDistributionLineChart from "../Market Overview/LinePlot";
 import { useState, useEffect } from "react";
 import "../../Style/DataAnalysis.css";
 
-const MarketOverview = () => {
+const MarketOverview = ({selectedCar}) => {
   const [meanPrice, setMeanPrice] = useState(0);
   const [medianPrice, setMedianPrice] = useState(0);
   const [firsQuartile, setFirstQuartile] = useState(0);
@@ -44,7 +44,7 @@ const MarketOverview = () => {
 
   useEffect(() => {
     getData();
-  }, []);
+  }, [selectedCar]);
 
   const HistogramContainer = styled("div")(({ theme }) => ({
     boxShadow:
