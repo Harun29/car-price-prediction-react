@@ -119,7 +119,7 @@ const PiePlot = () => {
           arcLinkLabelsThickness={2}
           arcLinkLabelsColor={{ from: "color" }}
           arcLabelsSkipAngle={10}
-          arcLabelsTextColor={theme.palette.text.primary}
+          arcLabelsTextColor="#333"
           defs={[
             {
               id: "dots",

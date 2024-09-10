@@ -120,7 +120,7 @@ const PriceDistributionLineChart = () => {
           pointColor={{ theme: "background" }}
           pointBorderWidth={2}
           pointBorderColor={{ from: "serieColor" }}
-          enablePointLabel={true}
+          // enablePointLabel={true}
           pointLabel="y"
           pointLabelYOffset={-12}
           axisBottom={{
@@ -138,7 +138,8 @@ const PriceDistributionLineChart = () => {
             legend: "Price",
             legendPosition: "middle",
             legendOffset: -50,
-          }}
+            format: (value) => `${value >= 1000 ? value / 1000 + 'k' : value}`,
+          }}          
           legends={[
             {
               anchor: "bottom-right",

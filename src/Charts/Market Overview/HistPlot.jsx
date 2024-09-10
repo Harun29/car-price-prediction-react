@@ -127,10 +127,11 @@ const MyHistogram = () => {
             legend: "Count",
             legendPosition: "middle",
             legendOffset: -40,
+            format: (value) => `${value >= 1000 ? value / 1000 + 'k' : value}`,
           }}
           labelSkipWidth={12}
           labelSkipHeight={12}
-          labelTextColor={{ from: "color", modifiers: [["darker", 1.6]] }}
+          labelTextColor="#333"
           animate={true}
           motionStiffness={90}
           motionDamping={15}

@@ -156,10 +156,11 @@ const ModelListingsChart = () => {
             legend: "Count",
             legendPosition: "middle",
             legendOffset: -40,
+            format: (value) => `${value >= 1000 ? value / 1000 + 'k' : value}`,
           }}
           labelSkipWidth={12}
           labelSkipHeight={12}
-          labelTextColor={theme.palette.text.primary}
+          labelTextColor="#333"
           legends={[
             {
               dataFrom: "keys",

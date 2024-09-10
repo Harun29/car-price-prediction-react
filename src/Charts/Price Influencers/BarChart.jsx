@@ -140,6 +140,7 @@ const BarChart = () => {
             legend: "Average Price",
             legendPosition: "middle",
             legendOffset: -40,
+            format: (value) => `${value >= 1000 ? value / 1000 + 'k' : value}`,
           }}
           labelSkipWidth={12}
           labelSkipHeight={12}

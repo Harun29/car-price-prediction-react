@@ -133,7 +133,7 @@ const AveragePriceHistogram = () => {
           }}
           labelSkipWidth={12}
           labelSkipHeight={12}
-          labelTextColor={{ from: "color", modifiers: [["darker", 1.6]] }}
+          labelTextColor="#333"
           animate={true}
           motionStiffness={90}
           motionDamping={15}

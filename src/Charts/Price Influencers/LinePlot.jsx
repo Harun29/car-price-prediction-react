@@ -129,6 +129,7 @@ const LinePlot = () => {
             legendOffset: -40,
             legendPosition: "middle",
             truncateTickAt: 0,
+            format: (value) => `${value >= 1000 ? value / 1000 + 'k' : value}`,
           }}
           pointSize={10}
           pointColor={{ theme: "background" }}

@@ -186,6 +186,7 @@ const ModelsPriceBoxPlot = () => {
             legendPosition: "middle",
             legendOffset: -40,
             truncateTickAt: 0,
+            format: (value) => `${value >= 1000 ? value / 1000 + 'k' : value}`,
           }}
           colors={{ scheme: "nivo" }}
           borderRadius={2}

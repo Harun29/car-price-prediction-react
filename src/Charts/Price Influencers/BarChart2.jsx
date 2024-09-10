@@ -119,10 +119,8 @@ const BarChart2 = () => {
           axisLeft={{
             tickSize: 5,
             tickPadding: 5,
-            tickRotation: 0,
-            legend: "Year Range",
-            legendPosition: "middle",
             legendOffset: -40,
+            tickRotation: -45,
           }}
           labelSkipWidth={12}
           labelSkipHeight={12}
