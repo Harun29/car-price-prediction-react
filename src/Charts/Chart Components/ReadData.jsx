@@ -7,8 +7,9 @@ import MenuItem from "@mui/material/MenuItem";
 import Select from "@mui/material/Select";
 import Button from "@mui/material/Button";
 import { styled } from "@mui/material/styles";
+import Skeleton from "@mui/material/Skeleton";
 
-const ReadData = ({selectedCar}) => {
+const ReadData = ({ selectedCar }) => {
   const [tableData, setTableData] = useState([]);
   const [columns, setColumns] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -26,19 +27,19 @@ const ReadData = ({selectedCar}) => {
     setLoading(true);
     try {
       const response = await fetch("http://localhost:5000/get_csv", {
-        method: "GET",  
+        method: "GET",
         headers: {
           "Content-Type": "application/json",
         },
       });
-      
+
       if (!response.ok) {
         throw new Error("Failed to fetch file");
       }
-      
+
       const result = await response.json();
-      const data = result.data;
-      
+      const data = result;
+
       if (data.length > 0) {
         const columns = Object.keys(data[0]).map((key) => ({
           title: key,
@@ -131,9 +132,60 @@ const ReadData = ({selectedCar}) => {
     <div className="data-analysis-container table-data-container">
       <div className="table-data">
         {loading ? (
-          <div className="spinner-container">
-            <CircularProgress className="custom-loader" />
-          </div>
+          <HistogramContainer>
+            <div className="skeleton-holder">
+              <Skeleton
+                animation="wave"
+                variant="text"
+                sx={{ fontSize: "2rem" }}
+                width="100%"
+              />
+            </div>
+            <div className="skeleton-holder">
+              <Skeleton
+                animation="wave"
+                variant="text"
+                sx={{ fontSize: "2rem" }}
+                width="100%"
+              />
+              <Skeleton
+                animation="wave"
+                variant="text"
+                sx={{ fontSize: "2rem" }}
+                width="100%"
+              />
+              <Skeleton
+                animation="wave"
+                variant="text"
+                sx={{ fontSize: "2rem" }}
+                width="100%"
+              />
+              <Skeleton
+                animation="wave"
+                variant="text"
+                sx={{ fontSize: "2rem" }}
+                width="100%"
+              />
+              <Skeleton
+                animation="wave"
+                variant="text"
+                sx={{ fontSize: "2rem" }}
+                width="100%"
+              />
+              <Skeleton
+                animation="wave"
+                variant="text"
+                sx={{ fontSize: "2rem" }}
+                width="100%"
+              />
+            </div>
+            <Skeleton
+              animation="wave"
+              variant="rounded"
+              width="100%"
+              height={600}
+            />
+          </HistogramContainer>
         ) : (
           <HistogramContainer>
             {tableData.length > 0 && (
@@ -208,11 +260,21 @@ const ReadData = ({selectedCar}) => {
               </Select>
             </FormControl>
 
-            <Button className="group-by-button" onClick={handleGroupBy} variant="outlined">
+            <Button
+              disabled={loading}
+              className="group-by-button"
+              onClick={handleGroupBy}
+              variant="outlined"
+            >
               Group By
             </Button>
 
-            <Button className="group-by-button" onClick={handleRefresh} variant="outlined">
+            <Button
+              disabled={loading}
+              className="group-by-button"
+              onClick={handleRefresh}
+              variant="outlined"
+            >
               Original Data
             </Button>
           </>

@@ -221,9 +221,11 @@
   justify-content: center;
 }
 .data-analysis-top-navbar.heading {
-  top: 400px;
-  left: -130px;
+  top: 420px;
+  left: -145px;
   height: 100px;
+  width: 350px;
+  justify-content: center;
 }
 
 .data-analysis-top-navbar img {
@@ -414,6 +416,13 @@
   display: grid;
   grid-template-columns: 2fr 2fr 2fr 1fr 1fr;
   gap: 15px;
+}
+
+.skeleton-holder{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
 }
 
 
