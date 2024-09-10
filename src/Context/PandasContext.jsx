@@ -24,8 +24,9 @@ export function PandasProvider({ children }) {
       }
 
       const result = await response.json();
-      console.log("Prediction:", result.prediction);
-      console.log("Filtered Vehicles:", result.vehicles);
+      console.log("predition result: ", result)
+      // console.log("Prediction:", result.prediction);
+      // console.log("Filtered Vehicles:", result.vehicles);
       return result;
     } catch (error) {
       console.error("Error:", error);

@@ -59,10 +59,10 @@ const HomePage = () => {
   const [tempValue, setTempValue] = useState(year);
 
   const [modelSelection, setModelSelection] = useState();
-  const [dataSelection, setDataSelection] = useState();
   const [models, setModels] = useState([]);
   const [oldModels, setOldModels] = useState([]);
-
+  const [score, setScore] = useState();
+ 
   const handleYearChange = (e, newValue) => {
     setCarsLoading(true);
     setTempValue(newValue); // Update tempValue while sliding
@@ -103,6 +103,7 @@ const HomePage = () => {
       setLoading(false);
       setCarsLoading(false);
       setPrediction(true);
+      setScore(response.model_metrics.RMSE)
     } catch (err) {
       console.error(err);
       setLoading(false);
@@ -564,7 +565,7 @@ const HomePage = () => {
                 <ArrowDropDownIcon />
               </div>
               <span style={{ color: theme.palette.text.secondary }}>
-                {Math.round(range, 0)} KM
+                {Math.round(score, 0)} KM
               </span>
             </div>
           </div>
