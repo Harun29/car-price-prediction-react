@@ -151,7 +151,7 @@ const images = [
   "Sharan (2010-2024).png",
   "SQ2 (2018-2024).png",
   "SQ5 (2013-2017).png",
-  "SQ5 (2017-2014).png",
+  "SQ5 (2014-2024).png",
   "SQ7 (2016-2024).png",
   "SQ8 (2018-2024).png",
   "T-Cross Mk1 (2018-2024).png",
@@ -265,7 +265,7 @@ function selectCarImage(model, year) {
       }
     }
   }
-  return "/CarPictures/default-car.png";
+  return "ghost.png";
 }
 
 function CarCard({ data, handleDetailedDescription }) {

@@ -174,6 +174,7 @@ const UpdateCsv = () => {
         throw new Error("Failed to train model");
       }
       const result = await response.json();
+      console.log(result)
       setMetrics(result.results);
     } catch (err) {
       console.error(err);
@@ -268,8 +269,21 @@ const UpdateCsv = () => {
               <div className="upload-csv">
                 <p>
                   Please upload your CSV file. This file should contain all the
-                  required columns (e.g., Column1, Column2, Column3) necessary
-                  for updating your data.
+                  required columns: <br />{" "}
+                  <span style={{ fontWeight: 700 }}>
+                    ('createdat', 'displacement', 'doors', 'fuel', 'kilowatts',
+                    'location', 'manufacturer', 'mileage', 'model', 'price',
+                    'title', 'year', 'color', 'cruisecontrol', 'drivetrain',
+                    'emissionstandard', 'parkingsensors', 'rimsize',
+                    'transmission', 'type', 'aircondition', 'navigation',
+                    'registration')
+                  </span>{" "}
+                  necessary for updating your data.
+                  <br />{" "}
+                  <span style={{ fontWeight: 700 }}>
+                    {" "}
+                    Columns are NOT case sensitive.
+                  </span>
                 </p>
                 <div className="upload-csv-result">
                   <Button
@@ -405,19 +419,19 @@ const UpdateCsv = () => {
                 </FormControl>
                 <div className="train-model-buttons">
                   <div className="checkbox-container">
-                    {file ? 
-                    <Checkbox disabled checked={true} />
-                    : 
-                    <Checkbox disabled checked={false} />
-                    }
+                    {file ? (
+                      <Checkbox disabled checked={true} />
+                    ) : (
+                      <Checkbox disabled checked={false} />
+                    )}
                     <span>Uploaded data</span>
                   </div>
                   <div className="checkbox-container">
-                  {model ? 
-                    <Checkbox disabled checked={true} />
-                    : 
-                    <Checkbox disabled checked={false} />
-                    }
+                    {model ? (
+                      <Checkbox disabled checked={true} />
+                    ) : (
+                      <Checkbox disabled checked={false} />
+                    )}
                     <span>Selected model</span>
                   </div>
                   {modelLoading && (
@@ -433,7 +447,7 @@ const UpdateCsv = () => {
                         <div className="audi-metrics">
                           <div>Audi: </div>
                           <span className="r2">
-                            R2: {Math.round(metrics.audi.R2Score, 2)}
+                            R2: {metrics.audi.R2Score}
                             <div className="tooltip">
                               R2 is the coefficient of determination
                             </div>
@@ -454,7 +468,7 @@ const UpdateCsv = () => {
                         <div className="vw-metrics">
                           <div>Volkswagen: </div>
                           <span className="r2">
-                            R2: {Math.round(metrics.volkswagen.R2Score, 2)}
+                            R2: {metrics.volkswagen.R2Score}
                             <div className="tooltip">
                               R2 is the coefficient of determination
                             </div>
