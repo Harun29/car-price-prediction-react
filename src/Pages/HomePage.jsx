@@ -227,10 +227,23 @@ const HomePage = () => {
     try {
       getModels("old");
       getModels("new");
+      selectedLogo === "vw" 
+        ? changeCarModel('volkswagen') 
+        : changeCarModel('audi')
     } catch (Err) {
       console.error(Err);
     }
   }, [selectedLogo]);
+
+  useEffect(() => {
+    try {
+      selectedLogo === "vw" 
+        ? changeCarModel('volkswagen') 
+        : changeCarModel('audi')
+    } catch (Err) {
+      console.error(Err);
+    }
+  }, []);
 
   const selectModel = async (model, type) => {
     try {
