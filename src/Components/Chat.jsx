@@ -2,10 +2,11 @@ import React, { useState, useRef, useEffect } from "react";
 import { styled } from "@mui/material/styles";
 import SendIcon from "@mui/icons-material/Send";
 import AutoAwesomeIcon from "@mui/icons-material/AutoAwesome";
-import Tooltip, { tooltipClasses } from '@mui/material/Tooltip';
+import Tooltip, { tooltipClasses } from "@mui/material/Tooltip";
 import { useChat } from "../Context/ChatContext";
 import "../Style/Chat.css";
 import CloseIcon from "@mui/icons-material/Close";
+import Alert from "@mui/material/Alert";
 
 const Chat = () => {
   const [chatOpen, setChatOpen] = useState(false);
@@ -13,6 +14,7 @@ const Chat = () => {
   const iconRef = useRef(null);
   const messagesEndRef = useRef(null);
   const typingMessageRef = useRef(null);
+  const [error, setError] = useState(false);
 
   const { messages, handleFormSubmit } = useChat();
 
@@ -41,9 +43,23 @@ const Chat = () => {
 
   const submitForm = async (event) => {
     event.preventDefault();
-    const message = typingMessageRef.current.value;
-    await handleFormSubmit(event, message);
+    setError(false);
+
+    const message = typingMessageRef.current.value.trim();
+    if (!message) return;
+
     typingMessageRef.current.value = "";
+
+    try {
+      const response = await handleFormSubmit(event, message);
+      console.log("response: ", response)
+      if (response !== "ok") {
+        setError(true);
+      }
+    } catch (err) {
+      console.error("ERROR IN CHAT! ", err);
+      setError(true);
+    }
   };
 
   useEffect(() => {
@@ -52,12 +68,16 @@ const Chat = () => {
     }
   }, [messages]);
 
+  useEffect(() => {
+    console.log("error state: ", error)
+  }, [error])
+
   const LightTooltip = styled(({ className, ...props }) => (
     <Tooltip {...props} classes={{ popper: className }} />
   ))(({ theme }) => ({
     [`& .${tooltipClasses.tooltip}`]: {
       backgroundColor: theme.palette.common.white,
-      color: 'black',
+      color: "black",
       boxShadow: theme.shadows[1],
       fontSize: 16,
     },
@@ -75,6 +95,7 @@ const Chat = () => {
           <AutoAwesomeIcon style={{ color: "white" }} />
         </div>
       </LightTooltip>
+
       {chatOpen && (
         <div className="chat" ref={chatRef}>
           <div className="chat-heading">
@@ -84,13 +105,20 @@ const Chat = () => {
                 src="chat-bot.avif"
                 alt="chat bot"
               />
-              <h3>Jarvis</h3>
+              {error ? (
+                <Alert style={{backgroundColor: "inherit", padding: "0", height: "50%", color: "red"}} severity="error" className="chat-error">
+                  There was something wrong with CarMate!
+                </Alert>
+              ) : (
+                <h3>CarMate</h3>
+              )}
             </div>
             <CloseIcon
               onClick={handleOpenChat}
               className="close-icon"
             ></CloseIcon>
           </div>
+
           <div className="chat-messages">
             {messages.map((message, index) => (
               <div
@@ -109,9 +137,10 @@ const Chat = () => {
                   src="user-image.jpeg"
                   alt="user"
                 />
-                {message.content}
+                <div className="message-content">{message.content}</div>
               </div>
             ))}
+
             <div ref={messagesEndRef} id="bottom-of-chat"></div>
           </div>
 

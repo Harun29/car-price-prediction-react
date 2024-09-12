@@ -12,7 +12,7 @@ export function ChatProvider({ children }) {
     {
       role: "assistant",
       content:
-        "Hello! I'm Jarvis, your AI assistant powered by GPT-4o-mini. I'm here to help you with any questions or tasks you have. Just type in your message, and I'll do my best to assist you. How can I help you today?",
+        "Hello! I'm CarMate, your AI assistant powered by GPT-4o-mini. I'm here to help you with any questions or tasks you have. Just type in your message, and I'll do my best to assist you. How can I help you today?",
     },
   ]);
 
@@ -48,6 +48,8 @@ export function ChatProvider({ children }) {
         ...prevMessages,
         { role: "assistant", content: aiMessage },
       ]);
+
+      return "ok"
     } catch (err) {
       console.error(err);
     }
@@ -56,9 +58,12 @@ export function ChatProvider({ children }) {
   const handleFormSubmit = async (event, message) => {
     event.preventDefault();
     try {
-      await handleSendMessage(message);
+      const response = await handleSendMessage(message);
+      if(response === "ok"){
+        return "ok";
+      }
     } catch (error) {
-      console.error("Failed to send message:", error);
+      return error
     }
   };
 
