@@ -434,11 +434,6 @@ const UpdateCsv = () => {
                     )}
                     <span>Selected model</span>
                   </div>
-                  {modelLoading && (
-                    <CircularProgress
-                      style={{ padding: "0", marginBottom: "20px" }}
-                    />
-                  )}
                   {metrics &&
                     !modelLoading &&
                     modelTrainedMessage ===

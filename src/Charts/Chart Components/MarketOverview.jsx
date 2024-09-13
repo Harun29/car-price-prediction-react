@@ -56,8 +56,6 @@ const MarketOverview = ({selectedCar}) => {
     backgroundColor: theme.palette.background.paper,
   }));
 
-  // TODO move handle prediction to chart component so page does not refresh
-
   return (
     <div className="data-analysis-container">
       <h3 className="data-analysis-headers">Top Models by Popularity</h3>

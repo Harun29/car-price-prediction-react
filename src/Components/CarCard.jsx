@@ -180,12 +180,6 @@ const images = [
 ];
 
 const missingImages = [
-  // "Golf Variant.png",
-  // "Sharan.png",
-  // "Bora.png",
-  // "Golf Plus.png",
-  // "Touran.png",
-  // "CC.png",
   "Golf Alltrack.png",
   "T5 Caravelle.png",
   "ID.4 Mk1 (model year specific).png",
