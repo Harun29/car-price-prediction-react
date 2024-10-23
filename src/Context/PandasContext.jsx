@@ -7,9 +7,9 @@ export function usePandas() {
 }
 
 export function PandasProvider({ children }) {
+
   const getPrediction = async (data) => {
     const url = "https://ml-flask-server-production.up.railway.app/get_prediction";
-
     try {
       const response = await fetch(url, {
         method: "POST",
@@ -20,18 +20,20 @@ export function PandasProvider({ children }) {
       });
 
       if (!response.ok) {
+        // Log response before throwing error
+        const errorText = await response.text();
+        console.error("Error Response:", errorText);
         throw new Error(`HTTP error! status: ${response.status}`);
       }
 
       const result = await response.json();
-      console.log("predition result: ", result)
-      // console.log("Prediction:", result.prediction);
-      // console.log("Filtered Vehicles:", result.vehicles);
+      console.log("Prediction result: ", result);
       return result;
     } catch (error) {
       console.error("Error:", error);
     }
   };
+
 
   const value = {
     getPrediction,
