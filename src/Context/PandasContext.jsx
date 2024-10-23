@@ -8,7 +8,7 @@ export function usePandas() {
 
 export function PandasProvider({ children }) {
   const getPrediction = async (data) => {
-    const url = "http://127.0.0.1:5000/get_prediction";
+    const url = "https://ml-flask-server-production.up.railway.app/get_prediction";
 
     try {
       const response = await fetch(url, {

@@ -127,7 +127,7 @@ const UpdateCsv = () => {
       formData.append("file", file);
 
       try {
-        const response = await fetch("http://127.0.0.1:5000/upload_csv", {
+        const response = await fetch("https://ml-flask-server-production.up.railway.app/upload_csv", {
           method: "POST",
           body: formData,
         });
@@ -162,7 +162,7 @@ const UpdateCsv = () => {
 
   const handleTrainModel = async () => {
     try {
-      const response = await fetch("http://127.0.0.1:5000/train_model", {
+      const response = await fetch("https://ml-flask-server-production.up.railway.app/train_model", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

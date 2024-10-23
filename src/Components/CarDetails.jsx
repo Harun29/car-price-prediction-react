@@ -173,6 +173,8 @@ function CarDetails({ data, carImage, closeDetailedDescription }) {
     data && console.log(data);
   }, [data]);
 
+  // make me a useEffect for console logging each state in this component
+
   return (
     <CarCardContainer
       className="car-details-container"

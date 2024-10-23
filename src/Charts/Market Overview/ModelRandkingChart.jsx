@@ -68,7 +68,7 @@ const ModelRankingPieChart = () => {
   }, [data]);
 
   const getData = async () => {
-    const url = "http://127.0.0.1:5000/model_ranking";
+    const url = "https://ml-flask-server-production.up.railway.app/model_ranking";
     try {
       const response = await fetch(url, {
         method: "GET",

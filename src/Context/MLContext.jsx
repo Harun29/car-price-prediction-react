@@ -36,7 +36,7 @@ export function MLProvider({ children }) {
 
   // const handleInitialData = async () => {
   //   try {
-  //     const response = await fetch("http://127.0.0.1:5000/get_csv", {
+  //     const response = await fetch("https://ml-flask-server-production.up.railway.app/get_csv", {
   //       method: "GET",
   //     });
 

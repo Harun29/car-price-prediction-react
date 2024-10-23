@@ -6,7 +6,7 @@ const PriceRangeHorizontalBarChart = () => {
   const [data, setData] = useState();
 
   const getData = async () => {
-    const url = "http://127.0.0.1:5000/type_minmax_price";
+    const url = "https://ml-flask-server-production.up.railway.app/type_minmax_price";
     try {
       const response = await fetch(url, {
         method: "GET",

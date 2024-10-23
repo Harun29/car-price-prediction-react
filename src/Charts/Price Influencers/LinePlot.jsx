@@ -64,7 +64,7 @@ const LinePlot = () => {
   };
 
   const getData = async () => {
-    const url = "http://127.0.0.1:5000/get_line_plot_data_prices";
+    const url = "https://ml-flask-server-production.up.railway.app/get_line_plot_data_prices";
     try {
       const response = await fetch(url, {
         method: "GET",

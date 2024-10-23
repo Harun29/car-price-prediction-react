@@ -69,7 +69,7 @@ const ModelListingsChart = () => {
   };
 
   const fetchData = async () => {
-    const url = "http://127.0.0.1:5000/model_listings";
+    const url = "https://ml-flask-server-production.up.railway.app/model_listings";
     try {
       const response = await fetch(url, {
         method: "GET",

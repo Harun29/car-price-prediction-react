@@ -112,7 +112,7 @@ const HomePage = () => {
 
   const changeCarModel = async (model) => {
     try {
-      const response = await fetch("http://127.0.0.1:5000/select_brand", {
+      const response = await fetch("https://ml-flask-server-production.up.railway.app/select_brand", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -200,7 +200,7 @@ const HomePage = () => {
   const getModels = async (modelType) => {
     try {
       const response = await fetch(
-        `http://127.0.0.1:5000/get_models?model_type=${modelType}`,
+        `https://ml-flask-server-production.up.railway.app/get_models?model_type=${modelType}`,
         {
           method: "GET",
           headers: {
@@ -247,7 +247,7 @@ const HomePage = () => {
 
   const selectModel = async (model, type) => {
     try {
-      const response = await fetch("http://127.0.0.1:5000/set_selected_model", {
+      const response = await fetch("https://ml-flask-server-production.up.railway.app/set_selected_model", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

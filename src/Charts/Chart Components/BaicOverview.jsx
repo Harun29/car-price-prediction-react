@@ -17,7 +17,7 @@ const BasicOverview = ({selectedCar}) => {
   const [thirdQuartile, setThirdQuartile] = useState(0);
 
   const getData = async () => {
-    const url = "http://127.0.0.1:5000/get_prices";
+    const url = "https://ml-flask-server-production.up.railway.app/get_prices";
     try {
       const response = await fetch(url, {
         method: "GET",

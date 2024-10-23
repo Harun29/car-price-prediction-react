@@ -64,7 +64,7 @@ const PiePlot = () => {
   };
 
   const getData = async () => {
-    const url = "http://127.0.0.1:5000/get_top5_models_avg_price_data";
+    const url = "https://ml-flask-server-production.up.railway.app/get_top5_models_avg_price_data";
     try {
       const response = await fetch(url, {
         method: "GET",

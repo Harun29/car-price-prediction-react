@@ -29,7 +29,7 @@ export function ChatProvider({ children }) {
     setMessages(updatedMessages);
 
     try {
-      const response = await fetch("http://127.0.0.1:5000/get_ai_message", {
+      const response = await fetch("https://ml-flask-server-production.up.railway.app/get_ai_message", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

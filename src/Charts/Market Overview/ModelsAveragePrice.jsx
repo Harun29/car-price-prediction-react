@@ -69,7 +69,7 @@ const AveragePriceHistogram = () => {
   };
 
   const getData = async () => {
-    const url = "http://127.0.0.1:5000/models_average_price";
+    const url = "https://ml-flask-server-production.up.railway.app/models_average_price";
     try {
       const response = await fetch(url, {
         method: "GET",

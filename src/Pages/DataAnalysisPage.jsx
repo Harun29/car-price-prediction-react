@@ -18,7 +18,7 @@ const DataAnalysisPage = () => {
 
   const changeCarModel = async(model) => {
     try{
-      const response = await fetch("http://127.0.0.1:5000/select_brand", {
+      const response = await fetch("https://ml-flask-server-production.up.railway.app/select_brand", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

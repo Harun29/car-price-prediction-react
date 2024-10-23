@@ -97,7 +97,7 @@ const ModelsPriceBoxPlot = () => {
   };
 
   const getData = async () => {
-    const url = "http://127.0.0.1:5000/get_models_price_box";
+    const url = "https://ml-flask-server-production.up.railway.app/get_models_price_box";
     try {
       const response = await fetch(url, {
         method: "GET",
