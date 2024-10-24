@@ -43,7 +43,7 @@ function App() {
                 </Routes>
                 <img
                   className="home-page-bloomteq-symbol"
-                  src="bloomteq-logo.png"
+                  src="car-price-logo.png"
                   alt=""
                 />
               </div>
