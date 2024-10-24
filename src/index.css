@@ -38,3 +38,11 @@ code {
   bottom: 0;
   right: 15px;
 }
+
+@media only screen and (max-width: 600px) {
+  .home-page-bloomteq-symbol{
+    top: 0;
+    bottom: auto;
+    right: 0;
+  }
+}

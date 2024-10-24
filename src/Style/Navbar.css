@@ -14,3 +14,17 @@
   font-family: "Poppins", sans-serif;
   font-size: 1.2rem;
 }
+
+@media only screen and (max-width: 600px) {
+  .navbar-container{
+    width: 100%;
+    height: 70px;
+    top: 0;
+    left: 0;
+    backdrop-filter: blur(25px);
+  }
+  .navbar-container svg{
+    
+    margin: 20px 0 0 30px;
+  }
+}

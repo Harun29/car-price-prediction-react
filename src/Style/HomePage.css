@@ -240,6 +240,10 @@
   justify-content: start;
 }
 
+.predicted-value.mobile{
+  display: none;
+}
+
 .prediction-range{
   display: flex;
   align-items: center;
@@ -284,4 +288,156 @@
 
 .find-cars-button {
   font-size: 1.2rem !important;
+}
+
+@media only screen and (max-width: 600px) {
+  .home-page-container {
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    flex-direction: column;
+    overflow-y: scroll;
+    /* height: 100%; */
+    /* overflow: hidden; */
+  }
+
+  .car-specs{
+    width: calc(100% - 30px);
+    padding: 0;
+    margin: 15px;
+    margin-top: 70px;
+    margin-bottom: 200px;
+    height: fit-content;
+  }
+  .row-inputs {
+    display: flex;
+    width: calc(100% - 10px);
+    align-items: center;
+    justify-content: center;
+    margin: 10px 5px;
+    gap: 10px;
+  }
+
+  .row-inputs.smaller {
+    width: calc(100% - 10px);
+  }
+
+  .row-inputs.smallest {
+    width: calc(100% - 10px);
+    display: flex;
+    justify-content: space-between;
+    align-items: start;
+    font-size: 0.6rem;
+  }
+
+  .row-inputs.row-inputs.smallest label{
+    margin: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    flex-direction: column;
+  }
+
+  .row-inputs.row-inputs.smallest label span{
+    font-size: 0.8rem;
+  }
+
+  .row-inputs div {
+    margin-right: 0;
+  }
+
+
+  .home-page-right-side {
+    position: fixed;
+    bottom: -5px;
+    transform: rotate(0deg);
+    width: 100%;
+    height: 10%;
+    border-radius: 20px 20px 0 0;
+    z-index: 1001;
+  }
+  
+  .home-page-right-side.active {
+    height: 90%;
+    bottom: -50px;
+  }
+
+  .home-page-default-car{
+    display: none;
+  }
+
+  .home-page-audi-logo{
+    bottom: 0;
+    left: 20px;
+    top: auto;
+    z-index: 1002;
+  }
+  .home-page-vw-logo{
+    bottom: 10px;
+    left: 120px;
+    top: auto;
+    z-index: 1002;
+  }
+
+  .cars-found-container {
+    margin-top: 0;
+    grid-template-columns: 1fr;
+    width: calc(100% - 100px);
+    height: 78%;
+  }
+
+  .cars-found-container div{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    width: 100%;
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+  }
+
+  .cars-found-container div span{
+    grid-column: 1/3;
+  }
+
+  .cars-found-container div img{
+    grid-row: 2/4;
+    margin-bottom: 0 !important;
+    width: auto;
+  }
+
+  .cars-found-container div div{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 0;
+    margin-left: 5px;
+    width: auto;
+    text-align: start;
+  }
+  .cars-found-container div div span{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 0;
+    width: auto;
+  }
+
+  .cars-container{
+    width: 100%;
+  }
+
+  .predicted-value.mobile{
+    margin-top: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+  }
+
+  .predicted-value.mobile span{
+    color: white;
+  }
 }

@@ -62,7 +62,7 @@ const HomePage = () => {
   const [models, setModels] = useState([]);
   const [oldModels, setOldModels] = useState([]);
   const [score, setScore] = useState();
- 
+
   const handleYearChange = (e, newValue) => {
     setCarsLoading(true);
     setTempValue(newValue); // Update tempValue while sliding
@@ -72,53 +72,75 @@ const HomePage = () => {
     setYear(newValue);
   };
 
-  const handlePrediction =useCallback( async (event) => {
-    event && event.preventDefault();
-    const data = {
-      type: carCategory,
-      drivetrain,
-      fuel: fuelType,
+  const handlePrediction = useCallback(
+    async (event) => {
+      event && event.preventDefault();
+      const data = {
+        type: carCategory,
+        drivetrain,
+        fuel: fuelType,
+        doors,
+        transmission,
+        displacement: parseFloat(displacement),
+        kilowatts: parseFloat(kilowatts),
+        mileage: parseFloat(mileage),
+        year: parseFloat(year),
+        cruisecontrol: cruiseControl ? 1 : 0,
+        aircondition: airCondition ? 1 : 0,
+        navigation: navigation ? 1 : 0,
+        registration: registration ? 1 : 0,
+        parkingsensors: parkingSensors,
+      };
+
+      console.log(data);
+
+      setLoading(true);
+      setCarsLoading(true);
+      try {
+        const response = await getPrediction(data);
+        setPredictionValue(response.prediction);
+        setPredictedVehicles(response.vehicles);
+        // setRange(response.score);
+        setLoading(false);
+        setCarsLoading(false);
+        setPrediction(true);
+        setScore(response.model_metrics.RMSE);
+      } catch (err) {
+        console.error(err);
+        setLoading(false);
+      }
+    },
+    [
+      airCondition,
+      carCategory,
+      cruiseControl,
+      displacement,
       doors,
+      drivetrain,
+      fuelType,
+      getPrediction,
+      kilowatts,
+      mileage,
+      navigation,
+      parkingSensors,
+      registration,
       transmission,
-      displacement: parseFloat(displacement),
-      kilowatts: parseFloat(kilowatts),
-      mileage: parseFloat(mileage),
-      year: parseFloat(year),
-      cruisecontrol: cruiseControl ? 1 : 0,
-      aircondition: airCondition ? 1 : 0,
-      navigation: navigation ? 1 : 0,
-      registration: registration ? 1 : 0,
-      parkingsensors: parkingSensors,
-    };
-
-    console.log(data);
-
-    setLoading(true);
-    setCarsLoading(true);
-    try {
-      const response = await getPrediction(data);
-      setPredictionValue(response.prediction);
-      setPredictedVehicles(response.vehicles);
-      // setRange(response.score);
-      setLoading(false);
-      setCarsLoading(false);
-      setPrediction(true);
-      setScore(response.model_metrics.RMSE)
-    } catch (err) {
-      console.error(err);
-      setLoading(false);
-    }
-  }, [airCondition, carCategory, cruiseControl, displacement, doors, drivetrain, fuelType, getPrediction, kilowatts, mileage, navigation, parkingSensors, registration, transmission, year]);
+      year,
+    ]
+  );
 
   const changeCarModel = async (model) => {
     try {
-      const response = await fetch("https://ml-flask-server-production.up.railway.app/select_brand", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ brand: model }),
-      });
+      const response = await fetch(
+        "https://ml-flask-server-production.up.railway.app/select_brand",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ brand: model }),
+        }
+      );
 
       if (!response.ok) {
         throw new Error("Failed to change brand");
@@ -177,7 +199,7 @@ const HomePage = () => {
     carType,
     modelSelection,
     prediction,
-    handlePrediction
+    handlePrediction,
   ]);
 
   const handleDisplacementChange = (e) => {
@@ -229,9 +251,9 @@ const HomePage = () => {
     try {
       getModels("old");
       getModels("new");
-      selectedLogo === "vw" 
-        ? changeCarModel('volkswagen') 
-        : changeCarModel('audi')
+      selectedLogo === "vw"
+        ? changeCarModel("volkswagen")
+        : changeCarModel("audi");
     } catch (Err) {
       console.error(Err);
     }
@@ -239,9 +261,9 @@ const HomePage = () => {
 
   useEffect(() => {
     try {
-      selectedLogo === "vw" 
-        ? changeCarModel('volkswagen') 
-        : changeCarModel('audi')
+      selectedLogo === "vw"
+        ? changeCarModel("volkswagen")
+        : changeCarModel("audi");
     } catch (Err) {
       console.error(Err);
     }
@@ -249,13 +271,16 @@ const HomePage = () => {
 
   const selectModel = async (model, type) => {
     try {
-      const response = await fetch("https://ml-flask-server-production.up.railway.app/set_selected_model", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ model_name: model, model_type: type }),
-      });
+      const response = await fetch(
+        "https://ml-flask-server-production.up.railway.app/set_selected_model",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ model_name: model, model_type: type }),
+        }
+      );
 
       if (!response.ok) {
         const errorData = await response.json();
@@ -275,22 +300,21 @@ const HomePage = () => {
 
   const formatModelName = (model) => {
     const parts = model.split("_");
-  
+
     const modelName = parts
       .slice(0, -2)
-      .filter(word => word.toLowerCase() !== 'model')
+      .filter((word) => word.toLowerCase() !== "model")
       .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
       .join(" ");
-  
+
     const rawDate = parts[parts.length - 2];
     const year = rawDate.slice(0, 4);
     const month = rawDate.slice(4, 6);
     const day = rawDate.slice(6, 8);
     const formattedDate = `${day}. ${month}. ${year}.`;
-  
+
     return `${modelName} (${formattedDate})`;
   };
-  
 
   return (
     <div className={`home-page-container ${prediction && "active"}`}>
@@ -589,6 +613,21 @@ const HomePage = () => {
       <div className={`home-page-right-side ${prediction && "active"}`}>
         {prediction && (
           <div className="cars-container">
+            {!loading && prediction && (
+              <div className="predicted-value mobile">
+                <span>{Math.round(predictionValue, 0)} KM</span>
+                <div className="prediction-range">
+                  <div>
+                    <ArrowDropUpIcon />
+                    <ArrowDropDownIcon />
+                  </div>
+                  <span style={{ color: theme.palette.text.secondary }}>
+                    {Math.round(score, 0)} KM
+                  </span>
+                </div>
+                <span onClick={() => setPrediction(false)} style={{fontSize: "15px", position: "absolute", right: "0"}}>X</span>
+              </div>
+            )}
             {!detailedDescription && !carsLoading && !loading && (
               <div className="cars-found-container">
                 {predictedVehicles.map((vehicle) => (
