@@ -1,4 +1,3 @@
-import { useTheme } from "@nivo/core";
 import "../../Style/DataAnalysis.css";
 import { useState, useEffect } from "react";
 import { styled } from "@mui/material/styles";
@@ -45,7 +44,6 @@ const BasicOverview = ({selectedCar}) => {
     getData();
   }, [selectedCar]);
 
-  const theme = useTheme();
   const [loading, setLoading] = useState(false);
 
   const HistogramContainer = styled("div")(({ theme }) => ({

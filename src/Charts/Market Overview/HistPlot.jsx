@@ -1,6 +1,6 @@
 import { ResponsiveBar } from "@nivo/bar";
 import useNivoTheme from "../../NivoTheme";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback, useMemo } from "react";
 import OpenAI from "openai";
 import AutoAwesomeIcon from "@mui/icons-material/AutoAwesome";
 import { motion } from "framer-motion";
@@ -14,12 +14,16 @@ const MyHistogram = () => {
   const [description, setDescription] = useState(false);
   const theme = useTheme();
 
-  const openai = new OpenAI({
-    apiKey: process.env.REACT_APP_OPENAI_API_KEY,
-    dangerouslyAllowBrowser: true,
-  });
+  const openai = useMemo(
+    () =>
+      new OpenAI({
+        apiKey: process.env.REACT_APP_OPENAI_API_KEY,
+        dangerouslyAllowBrowser: true,
+      }),
+    []
+  );
 
-  const handleSendMessage = async () => {
+  const handleSendMessage = useCallback( async () => {
     if (!data) return;
 
     const dataString = data
@@ -42,13 +46,13 @@ const MyHistogram = () => {
     } catch (err) {
       console.error(err);
     }
-  };
+  }, [data, openai]);
 
   useEffect(() => {
     if (description && aiDescription === "Getting Jarvis' description...") {
       handleSendMessage();
     }
-  }, [description]);
+  }, [description, aiDescription, handleSendMessage]);
 
   const handleDescription = () => {
     setDescription(false);

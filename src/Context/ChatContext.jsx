@@ -1,5 +1,4 @@
 import React, { createContext, useState, useContext, useEffect } from "react";
-import { OpenAI } from "openai";
 
 const ChatContext = createContext();
 
@@ -15,11 +14,6 @@ export function ChatProvider({ children }) {
         "Hello! I'm CarMate, your AI assistant powered by GPT-4o-mini. I'm here to help you with any questions or tasks you have. Just type in your message, and I'll do my best to assist you. How can I help you today?",
     },
   ]);
-
-  const openai = new OpenAI({
-    apiKey: process.env.REACT_APP_OPENAI_API_KEY,
-    dangerouslyAllowBrowser: true,
-  });
 
   const handleSendMessage = async (message) => {
     if (message.trim() === "") return;

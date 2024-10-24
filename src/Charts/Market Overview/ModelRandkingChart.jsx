@@ -1,8 +1,8 @@
 import { ResponsivePie } from "@nivo/pie";
-import React from "react";
+import React, { useCallback } from "react";
 import useNivoTheme from "../../NivoTheme";
 import { useTheme } from "@emotion/react";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import OpenAI from "openai";
 import { motion } from "framer-motion";
 import AutoAwesomeIcon from "@mui/icons-material/AutoAwesome";
@@ -14,12 +14,16 @@ const ModelRankingPieChart = () => {
   );
   const [description, setDescription] = useState(false);
 
-  const openai = new OpenAI({
-    apiKey: process.env.REACT_APP_OPENAI_API_KEY,
-    dangerouslyAllowBrowser: true,
-  });
+  const openai = useMemo(
+    () =>
+      new OpenAI({
+        apiKey: process.env.REACT_APP_OPENAI_API_KEY,
+        dangerouslyAllowBrowser: true,
+      }),
+    []
+  );
 
-  const handleSendMessage = async () => {
+  const handleSendMessage =useCallback( async () => {
     if (!data) return;
 
     const dataString = data
@@ -42,13 +46,13 @@ const ModelRankingPieChart = () => {
     } catch (err) {
       console.error(err);
     }
-  };
+  }, [data, openai]);
 
   useEffect(() => {
     if (description && aiDescription === "Getting Jarvis' description...") {
       handleSendMessage();
     }
-  }, [description]);
+  }, [description, aiDescription, handleSendMessage]);
 
   const handleDescription = () => {
     setDescription(false);

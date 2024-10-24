@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo, useCallback } from "react";
 import { ResponsiveBar } from "@nivo/bar";
 import useNivoTheme from "../../NivoTheme";
 import { useTheme } from "@emotion/react";
@@ -17,12 +17,16 @@ const ModelListingsChart = () => {
   );
   const [descriptionVisible, setDescriptionVisible] = useState(false);
 
-  const openai = new OpenAI({
-    apiKey: process.env.REACT_APP_OPENAI_API_KEY,
-    dangerouslyAllowBrowser: true,
-  });
+  const openai = useMemo(
+    () =>
+      new OpenAI({
+        apiKey: process.env.REACT_APP_OPENAI_API_KEY,
+        dangerouslyAllowBrowser: true,
+      }),
+    []
+  );
 
-  const handleSendMessage = async () => {
+  const handleSendMessage = useCallback( async () => {
     const { data } = modelData;
     if (!data.length) return;
 
@@ -53,7 +57,7 @@ const ModelListingsChart = () => {
     } catch (err) {
       console.error("Error fetching AI description:", err);
     }
-  };
+  }, [modelData, openai]);
 
   useEffect(() => {
     if (
@@ -62,7 +66,7 @@ const ModelListingsChart = () => {
     ) {
       handleSendMessage();
     }
-  }, [descriptionVisible]);
+  }, [descriptionVisible, aiDescription, handleSendMessage]);
 
   const handleDescriptionToggle = () => {
     setDescriptionVisible(!descriptionVisible);

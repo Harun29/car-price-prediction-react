@@ -1,23 +1,25 @@
 import { styled, useTheme } from "@mui/material/styles";
 import { Typography } from "@mui/material";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback, useMemo } from "react";
 import OpenAI from "openai";
 import { motion } from "framer-motion";
 import AutoAwesomeIcon from "@mui/icons-material/AutoAwesome";
 
 const DataCard = ({ title, value, color }) => {
   const theme = useTheme();
-  const [aiDescription, setAiDescription] = useState(
-    "Getting Jarvis' description...",
-  );
+  const [aiDescription, setAiDescription] = useState("Getting Jarvis' description...");
   const [description, setDescription] = useState(false);
 
-  const openai = new OpenAI({
-    apiKey: process.env.REACT_APP_OPENAI_API_KEY,
-    dangerouslyAllowBrowser: true,
-  });
+  const openai = useMemo(
+    () =>
+      new OpenAI({
+        apiKey: process.env.REACT_APP_OPENAI_API_KEY,
+        dangerouslyAllowBrowser: true,
+      }),
+    []
+  );
 
-  const handleSendMessage = async () => {
+  const handleSendMessage = useCallback(async () => {
     if (!value || !title) return;
 
     const message = `You are an AI assistant analyzing ${title} value of dataset of used cars. Value is ${value}. Explain what ${title} means and what it means for this data set. In maximum of 25 words!`;
@@ -36,13 +38,13 @@ const DataCard = ({ title, value, color }) => {
     } catch (err) {
       console.error(err);
     }
-  };
+  }, [value, title, openai]);
 
   useEffect(() => {
     if (description && aiDescription === "Getting Jarvis' description...") {
       handleSendMessage();
     }
-  }, [description]);
+  }, [description, aiDescription, handleSendMessage]);
 
   const handleDescription = () => {
     setDescription(false);
@@ -50,11 +52,7 @@ const DataCard = ({ title, value, color }) => {
 
   const handlePrediction = (e) => {
     e.stopPropagation();
-    if (aiDescription === "Getting Jarvis' description...") {
-      setDescription(true);
-    } else {
-      setDescription(true);
-    }
+    setDescription(true);
   };
 
   const HistogramContainer = styled("div")(({ theme }) => ({
@@ -66,6 +64,7 @@ const DataCard = ({ title, value, color }) => {
     padding: "20px",
     backgroundColor: theme.palette.background.paper,
   }));
+
   return (
     <HistogramContainer className="small-card">
       {!description && (

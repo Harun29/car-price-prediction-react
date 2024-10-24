@@ -1,4 +1,4 @@
-import { createContext, useContext, useEffect, useState } from "react";
+import { createContext, useContext} from "react";
 
 const MLContext = createContext();
 
@@ -7,32 +7,32 @@ export function useML() {
 }
 
 export function MLProvider({ children }) {
-  const [tableData, setTableData] = useState([]);
-  const [columns, setColumns] = useState([]);
+  // const [tableData, setTableData] = useState([]);
+  // const [columns, setColumns] = useState([]);
 
-  const [nansTableData, setNansTableData] = useState([]);
-  const [nansColumns, setNansColumns] = useState([]);
+  // const [nansTableData, setNansTableData] = useState([]);
+  // const [nansColumns, setNansColumns] = useState([]);
 
-  const [descTableData, setDescTableData] = useState([]);
-  const [descColumns, setDescColumns] = useState([]);
+  // const [descTableData, setDescTableData] = useState([]);
+  // const [descColumns, setDescColumns] = useState([]);
 
-  const [shape, setShape] = useState();
-  const [duplicates, setDuplicates] = useState();
-  const [columnsList, setColumnsList] = useState([]);
+  // const [shape, setShape] = useState();
+  // const [duplicates, setDuplicates] = useState();
+  // const [columnsList, setColumnsList] = useState([]);
 
-  const [columnsAIResponse, setColumnsAIResponse] = useState("");
+  // const [columnsAIResponse, setColumnsAIResponse] = useState("");
 
   // useEffect(() => {
   //   handleInitialData();
   // }, []);
 
-  useEffect(() => {
-    columnsList && console.log("columns: ", columnsList);
-  }, [columnsList]);
+  // useEffect(() => {
+  //   columnsList && console.log("columns: ", columnsList);
+  // }, [columnsList]);
 
-  useEffect(() => {
-    columnsAIResponse && console.log("ai response: ", columnsAIResponse);
-  }, [columnsAIResponse]);
+  // useEffect(() => {
+  //   columnsAIResponse && console.log("ai response: ", columnsAIResponse);
+  // }, [columnsAIResponse]);
 
   // const handleInitialData = async () => {
   //   try {

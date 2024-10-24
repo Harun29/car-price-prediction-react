@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 import { Box, Typography } from "@mui/material";
 import CheckIcon from "@mui/icons-material/Check";
 import CloseIcon from "@mui/icons-material/Close";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo, useCallback } from "react";
 import { OpenAI } from "openai";
 import { useTheme } from "@emotion/react";
 
@@ -13,12 +13,16 @@ function CarDetails({ data, carImage, closeDetailedDescription }) {
   );
   const theme = useTheme();
 
-  const openai = new OpenAI({
-    apiKey: process.env.REACT_APP_OPENAI_API_KEY,
-    dangerouslyAllowBrowser: true,
-  });
+  const openai = useMemo(
+    () =>
+      new OpenAI({
+        apiKey: process.env.REACT_APP_OPENAI_API_KEY,
+        dangerouslyAllowBrowser: true,
+      }),
+    []
+  );
 
-  const handleSendMessage = async () => {
+  const handleSendMessage =useCallback( async () => {
     const formatCarData = (data) => {
       return Object.entries(data)
         .map(([key, value]) => `${key}: ${value}`)
@@ -42,11 +46,11 @@ function CarDetails({ data, carImage, closeDetailedDescription }) {
     } catch (err) {
       console.error(err);
     }
-  };
+  }, [data, openai]);
 
   useEffect(() => {
     data && handleSendMessage();
-  }, [data]);
+  }, [data, handleSendMessage]);
 
   const CarCardContainer = styled(motion.div)(({ theme }) => ({
     width: "85%",

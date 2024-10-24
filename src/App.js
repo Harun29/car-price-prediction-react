@@ -2,7 +2,7 @@ import * as React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
-import { useState, useRef, useEffect } from "react";
+import { useState } from "react";
 import Navbar from "./Components/Navbar";
 import { PandasProvider } from "./Context/PandasContext";
 import { MLProvider } from "./Context/MLContext";

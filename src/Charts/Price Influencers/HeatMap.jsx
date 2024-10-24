@@ -1,5 +1,5 @@
 import useNivoTheme from "../../NivoTheme";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo, useCallback } from "react";
 import OpenAI from "openai";
 import AutoAwesomeIcon from "@mui/icons-material/AutoAwesome";
 import { motion } from "framer-motion";
@@ -16,12 +16,16 @@ const HeatMap = () => {
   const [description, setDescription] = useState(false);
   const theme = useTheme();
 
-  const openai = new OpenAI({
-    apiKey: process.env.REACT_APP_OPENAI_API_KEY,
-    dangerouslyAllowBrowser: true,
-  });
+  const openai = useMemo(
+    () =>
+      new OpenAI({
+        apiKey: process.env.REACT_APP_OPENAI_API_KEY,
+        dangerouslyAllowBrowser: true,
+      }),
+    []
+  );
 
-  const handleSendMessage = async () => {
+  const handleSendMessage =useCallback( async () => {
     if (!data) return;
 
     const message = `You are an AI assistant analyzing a heatmap representing correlations between various car features. The heatmap shows the following data: ${JSON.stringify(data)}. Identify significant correlations for price mainly, trends, clusters, and any outliers. Summarize your findings in 150 words.`;
@@ -40,13 +44,13 @@ const HeatMap = () => {
     } catch (err) {
       console.error("Error fetching AI description:", err);
     }
-  };
+  }, [data, openai]);
 
   useEffect(() => {
     if (description && aiDescription === "Getting Jarvis' description...") {
       handleSendMessage();
     }
-  }, [description]);
+  }, [description, aiDescription, handleSendMessage]);
 
   const handleDescription = () => {
     setDescription(false);

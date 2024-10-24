@@ -23,7 +23,7 @@ const UpdateCsv = () => {
   const [activeLink, setActiveLink] = useState(0);
   const [file, setFile] = useState(null);
   const [loading, setLoading] = useState(false);
-  const [page, setPage] = useState(0);
+  // const [page, setPage] = useState(0);
   const [model, setModel] = useState();
   const [metrics, setMetrics] = useState();
 
@@ -94,7 +94,7 @@ const UpdateCsv = () => {
 
   const handleNavClick = (index) => {
     setActiveLink(index);
-    setPage(index);
+    // setPage(index);
   };
 
   useEffect(() => {
@@ -102,12 +102,8 @@ const UpdateCsv = () => {
   }, []);
 
   const handleNext = () => {
-    setPage((prevPage) => {
-      const nextPage = prevPage + 1;
-      setActiveLink(nextPage);
-      return nextPage;
-    });
-  };
+    setActiveLink((prevActiveLink) => prevActiveLink + 1);
+  };  
 
   const VisuallyHiddenInput = styled("input")({
     clip: "rect(0 0 0 0)",
@@ -204,38 +200,38 @@ const UpdateCsv = () => {
         <div className="container preload">
           <h1>Update Your Data</h1>
           <nav>
-            <a
+            <div
               href="#"
               className={activeLink === 0 ? "active" : ""}
               onClick={() => handleNavClick(0)}
             >
               <i className="fa fa-home"></i>
               <span>Instructions</span>
-            </a>
-            <a
+            </div>
+            <div
               href="#"
               className={activeLink === 1 ? "active" : ""}
               onClick={() => handleNavClick(1)}
             >
               <i className="fa fa-briefcase"></i>
               <span>Upload CSV</span>
-            </a>
-            <a
+            </div>
+            <div
               href="#"
               className={activeLink === 2 ? "active" : ""}
               onClick={() => handleNavClick(2)}
             >
               <i className="fa fa-user-secret"></i>
               <span>Update Data</span>
-            </a>
-            <a
+            </div>
+            <div
               href="#"
               className={activeLink === 3 ? "active" : ""}
               onClick={() => handleNavClick(3)}
             >
               <i className="fa fa-send"></i>
               <span>Update Model</span>
-            </a>
+            </div>
             <div className="line"></div>
           </nav>
           <div className="update-data-content">

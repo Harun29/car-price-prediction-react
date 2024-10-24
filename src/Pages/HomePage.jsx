@@ -1,6 +1,6 @@
 import "../Style/HomePage.css";
 import { Button } from "@mui/material";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import {
   FormControl,
   InputLabel,
@@ -27,12 +27,12 @@ import { useTheme } from "@emotion/react";
 const HomePage = () => {
   const theme = useTheme();
   const [prediction, setPrediction] = useState(false);
-  const [alignment, setAlignment] = useState("Front");
+  // const [alignment, setAlignment] = useState("Front");
   const [detailedDescription, setDetailedDescription] = useState(false);
   const [carType, setCarType] = useState("default-car.png");
   const [selectedLogo, setSelectedLogo] = useState("vw");
   const [predictionValue, setPredictionValue] = useState("");
-  const [range, setRange] = useState();
+  // const [range, setRange] = useState();
   const [predictedVehicles, setPredictedVehicles] = useState([]);
   const { getPrediction } = usePandas();
   const [loading, setLoading] = useState(false);
@@ -72,7 +72,7 @@ const HomePage = () => {
     setYear(newValue);
   };
 
-  const handlePrediction = async (event) => {
+  const handlePrediction =useCallback( async (event) => {
     event && event.preventDefault();
     const data = {
       type: carCategory,
@@ -99,7 +99,7 @@ const HomePage = () => {
       const response = await getPrediction(data);
       setPredictionValue(response.prediction);
       setPredictedVehicles(response.vehicles);
-      setRange(response.score);
+      // setRange(response.score);
       setLoading(false);
       setCarsLoading(false);
       setPrediction(true);
@@ -108,7 +108,7 @@ const HomePage = () => {
       console.error(err);
       setLoading(false);
     }
-  };
+  }, [airCondition, carCategory, cruiseControl, displacement, doors, drivetrain, fuelType, getPrediction, kilowatts, mileage, navigation, parkingSensors, registration, transmission, year]);
 
   const changeCarModel = async (model) => {
     try {
@@ -152,9 +152,9 @@ const HomePage = () => {
     setDetailedDescription(false);
   };
 
-  const handleChange = (event, newAlignment) => {
-    setAlignment(newAlignment);
-  };
+  // const handleChange = (event, newAlignment) => {
+  //   setAlignment(newAlignment);
+  // };
 
   useEffect(() => {
     prediction && handlePrediction();
@@ -176,6 +176,8 @@ const HomePage = () => {
     mileage,
     carType,
     modelSelection,
+    prediction,
+    handlePrediction
   ]);
 
   const handleDisplacementChange = (e) => {
@@ -243,7 +245,7 @@ const HomePage = () => {
     } catch (Err) {
       console.error(Err);
     }
-  }, []);
+  }, [selectedLogo]);
 
   const selectModel = async (model, type) => {
     try {

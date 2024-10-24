@@ -1,6 +1,4 @@
-import { useTheme } from "@nivo/core";
 import "../../Style/DataAnalysis.css";
-import { useState } from "react";
 import { styled } from "@mui/material/styles";
 import HeatMap from "../Price Influencers/HeatMap";
 import LinePlot from "../Price Influencers/LinePlot";
@@ -9,8 +7,6 @@ import BarChart from "../Price Influencers/BarChart";
 import BarChart2 from "../Price Influencers/BarChart2";
 
 const PriceInfluencers = () => {
-  const theme = useTheme();
-  const [loading, setLoading] = useState(false);
 
   const HistogramContainer = styled("div")(({ theme }) => ({
     boxShadow:
@@ -26,23 +22,23 @@ const PriceInfluencers = () => {
     <div className="data-analysis-container">
       <HistogramContainer className="plot-box heat-map">
         <span>Correlations Heat Map</span>
-        {!loading && <HeatMap />}
+        <HeatMap />
       </HistogramContainer>
       <HistogramContainer className="plot-box pie-plot">
         <span>Average prices per model</span>
-        {!loading && <PiePlot />}
+        <PiePlot />
       </HistogramContainer>
       <HistogramContainer className="plot-box line-plot">
         <span>Line Plot</span>
-        {!loading && <LinePlot />}
+        <LinePlot />
       </HistogramContainer>
       <HistogramContainer className="plot-box bar-chart">
         <span>Most popular models - price by production year</span>
-        {!loading && <BarChart />}
+        <BarChart />
       </HistogramContainer>
       <HistogramContainer className="plot-box bar-chart-2">
         <span>Most popular types - price by production year</span>
-        {!loading && <BarChart2 />}
+        <BarChart2 />
       </HistogramContainer>
     </div>
   );

@@ -1,10 +1,9 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Button } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import "../Style/DataAnalysis.css";
 import QueryStatsIcon from "@mui/icons-material/QueryStats";
 import PriceChangeIcon from "@mui/icons-material/PriceChange";
-import AssignmentIcon from "@mui/icons-material/Assignment";
 import BarChartIcon from "@mui/icons-material/BarChart";
 import TableChartIcon from "@mui/icons-material/TableChart";
 import MarketOverview from "../Charts/Chart Components/MarketOverview";

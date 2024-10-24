@@ -1,5 +1,5 @@
 import useNivoTheme from "../../NivoTheme";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo, useCallback } from "react";
 import OpenAI from "openai";
 import AutoAwesomeIcon from "@mui/icons-material/AutoAwesome";
 import { motion } from "framer-motion";
@@ -16,12 +16,16 @@ const BarChart = () => {
   const theme = useTheme();
   const [keys, setKeys] = useState([]);
 
-  const openai = new OpenAI({
-    apiKey: process.env.REACT_APP_OPENAI_API_KEY,
-    dangerouslyAllowBrowser: true,
-  });
+  const openai = useMemo(
+    () =>
+      new OpenAI({
+        apiKey: process.env.REACT_APP_OPENAI_API_KEY,
+        dangerouslyAllowBrowser: true,
+      }),
+    []
+  );
 
-  const handleSendMessage = async () => {
+  const handleSendMessage =useCallback( async () => {
     if (!data) return;
   
     const message = `You are an AI assistant analyzing a bar chart. The chart compares the average prices of the most popular car models by their production year. The data contains various car models and their average prices across different year ranges: ${JSON.stringify(data)}. Your task is to provide insights into the price trends over the years, highlight which models have seen price increases or decreases, and identify any notable patterns or outliers. Summarize your findings in 150 words, focusing on how the models compare and what can be inferred about the pricing dynamics.`;
@@ -40,14 +44,14 @@ const BarChart = () => {
     } catch (err) {
       console.error("Error fetching AI description:", err);
     }
-  };
+  }, [data, openai]);
   
 
   useEffect(() => {
     if (description && aiDescription === "Getting Jarvis' description...") {
       handleSendMessage();
     }
-  }, [description]);
+  }, [description, aiDescription, handleSendMessage]);
 
   const handleDescription = () => {
     setDescription(false);

@@ -1,6 +1,6 @@
 import { ResponsiveBoxPlot } from "@nivo/boxplot";
 import useNivoTheme from "../../NivoTheme";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo, useCallback } from "react";
 import OpenAI from "openai";
 import AutoAwesomeIcon from "@mui/icons-material/AutoAwesome";
 import { motion } from "framer-motion";
@@ -21,16 +21,20 @@ const ModelsPriceBoxPlot = () => {
     data && console.log("box plot: ", data);
   }, [data]);
 
-  const openai = new OpenAI({
-    apiKey: process.env.REACT_APP_OPENAI_API_KEY,
-    dangerouslyAllowBrowser: true,
-  });
+  const openai = useMemo(
+    () =>
+      new OpenAI({
+        apiKey: process.env.REACT_APP_OPENAI_API_KEY,
+        dangerouslyAllowBrowser: true,
+      }),
+    []
+  );
 
   useEffect(() => {
     data && console.log(data);
   }, [data]);
 
-  const handleSendMessage = async () => {
+  const handleSendMessage =useCallback( async () => {
     if (!data) return;
 
     const getQuartiles = (values) => {
@@ -75,13 +79,13 @@ const ModelsPriceBoxPlot = () => {
     } catch (err) {
       console.error("Error fetching AI description:", err);
     }
-  };
+  }, [data, openai]);
 
   useEffect(() => {
     if (description && aiDescription === "Getting Jarvis' description...") {
       handleSendMessage();
     }
-  }, [description]);
+  }, [description, aiDescription, handleSendMessage]);
 
   const handleDescription = () => {
     setDescription(false);

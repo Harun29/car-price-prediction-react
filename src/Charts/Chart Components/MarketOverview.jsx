@@ -1,5 +1,4 @@
 import MyHistogram from "../Market Overview/HistPlot";
-import PriceRangeHorizontalBarChart from "../Market Overview/ResponsiveBar";
 import DataCard from "../Market Overview/DataCard";
 import ModelRankingPieChart from "../Market Overview/ModelRandkingChart";
 import { styled } from "@mui/material/styles";
